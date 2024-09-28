@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/27 13:35:38 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/28 14:28:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void init_player(t_player *player)
 {
 	player->direction = 0.0f;
 	player->player_icon = NULL;
+	player->px = (float)WIDTH / 2;
+	player->py= (float)HEIGHT / 2;
 	player->dposx = cos(player->px) * 5;
-	player->dposy = sin(player->dposy) * 5;
-	player->px = WIDTH / 2;
-	player->py= HEIGHT / 2;
+	player->dposy = sin(player->py) * 5;
+	
 }
 
 void init_scene(t_data *data)

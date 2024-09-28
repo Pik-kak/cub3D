@@ -6,7 +6,7 @@
 #    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/09/26 16:15:45 by tsaari           ###   ########.fr        #
+#    Updated: 2024/09/28 14:18:49 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,20 @@ NAME = cub3D
 CC = cc
 RM = rm -rf
 
+PIE_SUPPORTED := $(shell gcc -dumpspecs | grep 'pie' > /dev/null && echo yes || echo no)
+
+ifeq ($(PIE_SUPPORTED), yes)
+    CFLAGS += -fPIC
+    LDFLAGS += -pie
+endif
+
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
 CFLAGS = -Wall -Wextra -Werror -fPIE -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
-FRAMEWORKS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
+LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
 LIBFT =	libft/libft.a
 SRC_DIR = src/
 BONUS_DIR = bonus/
@@ -83,13 +90,13 @@ $(LIBFT):
 			@make -C "libft" CFLAGS="$(CFLAGS)"
 
 $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(FRAMEWORKS) -o $(NAME) -pie
+			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
 			@echo "\033[1;32mFdF compile success!\n\033[0m"
 
 .bonus:		$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(FRAMEWORKS) -o $(NAME) -pie
+			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
 			@touch .bonus
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/27 12:39:52 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/28 14:35:36 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		init_data(fd, data, argv);
-		data->m = mlx_init(WIDTH, HEIGHT, argv[1], false);
+		data->m = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 	
