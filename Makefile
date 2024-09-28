@@ -3,53 +3,111 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/26 14:17:42 by kkauhane          #+#    #+#              #
-#    Updated: 2024/09/26 14:17:46 by kkauhane         ###   ########.fr        #
+#    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
+#    Updated: 2024/09/26 16:15:45 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:= cub3D
-CFLAGS	= -Wextra -Wall -Werror
-LIBMLX := ./lib/MLX42
-LIBFTNAME = libft.a
-LIBFTDIR := ./libft
-LIBMLX	:= ./MLX42
-USER	:= kkauhane
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm
-SRCS	:= main.c \
-        map_parsing.c \
-        
-OBJS	:= ${SRCS:.c=.o}
+NAME = cub3D
 
-all: libmlx $(NAME)
+CC = cc
+RM = rm -rf
 
-libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+MLX_DIR = MLX42
+MLX_BUILD_DIR = $(MLX_DIR)/build
+MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
+CFLAGS = -Wall -Wextra -Werror -fPIE -g -fsanitize=address
+MLXFLAGS = -Iinclude -lglfw
+GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
+FRAMEWORKS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
+LIBFT =	libft/libft.a
+SRC_DIR = src/
+BONUS_DIR = bonus/
 
-libft:
-	@make -C $(LIBFTDIR)
-	@cp $(LIBFTDIR)/$(LIBFTNAME) .
-	@mv $(LIBFTNAME) $(NAME)
+SRCS	=	main_bonus.c \
+			draw_scene_bonus.c \
+			utils1_bonus.c \
+			free_and_exit_bonus.c \
+			rotate_and_center_bonus.c \
+			draw_utils_bonus.c \
+			key_hooks_bonus.c \
+			hook_utils_bonus.c \
+			utils2_bonus.c \
+			init_bonus.c
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)\n"
 
-$(NAME): libft $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(HEADERS) -L$(LIBFTDIR) -lft
+BSRCS	=	fdf_bonus.c \
+			parse_map_bonus.c \
+			draw_map_bonus.c \
+			utils1_bonus.c \
+			free_and_exit_bonus.c \
+			rotate_and_center_bonus.c \
+			draw_utils_bonus.c \
+			key_hooks_bonus.c \
+			hook_utils_bonus.c \
+			utils2_bonus.c
+
+OBJS	= $(SRCS:%.c=$(OBJ_DIR)/%.o)
+BOBJS	= $(BSRCS:%.c=$(BOBJ_DIR)/%.o)
+
+OBJ_DIR			= obj
+BOBJ_DIR		= bobj
+
+all:	$(NAME)
+
+bonus: $(BONUS)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+
+$(BOBJ_DIR):
+	@mkdir -p $(BOBJ_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)%.c
+	@$(CC) -c $< -o $@
+	@echo "\033[0;36mObject $@ [\033[0;32mOK\033[0;36m]\033[0m"
+
+$(BOBJ_DIR)/%.o: $(BONUS_DIR)%.c
+	@$(CC) -c $< -o $@
+	@echo "\033[0;36mBonus Object $@ [\033[0;32mOK\033[0;36m]\033[0m"
+
+$(MLX_TARGET):
+	@mkdir -p $(MLX_BUILD_DIR)
+	@cd $(MLX_DIR) && cmake -B build
+	@cmake --build $(MLX_BUILD_DIR) -j4
+
+$(LIBFT):
+			@make -C "libft" CFLAGS="$(CFLAGS)"
+
+$(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
+			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(FRAMEWORKS) -o $(NAME) -pie
+			@echo "\033[1;32mLibft library ready!\n\033[0m"
+			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
+			@echo "\033[1;32mFdF compile success!\n\033[0m"
+
+.bonus:		$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
+			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(FRAMEWORKS) -o $(NAME) -pie
+			@touch .bonus
+			@echo "\033[1;32mLibft library ready!\n\033[0m"
+			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
+			@echo "\033[1;32mFdF Bonus objects compiled!\n\033[0m"
+
+bonus:		$(BOBJ_DIR) .bonus
 
 clean:
-	@rm -rf $(OBJS)
-	@make -C $(LIBFTDIR) clean
-	@rm -rf $(LIBMLX)/build
+			@$(RM) $(OBJ_DIR) $(BOBJ_DIR) .bonus
+			@make clean -C "libft"
+			@echo "\033[0;36mClean FdF [\033[0;32mDONE\033[0;36m]\033[0m"
 
-fclean: clean
-	@rm -rf $(NAME)
-	@make -C $(LIBFTDIR) fclean
+fclean:		clean
+			@$(RM) $(NAME) $(OBJ_DIR) $(BOBJ_DIR)
+			@echo "\033[0;36mFClean FdF [\033[0;32mDONE\033[0;36m]\033[0m"
 
-re: clean all
+re:			fclean all
 
-.PHONY: all, clean, fclean, re, libmlx, libft
+rebonus:	fclean bonus
+
+.PHONY:		all clean fclean re bonus
