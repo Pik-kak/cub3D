@@ -42,19 +42,20 @@
 
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
-#define PLAYER_SPEED 1.2 * FIXED_POINT_SCALE
-#define IMG_SIZE 128
+#define PLAYER_SPEED 1.2
+#define IMG_SIZE 64
+#define GRID_GAP 1
 
 
 
 typedef struct s_player
 {
 	mlx_image_t *player_icon;
-	float direction;
-	float		px;
-	float		py;
-	float 		dposx;
-	float 		dposy;
+	double		direction;
+	double		px;
+	double		py;
+	double		dposx;
+	double		dposy;
 }	t_player;
 
 
@@ -81,6 +82,7 @@ typedef struct s_data
 
 //Map drawing
 void	draw_scene(t_data *data);
+void	draw_line(t_data *data, int px, int py, double theta, int length);
 //void	set_offset(t_data *data);
 int		pixel_ok(int x, int y);
 //int32_t	get_col(t_point *start, t_point *end, t_data *data);
@@ -89,6 +91,10 @@ int		pixel_ok(int x, int y);
 //initialize
 void	init_data(int fd, t_data *data, char **argv);
 void	init_z_factor(t_data *data);
+
+//raycasting
+void draw_one_ray(t_data *data, float ray_angle, float x, float y);
+
 
 //rotate and center
 //t_point	correct_point_offset(t_point *point, t_data *data);

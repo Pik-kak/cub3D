@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/28 14:28:54 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/29 09:54:46 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void init_player(t_player *player)
 {
 	player->direction = 0.0f;
 	player->player_icon = NULL;
-	player->px = (float)WIDTH / 2;
-	player->py= (float)HEIGHT / 2;
+	player->px = (float)100.0f;
+	player->py= (float)100.0f;
 	player->dposx = cos(player->px) * 5;
 	player->dposy = sin(player->py) * 5;
 	

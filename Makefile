@@ -6,7 +6,7 @@
 #    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/09/28 14:18:49 by tsaari           ###   ########.fr        #
+#    Updated: 2024/09/29 10:54:17 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ endif
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -fPIE -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
@@ -43,7 +43,9 @@ SRCS	=	main_bonus.c \
 			key_hooks_bonus.c \
 			hook_utils_bonus.c \
 			utils2_bonus.c \
-			init_bonus.c
+			init_bonus.c \
+			raycaster.c \
+			draw_line.c
 
 
 BSRCS	=	fdf_bonus.c \
@@ -90,7 +92,7 @@ $(LIBFT):
 			@make -C "libft" CFLAGS="$(CFLAGS)"
 
 $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
 			@echo "\033[1;32mFdF compile success!\n\033[0m"
