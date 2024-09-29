@@ -93,7 +93,7 @@ void	init_data(int fd, t_data *data, char **argv);
 void	init_z_factor(t_data *data);
 
 //raycasting
-void draw_one_ray(t_data *data, float ray_angle, float x, float y);
+void draw_one_ray(t_data *data, double ray_angle, double x, double y);
 
 
 //rotate and center

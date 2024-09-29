@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 09:18:59 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/29 11:00:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/29 14:34:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void draw_line(t_data *data, int px, int py, double theta, int length)
 	int i;
 	
 	i = 0;
+	printf("%d\n", length);
 	while (i < length)
 	{
 		int xn = px + i * cos(theta);

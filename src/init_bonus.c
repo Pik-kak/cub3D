@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/29 09:54:46 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/29 14:29:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void init_player(t_player *player)
 {
 	player->direction = 0.0f;
 	player->player_icon = NULL;
-	player->px = (float)100.0f;
-	player->py= (float)100.0f;
+	player->px = (double)100.0;
+	player->py= (double)100.0f;
 	player->dposx = cos(player->px) * 5;
 	player->dposy = sin(player->py) * 5;
 	
@@ -54,11 +54,11 @@ void init_scene(t_data *data)
 	int temp_map[8][8] = 
 	{
 		{1,1,1,1,1,1,1,1},
-		{1,0,0,1,0,0,0,1},
-		{1,0,0,1,0,0,0,1},
-		{1,0,1,1,0,0,0,1},
-		{1,0,0,0,0,1,1,1},
-		{1,0,1,1,0,0,0,1},
+		{1,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,1},
 		{1,1,1,1,1,1,1,1}
 	};
