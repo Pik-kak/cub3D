@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
+#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/09/29 10:54:17 by tsaari           ###   ########.fr        #
+#    Updated: 2024/09/30 15:40:45 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRCS	=	main_bonus.c \
 			utils2_bonus.c \
 			init_bonus.c \
 			raycaster.c \
-			draw_line.c
+			draw_line.c \
+			parse_scene.c
 
 
 BSRCS	=	fdf_bonus.c \

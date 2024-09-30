@@ -20,6 +20,9 @@
 # include "../libft/libft.h"
 # include "../libft/get_next_line.h"
 
+#define SUCCESS 0
+#define ERROR 1
+
 # define WIDTH 1920
 # define HEIGHT 1080
 
@@ -34,9 +37,9 @@
 # define COL_BLUE		0x1B03A3FF
 # define COL_PINK		0xFFC0CBFF
 
-
-# define ERR_INFILE "Invalid data"
+# define ERR_INFILE "Wrong file type"
 # define ERR_ARG "Invalid amount of arguments"
+# define ERR_OPEN "File cannot be opened"
 # define ERR_MALLOC "Malloc error"
 # define ERR_MLX "MLX error"
 
@@ -46,7 +49,11 @@
 #define IMG_SIZE 64
 #define GRID_GAP 1
 
-
+typedef struct s_check
+{
+	int	fd;
+	int	player_count;
+}				t_check;
 
 typedef struct s_player
 {
@@ -64,9 +71,14 @@ typedef struct s_scene
 {
 	t_player	player;
 	int			**map;
+	char		*no;
+	char		*so;
+	char		*ea;
+	char		*we;
+	int			floor[3];
+	int			ceiling[3];
 	int			cols;
 	int			rows;
-	
 }	t_scene;
 
 
@@ -74,11 +86,15 @@ typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
+	char		*file;
+	int			fd;
 	t_scene		scene;
 }	t_data;
 
 
-
+//Map parsing
+int		check_file_type(t_data *data, t_check *check);
+void	check_file(t_data *data, t_check *check);
 
 //Map drawing
 void	draw_scene(t_data *data);
@@ -89,7 +105,7 @@ int		pixel_ok(int x, int y);
 //void	bresenham_line(mlx_image_t *image, t_point s, t_point e, int32_t col);
 
 //initialize
-void	init_data(int fd, t_data *data, char **argv);
+void	init_data(t_data *data, char **argv);
 void	init_z_factor(t_data *data);
 
 //raycasting

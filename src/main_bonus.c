@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/28 14:35:36 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/09/30 15:13:26 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	int		fd;
 
-	fd = 0;
 	if (argc != 2)
 		ft_error(ERR_ARG);
 	data = (t_data *)malloc(sizeof(t_data));
@@ -26,7 +24,7 @@ int	main(int argc, char **argv)
 		ft_error(ERR_MALLOC);
 	else
 	{
-		init_data(fd, data, argv);
+		init_data(data, argv);
 		data->m = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
