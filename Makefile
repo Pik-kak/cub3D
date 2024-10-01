@@ -6,7 +6,7 @@
 #    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/09/30 15:40:45 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/10/01 16:39:54 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ SRCS	=	main_bonus.c \
 			init_bonus.c \
 			raycaster.c \
 			draw_line.c \
-			parse_scene.c
+			parse_scene.c \
+			parse_textr_col.c \
+			parse_utils.c
 
 
 BSRCS	=	fdf_bonus.c \
