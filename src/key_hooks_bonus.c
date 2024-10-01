@@ -6,12 +6,73 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 10:08:51 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/01 14:22:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
+void move_right_wall(t_player *player)
+{
+	if (player->direction < PI) // LOOK SOUTH
+	{ 
+		if (player->direction > PI / 2) // LOOK SOUTHWEST
+			player->py += PLAYER_SPEED / 2;
+		else if (player->direction < PI / 2) // LOOK SOUTHEAST
+			player->px += PLAYER_SPEED / 2;
+	} 
+	else // LOOK NORTH
+	{ 
+		if (player->direction > PI * 3 / 2) // LOOK NORTHEAST
+			player->py -= PLAYER_SPEED / 2;
+		else if (player->direction < PI * 3 / 2) // LOOK NORTHWEST
+			player->px -= PLAYER_SPEED / 2;
+	}
+}
+
+void move_left_wall(t_player *player)
+{
+	if (player->direction < PI) // LOOK SOUTH
+	{ 
+		if (player->direction > PI / 2) // LOOK SOUTHWEST
+			player->px -= PLAYER_SPEED / 2;
+		else if (player->direction < PI / 2) // LOOK SOUTHEAST
+			player->py += PLAYER_SPEED / 2;
+	}
+	else // LOOK NORTH
+	{ 
+		if (player->direction > PI * 3 / 2) // LOOK NORTHEAST
+			player->px += PLAYER_SPEED / 2;
+		else if (player->direction < PI * 3 / 2) // LOOK NORTHWEST
+			player->py -= PLAYER_SPEED / 2;
+	}
+}
+
+void move_player_forward(t_player *player)
+{
+	if (!player->col_front)
+	{
+		player->px += player->dposx * PLAYER_SPEED;
+		player->py += player->dposy * PLAYER_SPEED;
+	}
+	else			// MOVES BESIDE WALL
+	{
+		if (player->col_right && !player->col_left)
+			move_right_wall(player);
+		else if (player->col_left && !player->col_right)
+			move_left_wall(player);
+	}
+}
+
+
+void move_player_backward(t_player *player)
+{
+	if (!player->col_back)
+	{
+		player->px -= player->dposx * PLAYER_SPEED;
+		player->py -= player->dposy * PLAYER_SPEED;
+	}
+}
 
 void move_player_left(t_player *player)
 {
@@ -29,30 +90,14 @@ void move_player_right(t_player *player)
 {
 	if (!player->col_right)
 	{
-	double delta_x = cos(player->direction + PI / 2) * PLAYER_SPEED * 2;
-	double delta_y = sin(player->direction + PI / 2) * PLAYER_SPEED * 2;
-	player->px += delta_x;
-	player->py += delta_y;
+		double delta_x = cos(player->direction + PI / 2) * PLAYER_SPEED * 2;
+		double delta_y = sin(player->direction + PI / 2) * PLAYER_SPEED * 2;
+		player->px += delta_x;
+		player->py += delta_y;
 	}
 }
 
-void move_player_forward(t_player *player)
-{
-	if (!player->col_front)
-	{
-    player->px += player->dposx * PLAYER_SPEED;
-    player->py += player->dposy * PLAYER_SPEED;
-	}
-}
 
-void move_player_backward(t_player *player)
-{
-	if (!player->col_back)
-	{
-    player->px -= player->dposx * PLAYER_SPEED;
-    player->py -= player->dposy * PLAYER_SPEED;
-	}
-}
 void turn_player(t_player *player, double angle)
 {
 	player->direction += angle;

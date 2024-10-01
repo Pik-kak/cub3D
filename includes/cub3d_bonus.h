@@ -42,7 +42,7 @@
 
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
-#define PLAYER_SPEED 1.2
+#define PLAYER_SPEED 0.4
 #define IMG_SIZE 64
 #define GRID_GAP 1
 

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:52:25 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 10:05:12 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/01 13:16:46 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void collisions(t_data *data)
 	if (data->scene.player.col_front)
 		printf("front collision\n");
 	if (data->scene.player.col_right)
-		printf("left collision\n");
+		printf("right collision\n");
 	if (data->scene.player.col_left)
 		printf("left collision\n");
 	if (data->scene.player.col_back)
