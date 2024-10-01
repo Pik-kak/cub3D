@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
 /*   Updated: 2024/10/01 16:43:32 by tsaari           ###   ########.fr       */
@@ -30,6 +30,10 @@ void init_scene(t_data *data)
 {
 	int row;
 	
+	data->scene.no = NULL;
+	data->scene.so = NULL;
+	data->scene.ea = NULL;
+	data->scene.we = NULL;
 	data->scene.cols = 0;
 	data->scene.rows = 0;
 	t_scene *scene;
@@ -77,10 +81,23 @@ void init_scene(t_data *data)
 	}
 }
 
-
-
-void	init_data(int fd, t_data *data, char **argv)
+void	init_check(t_data *data)
 {
+	t_check	check;
+	
+	check.fd = -1;
+	check.player_count = 0;
+	if (check_file_type(data, &check) != 0)
+		ft_error(ERR_INFILE);
+	check_file(data, &check);
+}
+
+void	init_data(t_data *data, char **argv)
+{
+	data->file = argv[1];
+	data->fd = open(data->file, O_RDONLY);
+	if (data->fd < 0)
+		ft_error(ERR_OPEN);
 	init_scene(data);
 }
 
