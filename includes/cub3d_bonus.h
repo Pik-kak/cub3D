@@ -95,6 +95,8 @@ typedef struct s_data
 //Map parsing
 int		check_file_type(t_data *data, t_check *check);
 void	check_file(t_data *data, t_check *check);
+void	read_file(t_data *data, t_check *check);
+char	*skip_spaces(char *line);
 
 //Map drawing
 void	draw_scene(t_data *data);
