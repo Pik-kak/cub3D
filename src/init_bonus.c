@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 12:54:20 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/01 16:43:32 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 void init_player(t_player *player)
 {
 	player->direction = 0.0f;
-	player->px = (double)100.0;
-	player->py= (double)100.0f;
+	player->px = 100.0;
+	player->py = 100.0;
 	player->dposx = cos(player->px) * 5;
 	player->dposy = sin(player->py) * 5;
 	player->col_front = false;

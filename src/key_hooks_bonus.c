@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 14:22:08 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/01 16:47:20 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void move_left_wall(t_player *player)
 	}
 }
 
+/* ==============================
+ * moves player forward or backward using dopx/y 
+ * ==============================
+ */
+
 void move_player_forward(t_player *player)
 {
 	if (!player->col_front)
@@ -74,12 +79,20 @@ void move_player_backward(t_player *player)
 	}
 }
 
+/* ==============================
+ * counts delta_x and y which is side from player and moves player there
+ * ==============================
+ */
+
 void move_player_left(t_player *player)
 {
 	if (!player->col_left)
 	{
-		double delta_x = cos(player->direction - PI / 2) * PLAYER_SPEED * 2;
-		double delta_y = sin(player->direction - PI / 2) * PLAYER_SPEED * 2;
+		double delta_x;
+		double delta_y;
+		
+		delta_x = cos(player->direction - PI / 2) * PLAYER_SPEED * 3;
+		delta_y = sin(player->direction - PI / 2) * PLAYER_SPEED * 3;
 		player->px += delta_x;
 		player->py += delta_y;
 	}
@@ -90,13 +103,22 @@ void move_player_right(t_player *player)
 {
 	if (!player->col_right)
 	{
-		double delta_x = cos(player->direction + PI / 2) * PLAYER_SPEED * 2;
-		double delta_y = sin(player->direction + PI / 2) * PLAYER_SPEED * 2;
+		double delta_x;
+		double delta_y;
+		
+		delta_x = cos(player->direction + PI / 2) * PLAYER_SPEED * 3;
+		delta_y = sin(player->direction + PI / 2) * PLAYER_SPEED * 3;
 		player->px += delta_x;
 		player->py += delta_y;
 	}
 }
 
+/* ==============================
+ * Turnsplayer by changing it's direction
+ * full round is 2 * PI 
+ * sets dposx and dpos y to be next step for player
+ * ==============================
+ */
 
 void turn_player(t_player *player, double angle)
 {

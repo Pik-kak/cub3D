@@ -43,7 +43,7 @@
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
 #define PLAYER_SPEED 0.4
-#define IMG_SIZE 64
+#define BLOCK_SIZE 64
 #define GRID_GAP 1
 
 typedef struct s_ray
@@ -106,10 +106,10 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle);
 
 //raycasting
 void	raycaster(t_data *data);
-int		draw_one_ray(t_data *data, double ray_angle, double x, double y);
+int		cast_one_ray(t_data *data, double ray_angle, double x, double y);
 
 //player handling
-void collisions(t_data *data);
+void	collisions(t_data *data);
 
 //rotate and center
 //t_point	correct_point_offset(t_point *point, t_data *data);

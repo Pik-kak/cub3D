@@ -12,34 +12,48 @@
 
 #include "../includes/cub3d_bonus.h"
 
+/* ==============================
+ * If pixel is out of screen does not draw it 
+ * prevents segfault
+ * ==============================
+ */
+
 int	pixel_ok(int x, int y)
 {
 	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
-        return (1);
-    return (0);
+		return (1);
+	return (0);
 }
 
-
+/* ==============================
+ * Draws one block filled with same color 
+ * leaves last pixels empty to make grid
+ * ==============================
+ */
 void fill_square(mlx_image_t *img, int x, int y, int color)
 {
-    int start_x = x * (IMG_SIZE);
-    int start_y = y * (IMG_SIZE);
-    int i = 0;
-    int j;
+	int start_x = x * (BLOCK_SIZE);
+	int start_y = y * (BLOCK_SIZE);
+	int i = 0;
+	int j;
 
-    while (i < IMG_SIZE - 1)
-    {
-        j = 0;
-        while (j < IMG_SIZE -1)
-        {
-            if (pixel_ok(start_x + j, start_y + i))
-                mlx_put_pixel(img, start_x + j, start_y + i, color);
-            j++;
-        }
-        i++;
-    }
+	while (i < BLOCK_SIZE - 1)
+	{
+		j = 0;
+		while (j < BLOCK_SIZE -1)
+		{
+			if (pixel_ok(start_x + j, start_y + i))
+				mlx_put_pixel(img, start_x + j, start_y + i, color);
+			j++;
+		}
+		i++;
+	}
 }
 
+/* ==============================
+ * Draws walls (1) or free space 
+ * ==============================
+ */
 
 void draw_tile(t_scene *scene, mlx_image_t *img, int x, int y)
 {
@@ -49,6 +63,10 @@ void draw_tile(t_scene *scene, mlx_image_t *img, int x, int y)
 		fill_square(img, x, y, COL_BLUE);
 }
 
+/* ==============================
+ * Draws map tile by tile
+ * ==============================
+ */
 
 void draw_map(t_data *data, mlx_image_t *image)
 {
@@ -68,35 +86,24 @@ void draw_map(t_data *data, mlx_image_t *image)
 	}
 }
 
-/*mlx_texture_t* load_player_sprites(int degree)
-{
-	
-	if (degree > 0 && degree < PI / 4)
-		return (mlx_load_png("./sprites/minimap/playerNE.png"));
-	else if (degree >= PI / 4 && degree < PI / 2)
-		return (mlx_load_png("./sprites/minimap/playerE.png"));
-	else if (degree >= PI / 2 && degree < PI - (PI / 4))
-		return (mlx_load_png("./sprites/minimap/playerSE.png"));
-	else if (degree >= PI - (PI / 4) && degree < PI)
-		return (mlx_load_png("./sprites/minimap/playerS.png"));
-	else if (degree >= PI && degree < PI + (PI / 4))
-		return (mlx_load_png("./sprites/minimap/playerSW.png"));
-	else if (degree >= PI + (PI / 4) && degree < PI + (PI / 2))
-		return (mlx_load_png("./sprites/minimap/playerW.png"));
-	else if (degree >= PI + (PI / 2) && degree < PI  * 2 - (PI / 4))
-		return (mlx_load_png("./sprites/minimap/playerNW.png"));
-	else
-		return (mlx_load_png("./sprites/minimap/playerN.png"));
-}*/
-
-void draw_circle(t_data *data, int cx, int cy, int radius, int color)
+/* ==============================
+ * Draws player "body" as circle
+ * 
+ * ==============================
+ */
+void draw_circle(t_data *data, int radius, int color)
 {
 	int y;
-	
+	int x;
+	int cx;
+	int cy;
+
+	cx = data->scene.player.px;
+	cy = data->scene.player.py;
 	y = -radius;
 	while (y <= radius)
 	{
-		int x = -radius;
+		x = -radius;
 		while (x <= radius)
 		{
 			if (x * x + y * y <= radius * radius)
@@ -112,69 +119,40 @@ void draw_circle(t_data *data, int cx, int cy, int radius, int color)
 	}
 }
 
-void draw_nose(t_data *data, t_player *player, int length, int width, int color)
+/* ==============================
+ * Draws player "nOSE" as circle
+ * Calculate the center coordinates for the current length
+ * Draw two pixels side by side
+ * ==============================
+ */
+
+void draw_nose(t_data *data, int length, int color)
 {
-	double dir = player->direction;
-	int half_width = width / 2;
-	int i = 0;
+	double dir; 
+	int c_x;
+	int c_y;
+	int i;
+
+	dir = data->scene.player.direction;
+	i = 0;
 
 	while (i < length)
 	{
-		int center_x = player->px + i * cos(dir);
-		int center_y = player->py + i * sin(dir);
-
-		int w = -half_width;
-		while (w <= half_width)
-		{
-			int offset_x = w * cos(dir + PI / 2);
-			int offset_y = w * sin(dir + PI / 2);
-			int xn = (int)round(center_x + offset_x);
-			int yn = (int)round(center_y + offset_y);
-
-			if (pixel_ok(xn, yn))
-				mlx_put_pixel(data->image, xn, yn, color);
-			w++;
-		}
+		c_x = data->scene.player.px + i * cos(dir);
+		c_y = data->scene.player.py + i * sin(dir);
+		if (pixel_ok(c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
+			mlx_put_pixel(data->image, c_x + 1 * sin(dir), c_y - 1 * cos(dir), color);
+		if (pixel_ok(c_x - 1 * sin(dir), c_y + 1 * cos(dir)))
+			mlx_put_pixel(data->image, c_x - 1 * sin(dir), c_y + 1 * cos(dir), color);
 		i++;
 	}
 }
 
-
-  
-
 void draw_player(t_data *data)
 {
-	t_player *player;
-
-	player = &data->scene.player;
-	draw_circle(data, player->px, player->py, 5, COL_LINE);
-	draw_nose(data, player, 16, 4, COL_LINE);
+	draw_circle(data, 7, COL_LINE);
+	draw_nose(data, 16, COL_LINE);
 }
-/*void draw_player_icon(t_data *data, mlx_image_t *image)
-{
-	mlx_texture_t *pl_text;
-	
-	int plx = data->scene.player.px;
-
-	int ply = data->scene.player.py;
-
-	pl_text = load_player_sprites(data->scene.player.direction);
-	if (!pl_text)
-	{
-		ft_free_data_and_error(data, "Error loading sprite texture.");
-		return;
-	}
-	data->scene.player.player_icon = mlx_texture_to_image(data->m, pl_text);
-
-	if (!data->scene.player.player_icon)
-		ft_free_data_and_error(data, "Error creating player icon from texture.");
-	mlx_delete_texture(pl_text);
-	if (mlx_image_to_window(data->m, data->scene.player.player_icon, plx, ply) == -1) 
-		ft_free_data_and_error(data, ERR_MLX);
-	mlx_set_instance_depth(&data->scene.player.player_icon->instances[0], 3);
-}*/
-
-
 
 void draw_scene(t_data *data) 
 {
@@ -184,11 +162,8 @@ void draw_scene(t_data *data)
 	if (!data->image)
 		ft_free_data_and_error(data, ERR_MLX);
 	draw_map(data, data->image);
-	//draw_one_ray(data, data->scene.player.direction, data->scene.player.px, data->scene.player.py);
 	draw_player(data);
 	collisions(data);
-
-	//draw_player_icon(data, data->image);
 	
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1) 
 	{
