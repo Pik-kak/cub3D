@@ -1,16 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parsing.c                                      :+:      :+:    :+:   */
+/*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/09/30 15:26:59 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:38:48 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
+
+/*
+- Check the file type
+- Read the file until you find all the elements before the map.
+  If you reach the map(1) and all the elements are not found, or if there are extra elements/map doesnt start with 1 return error.
+- Check that the elements are correct (the paths are real paths and the rgb values are between 0-255)
+- Read the map, checking that there are no extra symbols and count the size of the map(lengt/width) by finding the longest line.
+- Change the spaces to '2's
+- Check that the map is surrounded by walls on all sides and if there are spaces around them as well
+*/
+
+/*
+Help function that calls different checks
+*/
+void	check_file(t_data *data, t_check *check)
+{
+	read_file(data, check);
+	//check paths
+	//check
+}
+
+/*
+Checks that the file type ends with .cub
+*/
+int	check_file_type(t_data *data, t_check *check)
+{
+	char			*file_name;
+	char			*file_type;
+	unsigned int	i;
+
+	i = 0;
+	file_type = ".cub";
+	file_name = ft_strrchr(data->file, '.');
+	if (!file_name)
+		return (ERROR);
+	while (file_name[i] != '\0' && file_type[i] == file_name[i])
+		i++;
+	return (file_name[i] - file_type[i]);
+}
 
 /*
 void	check_map(t_scene *scene)
@@ -34,54 +73,4 @@ void	check_map(t_scene *scene)
 		i++;
 		ii = 0;
 	}
-}
-
-int	read_file(t_data *data, t_check *check)
-{
-	char	*line; 
-
-	//while (line)
-	//{
-		line = get_next_line(data->fd);
-		//if (!line)//if no more lines
-			//break ;
-	//	if (ft_strrchr(line, '\n'))
-	//	{
-	//		free(line);
-	//		continue;
-	//	}
-		//if (check_line(line) == 1)
-		//{
-		//	printf("Line not valid\n");//if there is something extra in the scene file
-		//	break ;
-		//}
-		printf("%s\n", line);
-	//}
-	free(line);
-	close(data->fd);
-	return (SUCCESS);
-}
-
-void	check_file(t_data *data, t_check *check)
-{
-	read_file(data, check);
-//	if (check->player_count != 1)
-//		error_scene("Wrong amount of players", scene);
 }*/
-
-int	check_file_type(t_data *data, t_check *check)
-{
-	char			*file_name;
-	char			*file_type;
-	unsigned int	i;
-
-	i = 0;
-	file_type = ".cub";
-	file_name = ft_strrchr(data->file, '.');
-	if (!file_name)
-		return (ERROR);
-	while (file_name[i] != '\0' && file_type[i] == file_name[i])
-		i++;
-	return (file_name[i] - file_type[i]);
-}
-

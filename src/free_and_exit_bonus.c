@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/26 15:56:28 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/01 16:20:21 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ void	ft_free_data_and_exit(t_data *data)
 		free(data->scene.map[i]); 
 		i++;
 	}
+	if (data->scene.no != NULL)
+		free(data->scene.no);
+	if (data->scene.so != NULL)
+		free(data->scene.so);
+	if (data->scene.ea != NULL)
+		free(data->scene.ea);
+	if (data->scene.we != NULL)
+		free(data->scene.we);
 	free(data->scene.map);
 	free(data);
 	data = NULL;

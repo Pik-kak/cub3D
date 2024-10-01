@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/30 15:43:16 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:19:04 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void init_scene(t_data *data)
 {
 	int row;
 	
+	data->scene.no = NULL;
+	data->scene.so = NULL;
+	data->scene.ea = NULL;
+	data->scene.we = NULL;
 	data->scene.cols = 0;
 	data->scene.rows = 0;
 	t_scene *scene;
@@ -83,6 +87,7 @@ void	init_check(t_data *data)
 	check.player_count = 0;
 	if (check_file_type(data, &check) != 0)
 		ft_error(ERR_INFILE);
+	check_file(data, &check);
 }
 
 void	init_data(t_data *data, char **argv)
@@ -91,6 +96,6 @@ void	init_data(t_data *data, char **argv)
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 		ft_error(ERR_OPEN);
-	init_check(data);
 	init_scene(data);
+	init_check(data);
 }
