@@ -14,9 +14,9 @@
 
 int	pixel_ok(int x, int y)
 {
-	if (x < WIDTH && x > 0 && y < HEIGHT && y > 0)
-		return (1);
-	return (-1);
+	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+        return (1);
+    return (0);
 }
 
 
@@ -128,8 +128,8 @@ void draw_nose(t_data *data, t_player *player, int length, int width, int color)
 		{
 			int offset_x = w * cos(dir + PI / 2);
 			int offset_y = w * sin(dir + PI / 2);
-			int xn = center_x + offset_x;
-			int yn = center_y + offset_y;
+			int xn = (int)round(center_x + offset_x);
+			int yn = (int)round(center_y + offset_y);
 
 			if (pixel_ok(xn, yn))
 				mlx_put_pixel(data->image, xn, yn, color);
@@ -184,15 +184,17 @@ void draw_scene(t_data *data)
 	if (!data->image)
 		ft_free_data_and_error(data, ERR_MLX);
 	draw_map(data, data->image);
-	draw_one_ray(data, data->scene.player.direction, data->scene.player.px, data->scene.player.py);
-	//draw_player_icon(data, data->image);
+	//draw_one_ray(data, data->scene.player.direction, data->scene.player.px, data->scene.player.py);
 	draw_player(data);
+	collisions(data);
+
+	//draw_player_icon(data, data->image);
+	
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1) 
 	{
 		mlx_delete_image(data->m, data->image);
 		ft_free_data_and_error(data, ERR_MLX);
 	}
-
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }
 
