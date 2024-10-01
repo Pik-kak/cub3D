@@ -5,130 +5,172 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 17:28:34 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/29 15:13:03 by tsaari           ###   ########.fr       */
+/*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
+/*   Updated: 2024/10/01 16:09:04 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void draw_one_ray(t_data *data, double ray_angle, double x, double y)
+void	check_direction_horizontal(t_ray *ray, double ray_angle)
 {
-	double rx = x;
-	double ry = y;
-	double xo = 0;
-	double yo = 0;
-	int distance_h = 0;
-	int distance_v = 0;
-	
-	// Horizontal Raycasting
-	int dof = 0;
-	if (ray_angle > PI) 
+	double	a_tan;
+
+	a_tan = -1 / tan(ray_angle);
+	if (ray_angle > PI)
 	{
-		double aTan = -1 / tan(ray_angle);
-		ry = (floor(y / IMG_SIZE) * IMG_SIZE) - 0.0001;
-		rx = (y - ry) * aTan + x;
-		yo = -IMG_SIZE;
-		xo = -yo * aTan;
+		ray->rxry[1] = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE - 0.0001;
+		ray->rxry[0] = (ray->pxpy[1] - ray->rxry[1]) * a_tan + ray->pxpy[0];
+		ray->xoyo[1] = -BLOCK_SIZE;
+		ray->xoyo[0] = -(ray->xoyo[1]) * a_tan;
 	}
 	else if (ray_angle < PI)
 	{
-		double aTan = -1 / tan(ray_angle);
-		ry = (floor(y / IMG_SIZE) * IMG_SIZE) + IMG_SIZE;
-		rx = (y - ry) * aTan + x;
-		yo = IMG_SIZE;
-		xo = -yo * aTan;
+		ray->rxry[1] = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE + BLOCK_SIZE;
+		ray->rxry[0] = (ray->pxpy[1] - ray->rxry[1]) * a_tan + ray->pxpy[0];
+		ray->xoyo[1] = BLOCK_SIZE;
+		ray->xoyo[0] = -(ray->xoyo[1]) * a_tan;
 	}
 	else
 	{
-		rx = x;
-		ry = y;
-		dof = 8;
+		ray->rxry[0] = ray->pxpy[0];
+		ray->rxry[1] = ray->pxpy[1];
 	}
-	while (dof < 8)
-	{
-		int gridX = (int)(rx / IMG_SIZE);
-		int gridY = (int)(ry / IMG_SIZE);
-		if (gridX >= 0 && gridX < data->scene.cols && gridY >= 0 && gridY < data->scene.rows) 
-		{
-			if (data->scene.map[gridY][gridX] == 1)
-			{
-				printf("horizontal hit to wall %d, %d\n", gridY, gridX);
-				distance_h = (int)round(sqrt((rx - x) * (rx - x) + (ry - y) * (ry - y)));
-				break;
-			}
-			else 
-			{
-				rx += xo;
-				ry += yo;
-			}
-		} 
-		else 
-			break;
-		dof++;
-	}
+}
 
-	// Vertical Raycasting
-	int dof_v = 0;
-	
-	rx = x;
-	ry = y;
-	double nTan = -tan(ray_angle);
-	
-	const double epsilon = 0.0001;
+/* ==============================
+ *	calculates negative tangent of an angle because the y increases when moving down
+ *  checks if palyer direction is to west or east  or directly up or down
+ *  if looking up or down just sets ray x to player x etc
+ * if looking east or west calculates rxry to next
+ * ==============================
+ */
 
-	if (fabs(ray_angle - 0.5 * PI) < epsilon || fabs(ray_angle - 1.5 * PI) < epsilon) 
+void	check_direction_vertical(t_ray *ray, double ray_angle)
+{
+	double	n_tan;
+
+	n_tan = -tan(ray_angle);
+	if (fabs(ray_angle - 0.5 * PI) < 0.001 || fabs(ray_angle - 1.5 * PI) < 0.001) //looking up or down
 	{
-		rx = x;
-		ry = y;
-		dof_v = 8;
+		ray->rxry[0] = ray->pxpy[0];
+		ray->rxry[1] = ray->pxpy[1];
+	} 
+	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)  // looking east
+	{
+		ray->rxry[0] = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE + BLOCK_SIZE;  
+		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
+		ray->xoyo[0] = BLOCK_SIZE;
+		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
+	} 
+	else
+	{
+		ray->rxry[0] = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE - 0.0001;
+		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
+		ray->xoyo[0] = -BLOCK_SIZE;
+		ray->xoyo[1] = -(ray->xoyo[0]) * n_tan;
 	}
-	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)
+}
+
+bool check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
+{
+	if (ray->map[grid_y][grid_x] == 1)
 	{
-		rx = (floor(x / IMG_SIZE) * IMG_SIZE) + IMG_SIZE;  
-		ry = (x - rx) * nTan + y;
-		xo = IMG_SIZE;
-		yo = -xo * nTan;
+		if (hor_or_ver == 1)
+			ray->dist_h = (int)round(hypot(ray->rxry[0] - ray->pxpy[0], ray->rxry[1] - ray->pxpy[1]));
+		else
+			ray->dist_v = (int)round(hypot(ray->rxry[0] - ray->pxpy[0], ray->rxry[1] - ray->pxpy[1]));
+		return (true);
 	}
 	else
 	{
-		rx = (floor(x / IMG_SIZE) * IMG_SIZE) - 0.0001;
-		ry = (x - rx) * nTan + y;
-		xo = -IMG_SIZE;
-		yo = -xo * nTan;
+		ray->rxry[0] += ray->xoyo[0];
+		ray->rxry[1] += ray->xoyo[1];
+		return (false);
 	}
+}
 
-	while (dof_v < 8)
+/* 
+	calls check_dir function and then divides found block side and checks if next block is wall
+	by calling check_if_wall_found function, which sets total length of ray to struct 
+ */
+
+void horizontal_cast(t_ray *ray, double ray_angle)
+{
+	int size;
+	int grid_x;
+	int grid_y;
+
+	size = ray->cols + ray->rows;
+	check_direction_horizontal(ray, ray_angle);
+	while (size > 0)
 	{
-		int gridX = (int)(rx / IMG_SIZE);
-		int gridY = (int)(ry / IMG_SIZE);
-		if (gridX >= 0 && gridX < data->scene.cols && gridY >= 0 && gridY < data->scene.rows) 
+		grid_x = (int)(ray->rxry[0] / BLOCK_SIZE);
+		grid_y = (int)(ray->rxry[1] / BLOCK_SIZE);
+		if (grid_x >= 0 && grid_x < ray->cols && grid_y >= 0 && grid_y < ray->rows)
 		{
-			if (data->scene.map[gridY][gridX] == 1)
-			{
-				printf("vertical hit to wall %d, %d\n", gridY, gridX);
-				distance_v = (int)round(sqrt((rx - x) * (rx - x) + (ry - y) * (ry - y)));
+			if (check_if_wall_found(ray, grid_y, grid_x, 1))
 				break;
-			}
-			else 
-			{
-				rx += xo;
-				ry += yo;
-			}
-		} 
-		else 
+		}
+		else
 			break;
-		dof_v++;
+		size--;
 	}
+}
 
-	if (distance_h > 0.0 && (distance_v == 0.0 || distance_h < distance_v))
+/* 
+	calls check dir function and then divides found block side and checks if next block is wall
+	by calling check_if_wall_found function, which sets total length of ray to struct 
+ */
+
+void vertical_cast(t_ray *ray, double ray_angle)
+{
+	int size;
+	int grid_x;
+	int grid_y;
+
+	size = ray->cols + ray->rows;
+	check_direction_vertical(ray, ray_angle);
+	while (size > 0)
 	{
-		printf("%f\n", ray_angle);
-		draw_line(data, x, y, ray_angle, distance_h);
+		grid_x = (int)(ray->rxry[0] / BLOCK_SIZE);
+		grid_y = (int)(ray->rxry[1] / BLOCK_SIZE);
+		if (grid_x >= 0 && grid_x < ray->cols && grid_y >= 0 && grid_y < ray->rows)
+		{
+			if (check_if_wall_found(ray, grid_y, grid_x, 0))
+				break;
+		}
+		else
+			break;
+		size--;
 	}
-	else if (distance_v > 0.0 && (distance_h == 0.0 || distance_v <= distance_h))
+}
+
+/* 
+
+	casts One ray to given angle
+		first it casts ray to find wall in horizontal block sides, then vertical and 
+		draws ray to which ray is shorter and nearer player.
+*/
+
+
+int	cast_one_ray(t_data *data, double ray_angle, double x, double y)
+{
+	t_ray	ray;
+	int		ret_dist;
+
+	init_ray(data, &ray, ray_angle);
+	horizontal_cast(&ray, ray_angle);
+	vertical_cast(&ray, ray_angle);
+	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
-		printf("%f\n", ray_angle);
-		draw_line(data, x, y, ray_angle, distance_v);
+		ret_dist = ray.dist_h;
+		//draw_line(data, &ray, 0, ray_angle);
 	}
+	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
+	{
+		ret_dist = ray.dist_v;
+		//draw_line(data, &ray, 1, ray_angle);
+	}
+	return (ret_dist);
 }

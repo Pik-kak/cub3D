@@ -45,9 +45,21 @@
 
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
-#define PLAYER_SPEED 1.2
-#define IMG_SIZE 64
+#define PLAYER_SPEED 0.4
+#define BLOCK_SIZE 64
 #define GRID_GAP 1
+
+typedef struct s_ray
+{
+	int		**map;
+	double	pxpy[2];
+	double	rxry[2];
+	double	xoyo[2];
+	int		dist_v;
+	int		dist_h;
+	int		cols;
+	int		rows;
+}	t_ray;
 
 typedef struct s_check
 {
@@ -55,17 +67,19 @@ typedef struct s_check
 	int	player_count;
 }				t_check;
 
+
 typedef struct s_player
 {
-	mlx_image_t *player_icon;
 	double		direction;
 	double		px;
 	double		py;
 	double		dposx;
 	double		dposy;
+	bool		col_front;
+	bool		col_back;
+	bool		col_right;
+	bool		col_left;
 }	t_player;
-
-
 
 typedef struct s_scene
 {
@@ -80,7 +94,6 @@ typedef struct s_scene
 	int			cols;
 	int			rows;
 }	t_scene;
-
 
 typedef struct s_data
 {
@@ -100,7 +113,7 @@ char	*skip_spaces(char *line);
 
 //Map drawing
 void	draw_scene(t_data *data);
-void	draw_line(t_data *data, int px, int py, double theta, int length);
+void	draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle);
 //void	set_offset(t_data *data);
 int		pixel_ok(int x, int y);
 //int32_t	get_col(t_point *start, t_point *end, t_data *data);
@@ -109,10 +122,15 @@ int		pixel_ok(int x, int y);
 //initialize
 void	init_data(t_data *data, char **argv);
 void	init_z_factor(t_data *data);
+void	init_ray(t_data *data, t_ray *ray, double ray_angle);
+
 
 //raycasting
-void draw_one_ray(t_data *data, double ray_angle, double x, double y);
+void	raycaster(t_data *data);
+int		cast_one_ray(t_data *data, double ray_angle, double x, double y);
 
+//player handling
+void	collisions(t_data *data);
 
 //rotate and center
 //t_point	correct_point_offset(t_point *point, t_data *data);

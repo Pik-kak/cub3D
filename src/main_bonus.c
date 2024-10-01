@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/09/30 15:13:26 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:44:46 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ int	main(int argc, char **argv)
 		data->m = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
-	
 		mlx_loop_hook(data->m, my_keyhook, data);
-		
 		mlx_loop(data->m);
-	
 		mlx_terminate(data->m);
 	}
 	ft_free_data_and_exit(data);

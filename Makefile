@@ -6,7 +6,7 @@
 #    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/01 16:39:54 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/10/01 11:02:55 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ endif
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -lm #-g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
@@ -46,6 +46,7 @@ SRCS	=	main_bonus.c \
 			init_bonus.c \
 			raycaster.c \
 			draw_line.c \
+			collissions.c
 			parse_scene.c \
 			parse_textr_col.c \
 			parse_utils.c
