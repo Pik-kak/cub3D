@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
+#    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/01 11:02:55 by tsaari           ###   ########.fr        #
+#    Updated: 2024/10/02 11:28:09 by pikkak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SRCS	=	main_bonus.c \
 			init_bonus.c \
 			raycaster.c \
 			draw_line.c \
-			collissions.c
+			collissions.c \
 			parse_scene.c \
 			parse_textr_col.c \
 			parse_utils.c

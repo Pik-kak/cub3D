@@ -3,15 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 16:43:32 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/02 17:00:20 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
+/*
+Initializes the window to fit the screen if the default size is too big
+*/
+void	init_window(t_data *data)
+{
+	mlx_get_monitor_size(0, &data->s_width, &data->s_height);//Gets the monitor size
+	if (data->s_width > WIDTH)
+		data->s_width = WIDTH;
+	if (data->s_height > HEIGHT)
+		data->s_height = HEIGHT;
+	mlx_terminate(data->m);
+	data->m = mlx_init(data->s_width, data-> s_height, "Cub3D", false);
+	if (!data->m)
+		ft_free_data_and_error(data, ERR_MLX);
+}
 
 void init_player(t_player *player)
 {
