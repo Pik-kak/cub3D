@@ -157,6 +157,8 @@ int		ft_atoi_hex(char *str);
 
 //hooks
 void	my_keyhook(void *param);
+void	my_mouse_hook(t_data *data);
+void	turn_player(t_player *player, double angle);
 
 //free and error
 void	ft_free_data_and_array_error(t_data *data, char **array, char *error);
