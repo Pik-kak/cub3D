@@ -6,7 +6,7 @@
 #    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/02 11:28:09 by pikkak           ###   ########.fr        #
+#    Updated: 2024/10/02 19:08:18 by pikkak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ SRCS	=	main_bonus.c \
 			collissions.c \
 			parse_scene.c \
 			parse_textr_col.c \
-			parse_utils.c
+			parse_utils.c \
+			mouse_hook.c
 
 
 BSRCS	=	fdf_bonus.c \
