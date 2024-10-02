@@ -36,6 +36,7 @@
 # define COL_LINE2		0x8B0000C8
 # define COL_BLUE		0x1B03A3FF
 # define COL_PINK		0xFFC0CBFF
+# define COL_RAY		0xADD8E6FF
 
 # define ERR_INFILE "Wrong file type"
 # define ERR_ARG "Invalid amount of arguments"
@@ -45,6 +46,7 @@
 
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
+#define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 0.4
 #define BLOCK_SIZE 64
 #define GRID_GAP 1
@@ -99,6 +101,8 @@ typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
+	int			s_width;
+	int			s_height;
 	char		*file;
 	int			fd;
 	t_scene		scene;
@@ -121,13 +125,16 @@ int		pixel_ok(int x, int y);
 
 //initialize
 void	init_data(t_data *data, char **argv);
+void	init_window(t_data *data);
 void	init_z_factor(t_data *data);
 void	init_ray(t_data *data, t_ray *ray, double ray_angle);
 
 
 //raycasting
+double	normalize_angle(double angle);
 void	raycaster(t_data *data);
-int		cast_one_ray(t_data *data, double ray_angle, double x, double y);
+int		cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag);
+int		cast_rays(t_data *data);
 
 //player handling
 void	collisions(t_data *data);
