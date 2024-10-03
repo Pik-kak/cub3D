@@ -53,6 +53,7 @@
 #define PI 3.14159265
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 0.4
+#define SENSITIVITY 0.002
 #define BLOCK_SIZE 64
 #define GRID_GAP 1
 #define FOV PI / 3;
@@ -75,6 +76,7 @@ typedef struct s_check
 	int	player_count;
 	int longest_line;
 	int	first_map_line;
+	int map_lines;
 }				t_check;
 
 

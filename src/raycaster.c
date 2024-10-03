@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/02 17:39:06 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/03 11:24:30 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ int	cast_rays(t_data *data)
 {
 	int		nbr_of_rays;
 	double	ray_angle;
+	int		ray_length;
 	int	i;
 
 	nbr_of_rays = 60;
@@ -186,7 +187,8 @@ int	cast_rays(t_data *data)
 	while(i <= nbr_of_rays) 
 	{
 		ray_angle = normalize_angle(data->scene.player.direction + (i * DEGREE));
-		cast_one_ray(data, ray_angle, data->scene.player.px, data->scene.player.py, 1);
+		ray_length = cast_one_ray(data, ray_angle, data->scene.player.px, data->scene.player.py, 1);
 		i++;
 	}
+	return (ray_length);
 }

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/03 11:06:56 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:52:30 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,31 @@
 - Check that the map is surrounded by walls on all sides and if there are spaces around them as well
 */
 
+
+void allocate_map(t_data *data, t_check *check)
+{
+	int row;
+
+	row = 0;
+	data->scene.map = malloc(data->scene.rows * sizeof(int*));
+	if (!data->scene.map)
+	{
+		ft_free_data_and_error(data, "malloc error");
+	}
+	while (row < data->scene.rows)
+	{
+		data->scene.map[row] = malloc(data->scene.cols * sizeof(int));
+		if (!data->scene.map[row])
+		{
+			ft_free_data_and_error(data, "malloc error");
+		}
+		row++;
+	}
+}
+
+
 /*
-Help function that calls different checks
+Opens ffile several times and runs parsing aand check functions
 */
 void	check_and_parse_file(t_data *data, t_check *check)
 {
@@ -36,6 +59,14 @@ void	check_and_parse_file(t_data *data, t_check *check)
 	if (data->fd < 0)
 		ft_error(ERR_OPEN);
 	read_file_for_longest_map_line(data, check);
+	close(data->fd);
+	data->scene.rows = check->map_lines + 2;
+	data->scene.cols = check->longest_line + 2;
+	allocate_map(data, check);
+	data->fd = open(data->file, O_RDONLY);
+	if (data->fd < 0)
+		ft_error(ERR_OPEN);
+	fill_map(data, check);
 	close(data->fd);
 }
 

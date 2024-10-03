@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 10:17:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/03 12:50:57 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,7 @@ void init_scene(t_data *data)
 	data->scene.floor_rgb[0] = 0;
 	data->scene.floor_rgb[1] = 0;
 	data->scene.floor_rgb[2] = 255;
-
-	data->scene.map = malloc(data->scene.rows * sizeof(int*));
+	/*	data->scene.map = malloc(data->scene.rows * sizeof(int*));
 	if (!data->scene.map)
 	{
 		ft_free_data_and_exit(data);
@@ -96,7 +95,8 @@ void init_scene(t_data *data)
 			j++;
 		}
 		i++;
-	}
+	}*/
+
 
 	
 }
@@ -107,6 +107,7 @@ void	init_check(t_check *check)
 	check->player_count = 0;
 	check->longest_line = 0;
 	check->first_map_line = 0;
+	check->map_lines = 0;
 }
 
 void	init_data(t_data *data, char **argv)
