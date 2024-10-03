@@ -45,9 +45,10 @@ SRCS	=	main_bonus.c \
 			parse_scene.c \
 			parse_textr_col.c \
 			parse_utils.c \
-			parse_map.c \
-			mouse_hook.c
-      
+			draw_walls.c \
+			parse_map.c
+
+
 BSRCS	=	fdf_bonus.c \
 			parse_map_bonus.c \
 			draw_map_bonus.c \

@@ -70,7 +70,7 @@ int	main(int argc, char **argv)
 	{
 		init_data(data, argv);
 		parse(data);
-		data->m = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
+		data->m = mlx_init(data->width, data->height, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 		init_window(data);

@@ -30,9 +30,9 @@ uint32_t	get_colour(int rgb[3])
  * ==============================
  */
 
-int	pixel_ok(int x, int y)
+int	pixel_ok(t_data *data, int x, int y)
 {
-	if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+	if (x >= 0 && x < data->width && y >= 0 && y < data->height)
 		return (1);
 	return (0);
 }
@@ -43,7 +43,7 @@ int	pixel_ok(int x, int y)
  * ==============================
  */
 
-void fill_square(mlx_image_t *img, int x, int y, int colour)
+void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color)
 {
 	int start_x = x * (BLOCK_SIZE);
 	int start_y = y * (BLOCK_SIZE);
@@ -55,8 +55,10 @@ void fill_square(mlx_image_t *img, int x, int y, int colour)
 		j = 0;
 		while (j < BLOCK_SIZE -1)
 		{
-			if (pixel_ok(start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + i, colour);
+			if (pixel_ok(data, start_x + j, start_y + i))
+				mlx_put_pixel(img, start_x + j, start_y + i, color);
+			if (pixel_ok(data, start_x + j, start_y + i))
+				mlx_put_pixel(img, start_x + j, start_y + i, color);
 			j++;
 		}
 		i++;
@@ -68,17 +70,18 @@ void fill_square(mlx_image_t *img, int x, int y, int colour)
  * ==============================
  */
 
-void draw_tile(t_scene *scene, mlx_image_t *img, int x, int y)
+void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y)
 {
 	if (scene->map[y][x] == 1)
 	{
-		fill_square(img, x, y, COL_BLUE);
+		fill_square(data, img, x, y, COL_BLUE);
 	} //get_colour(scene->ceiling_rgb)
 	else
 	{
-		fill_square(img, x, y, get_colour(scene->floor_rgb));
+		fill_square(data, img, x, y, get_colour(scene->floor_rgb));
 	}
 }
+
 
 /* ==============================
  * Draws map tile by tile
@@ -96,7 +99,7 @@ void draw_map(t_data *data, mlx_image_t *image)
 		x = 0;
 		while (x < data->scene.cols)
 		{
-			draw_tile(&data->scene, image, x, y);
+			draw_tile(data, &data->scene, image, x, y);
 			x++;
 		}
 		y++;
@@ -127,7 +130,7 @@ void draw_circle(t_data *data, int radius, int color)
 			{
 				int px = cx + x;
 				int py = cy + y;
-				if (pixel_ok(px, py))
+				if (pixel_ok(data, px, py))
 					mlx_put_pixel(data->image, px, py, color);
 			}
 			x++;
@@ -157,9 +160,9 @@ void draw_nose(t_data *data, int length, int color)
 	{
 		c_x = data->scene.player.px + i * cos(dir);
 		c_y = data->scene.player.py + i * sin(dir);
-		if (pixel_ok(c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
+		if (pixel_ok(data, c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
 			mlx_put_pixel(data->image, c_x + 1 * sin(dir), c_y - 1 * cos(dir), color);
-		if (pixel_ok(c_x - 1 * sin(dir), c_y + 1 * cos(dir)))
+		if (pixel_ok(data, c_x - 1 * sin(dir), c_y + 1 * cos(dir)))
 			mlx_put_pixel(data->image, c_x - 1 * sin(dir), c_y + 1 * cos(dir), color);
 		i++;
 	}
@@ -175,15 +178,13 @@ void draw_scene(t_data *data)
 {
 	mlx_delete_image(data->m, data->image);
 	data->image = NULL;
-	data->image = mlx_new_image(data->m, WIDTH, HEIGHT);
+	data->image = mlx_new_image(data->m, data->width, data->height);
 	if (!data->image)
 		ft_free_data_and_error(data, ERR_MLX);
 	draw_map(data, data->image);
 	draw_player(data);
 	collisions(data);
-
-	cast_rays(data);
-
+	cast_rays(data, data->image);
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1) 
 	{
 		mlx_delete_image(data->m, data->image);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 12:50:57 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:28:09 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,21 @@ Initializes the window to fit the screen if the default size is too big
 */
 void	init_window(t_data *data)
 {
-	mlx_get_monitor_size(0, &data->s_width, &data->s_height);//Gets the monitor size
-	if (data->s_width > WIDTH)
-		data->s_width = WIDTH;
-	if (data->s_height > HEIGHT)
-		data->s_height = HEIGHT;
-	mlx_terminate(data->m);
-	data->m = mlx_init(data->s_width, data-> s_height, "Cub3D", false);
-	if (!data->m)
-		ft_free_data_and_error(data, ERR_MLX);
+	int	s_width;//these are the new measurements
+	int	s_height;
+	
+	mlx_get_monitor_size(0, &s_width, &s_height);//Gets the monitor size
+	if (s_width != data->width || s_height != data->height)//if there is a difference
+	{
+		if (s_width < data->width)//if screen is smaller than the original window size
+			data->width = s_width;
+		if (s_height < data->height)//if screen is smaller than the original window size
+			data->height = s_height;
+		mlx_terminate(data->m);
+		data->m = mlx_init(data->width, data-> height, "Cub3D", false);
+		if (!data->m)
+			ft_free_data_and_error(data, ERR_MLX);
+	}
 }
 
 void init_player(t_player *player)
@@ -113,6 +119,8 @@ void	init_check(t_check *check)
 void	init_data(t_data *data, char **argv)
 {
 	data->file = argv[1];
+	data->height = 1080;
+	data->width = 1920;
 	init_scene(data);
 	init_player(&data->scene.player);
 }

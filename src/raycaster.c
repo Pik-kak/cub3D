@@ -163,17 +163,18 @@ int	cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag)
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
-		if (flag)
-			draw_line(data, &ray, 0, ray_angle);
+		//if (flag)
+		//	draw_line(data, &ray, 0, ray_angle);
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-		if (flag)
-			draw_line(data, &ray, 1, ray_angle);
+	//	if (flag)
+	//		draw_line(data, &ray, 1, ray_angle);
 	}
 	return (ret_dist);
 }
+
 
 int	cast_rays(t_data *data)
 {
@@ -192,3 +193,5 @@ int	cast_rays(t_data *data)
 	}
 	return (ray_length);
 }
+
+
