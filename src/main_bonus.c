@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/02 17:01:23 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/03 12:41:01 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 	{
 		init_data(data, argv);
 		parse(data);
-		data->m = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
+		data->m = mlx_init(data->width, data->height, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 		init_window(data);

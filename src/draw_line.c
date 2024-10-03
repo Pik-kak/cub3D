@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 09:18:59 by tsaari            #+#    #+#             */
+/*   Updated: 2024/10/03 14:17:35 by kkauhane         ###   ########.fr       */
 /*   Updated: 2024/10/02 11:12:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -27,7 +28,7 @@ void draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle)
 	{
 		int xn = ray->pxpy[0] + i * cos(angle);
 		int yn = ray->pxpy[1] + i * sin(angle);
-		if (pixel_ok(xn, yn) == 1)
+		if (pixel_ok(data, xn, yn) == 1)
 		{
 			mlx_put_pixel(data->image, xn, yn, COL_WHITE);
 		}
