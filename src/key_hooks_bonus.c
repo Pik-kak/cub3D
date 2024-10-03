@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hooks_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 16:47:20 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/02 19:14:21 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ void	my_keyhook(void *param)
 		turn_player(&data->scene.player, -0.1);
 	if (mlx_is_key_down(data->m, MLX_KEY_RIGHT))
 		turn_player(&data->scene.player, 0.1);
-
+	if (mlx_is_key_down(data->m, MLX_KEY_ESCAPE))
+		ft_free_data_and_exit(data);
+	my_mouse_hook(param);
 	draw_scene(data);
 }

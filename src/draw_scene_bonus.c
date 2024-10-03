@@ -170,7 +170,7 @@ void draw_player(t_data *data)
 	draw_circle(data, 7, COL_WHITE);
 	draw_nose(data, 16, COL_WHITE);
 }
-
+//if we scale the window we need to be able to scale all images. PROBLEM!
 void draw_scene(t_data *data) 
 {
 	mlx_delete_image(data->m, data->image);
@@ -181,6 +181,9 @@ void draw_scene(t_data *data)
 	draw_map(data, data->image);
 	draw_player(data);
 	collisions(data);
+
+	cast_rays(data);
+
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1) 
 	{
 		mlx_delete_image(data->m, data->image);
