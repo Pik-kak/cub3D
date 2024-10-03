@@ -57,8 +57,8 @@ void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
 				mlx_put_pixel(img, start_x + j, start_y + i, color);
-			if (pixel_ok(start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + i, colour);
+			if (pixel_ok(data, start_x + j, start_y + i))
+				mlx_put_pixel(img, start_x + j, start_y + i, color);
 			j++;
 		}
 		i++;
