@@ -23,9 +23,6 @@
 #define SUCCESS 0
 #define ERROR 1
 
-# define WIDTH 1920
-# define HEIGHT 1080
-
 # define COL_DISCO		0x9A1F6AFF
 # define COL_BRICK_RED	0xC2294EFF
 # define COL_FLAMINGO	0xEC4B27FF
@@ -47,6 +44,7 @@
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
+#define FOV (60 * (PI / 180))  // 60 degrees in radians
 #define PLAYER_SPEED 0.4
 #define BLOCK_SIZE 64
 #define GRID_GAP 1
@@ -101,13 +99,12 @@ typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
-	int			s_width;
-	int			s_height;
+	int			width;
+	int			height;
 	char		*file;
 	int			fd;
 	t_scene		scene;
 }	t_data;
-
 
 //Map parsing
 int		check_file_type(t_data *data, t_check *check);
@@ -119,7 +116,7 @@ char	*skip_spaces(char *line);
 void	draw_scene(t_data *data);
 void	draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle);
 //void	set_offset(t_data *data);
-int		pixel_ok(int x, int y);
+int		pixel_ok(t_data *data, int x, int y);
 //int32_t	get_col(t_point *start, t_point *end, t_data *data);
 //void	bresenham_line(mlx_image_t *image, t_point s, t_point e, int32_t col);
 
@@ -134,7 +131,7 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle);
 double	normalize_angle(double angle);
 void	raycaster(t_data *data);
 int		cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag);
-int		cast_rays(t_data *data);
+int		cast_rays(t_data *data, mlx_image_t *image);
 
 //player handling
 void	collisions(t_data *data);
