@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 16:43:32 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/03 10:17:44 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,27 @@ void init_scene(t_data *data)
 	data->scene.so = NULL;
 	data->scene.ea = NULL;
 	data->scene.we = NULL;
-	data->scene.cols = 0;
-	data->scene.rows = 0;
-	t_scene *scene;
-	scene = &data->scene;
-	
-	init_player(&scene->player);
-	scene->cols = 8;
-	scene->rows = 8;
-	scene->map = malloc(scene->rows * sizeof(int*));
-	if (!scene->map)
+	data->scene.cols = 8;
+	data->scene.rows = 8;
+	data->scene.ceiling = COL_BLUE;
+	data->scene.floor = COL_GREEN;
+	data->scene.ceiling_rgb[0] = 255;
+	data->scene.ceiling_rgb[1] = 0;
+	data->scene.ceiling_rgb[2] = 0;
+	data->scene.floor_rgb[0] = 0;
+	data->scene.floor_rgb[1] = 0;
+	data->scene.floor_rgb[2] = 255;
+
+	data->scene.map = malloc(data->scene.rows * sizeof(int*));
+	if (!data->scene.map)
 	{
 		ft_free_data_and_exit(data);
 	}
 	row = 0;
 	while (row < 8)
 	{
-		scene->map[row] = malloc(scene->cols * sizeof(int));
-		if (!scene->map[row])
+		data->scene.map[row] = malloc(data->scene.cols * sizeof(int));
+		if (!data->scene.map[row])
 		{
 			ft_free_data_and_exit(data);
 		}
@@ -74,31 +77,28 @@ void init_scene(t_data *data)
 		int j = 0;
 		while (j < 8)
 		{
-			scene->map[i][j] = temp_map[i][j];
+			data->scene.map[i][j] = temp_map[i][j];
 			j++;
 		}
 		i++;
 	}
+
+	
 }
 
-void	init_check(t_data *data)
-{
-	t_check	check;
-	
-	check.fd = -1;
-	check.player_count = 0;
-	if (check_file_type(data, &check) != 0)
-		ft_error(ERR_INFILE);
-	check_file(data, &check);
+void	init_check(t_check *check)
+{	
+	check->fd = -1;
+	check->player_count = 0;
+	check->longest_line = 0;
+	check->first_map_line = 0;
 }
 
 void	init_data(t_data *data, char **argv)
 {
 	data->file = argv[1];
-	data->fd = open(data->file, O_RDONLY);
-	if (data->fd < 0)
-		ft_error(ERR_OPEN);
 	init_scene(data);
+	init_player(&data->scene.player);
 }
 
 void	init_ray(t_data *data, t_ray *ray, double ray_angle)

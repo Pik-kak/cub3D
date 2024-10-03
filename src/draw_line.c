@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 09:18:59 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/01 10:28:06 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/02 11:12:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle)
 		int yn = ray->pxpy[1] + i * sin(angle);
 		if (pixel_ok(xn, yn) == 1)
 		{
-			mlx_put_pixel(data->image, xn, yn, COL_LINE);
+			mlx_put_pixel(data->image, xn, yn, COL_WHITE);
 		}
 		i++;
 	}

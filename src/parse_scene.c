@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/01 16:38:48 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:06:56 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,18 @@
 /*
 Help function that calls different checks
 */
-void	check_file(t_data *data, t_check *check)
+void	check_and_parse_file(t_data *data, t_check *check)
 {
-	read_file(data, check);
-	//check paths
-	//check
+	data->fd = open(data->file, O_RDONLY);
+	if (data->fd < 0)
+		ft_error(ERR_OPEN);
+	parse_file_for_walls_and_colours(data, check);
+	close(data->fd);
+	data->fd = open(data->file, O_RDONLY);
+	if (data->fd < 0)
+		ft_error(ERR_OPEN);
+	read_file_for_longest_map_line(data, check);
+	close(data->fd);
 }
 
 /*
@@ -51,26 +58,45 @@ int	check_file_type(t_data *data, t_check *check)
 	return (file_name[i] - file_type[i]);
 }
 
-/*
-void	check_map(t_scene *scene)
+
+void set_player_position(t_player *player, char dir, int i, int ii)
+{
+	player->px = ii * BLOCK_SIZE;
+	player->py = i * BLOCK_SIZE;
+	if (dir == 'N')
+		player->direction = 3 / 2 * PI;
+	if (dir == 'E')
+		player->direction = 0;
+	if (dir == 'S')
+		player->direction = PI / 2;
+	if (dir == 'W')
+		player->direction = PI;
+}
+
+void	check_map(t_data *data)
 {
 	int	i;
 	int	ii;
+	int player_found;
 
-	i = 0;
-	ii = 0;
-	while (scene->map[i] != NULL)
+	player_found = 0;
+	i = -1;
+	while (data->scene.map[i++] != NULL)
 	{
-		while (scene->map[i][ii] != '\0')
+		ii = 0;
+		while (data->scene.map[i][ii] != '\0')
 		{
-			if (scene->map[i][ii] == 'N' || scene->map[i][ii] == 'S' 
-                 ||scene->map[i][ii] == 'E' || scene->map[i][ii] == 'W')
-				scene->player_count++;
-			else if (scene->map[i][ii] != '0' && scene->map[i][ii] != '1' && scene->map[i][ii] != ' ')
-				error_scene("map not valid", scene);
+			if (data->scene.map[i][ii] == 'N' || data->scene.map[i][ii] == 'S' 
+                 || data->scene.map[i][ii] == 'E' || data->scene.map[i][ii] == 'W')
+			{
+				set_player_position(&data->scene.player, data->scene.map[i][ii], i, ii);
+				player_found++;
+			}
+			else if (data->scene.map[i][ii] != '0' && data->scene.map[i][ii] != '1' && data->scene.map[i][ii] != ' ')
+				ft_free_data_and_error(data, "map not valid");
 			ii++;
 		}
-		i++;
-		ii = 0;
 	}
-}*/
+	if (player_found != 1)
+		ft_free_data_and_error(data, "map not valid");
+}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/01 11:02:55 by tsaari           ###   ########.fr        #
+#    Updated: 2024/10/02 16:14:20 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ endif
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -lm #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -lm -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
@@ -36,21 +36,16 @@ BONUS_DIR = bonus/
 
 SRCS	=	main_bonus.c \
 			draw_scene_bonus.c \
-			utils1_bonus.c \
 			free_and_exit_bonus.c \
-			rotate_and_center_bonus.c \
-			draw_utils_bonus.c \
 			key_hooks_bonus.c \
-			hook_utils_bonus.c \
-			utils2_bonus.c \
 			init_bonus.c \
 			raycaster.c \
 			draw_line.c \
-			collissions.c
+			collissions.c \
 			parse_scene.c \
 			parse_textr_col.c \
-			parse_utils.c
-
+			parse_utils.c \
+			parse_map.c
 
 BSRCS	=	fdf_bonus.c \
 			parse_map_bonus.c \
