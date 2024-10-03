@@ -26,7 +26,7 @@ endif
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -lm #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -lm -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
@@ -36,13 +36,8 @@ BONUS_DIR = bonus/
 
 SRCS	=	main_bonus.c \
 			draw_scene_bonus.c \
-			utils1_bonus.c \
 			free_and_exit_bonus.c \
-			rotate_and_center_bonus.c \
-			draw_utils_bonus.c \
 			key_hooks_bonus.c \
-			hook_utils_bonus.c \
-			utils2_bonus.c \
 			init_bonus.c \
 			raycaster.c \
 			draw_line.c \
@@ -51,8 +46,8 @@ SRCS	=	main_bonus.c \
 			parse_textr_col.c \
 			parse_utils.c \
 			mouse_hook.c \
-			draw_walls.c
-
+			draw_walls.c \
+			parse_map.c
 
 BSRCS	=	fdf_bonus.c \
 			parse_map_bonus.c \

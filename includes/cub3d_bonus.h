@@ -23,6 +23,11 @@
 #define SUCCESS 0
 #define ERROR 1
 
+# define COL_RED		0xFF0000FF
+# define COL_GREEN		0x00FF00FF
+# define COL_BLUE		0x0000FFFF
+# define COL_WHITE		0xFFFFFFFF
+# define COL_BLACK		0x000000FF
 # define COL_DISCO		0x9A1F6AFF
 # define COL_BRICK_RED	0xC2294EFF
 # define COL_FLAMINGO	0xEC4B27FF
@@ -31,13 +36,13 @@
 # define COL_BG 		0x050203FF
 # define COL_LINE		0xF8F7edFF
 # define COL_LINE2		0x8B0000C8
-# define COL_BLUE		0x1B03A3FF
 # define COL_PINK		0xFFC0CBFF
 # define COL_RAY		0xADD8E6FF
 
+
 # define ERR_INFILE "Wrong file type"
 # define ERR_ARG "Invalid amount of arguments"
-# define ERR_OPEN "File cannot be opened"
+# define ERR_OPEN "File caannot be opened"
 # define ERR_MALLOC "Malloc error"
 # define ERR_MLX "MLX error"
 
@@ -48,6 +53,7 @@
 #define PLAYER_SPEED 0.4
 #define BLOCK_SIZE 64
 #define GRID_GAP 1
+#define FOV PI / 3;
 
 typedef struct s_ray
 {
@@ -65,6 +71,8 @@ typedef struct s_check
 {
 	int	fd;
 	int	player_count;
+	int longest_line;
+	int	first_map_line;
 }				t_check;
 
 
@@ -89,8 +97,10 @@ typedef struct s_scene
 	char		*so;
 	char		*ea;
 	char		*we;
-	int			floor[3];
-	int			ceiling[3];
+	int			floor;
+	int			ceiling;
+	int			ceiling_rgb[3];
+	int			floor_rgb[3];
 	int			cols;
 	int			rows;
 }	t_scene;
@@ -108,9 +118,13 @@ typedef struct s_data
 
 //Map parsing
 int		check_file_type(t_data *data, t_check *check);
-void	check_file(t_data *data, t_check *check);
-void	read_file(t_data *data, t_check *check);
+void	check_and_parse_file(t_data *data, t_check *check);
+void 	parse_file_for_walls_and_colours(t_data *data, t_check *check);
+
+void	read_file_for_map(t_data *data, t_check *check);
 char	*skip_spaces(char *line);
+unsigned int	rgb_to_hex(int r, int g, int b, int alpha);
+void read_file_for_longest_map_line(t_data *data, t_check *check);
 
 //Map drawing
 void	draw_scene(t_data *data);
@@ -125,6 +139,7 @@ void	init_data(t_data *data, char **argv);
 void	init_window(t_data *data);
 void	init_z_factor(t_data *data);
 void	init_ray(t_data *data, t_ray *ray, double ray_angle);
+void	init_check(t_check *check);
 
 
 //raycasting
