@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 12:41:01 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/03 15:01:30 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,29 @@ void print_parsing(t_data *data, t_check *check)
 	printf("%s\n", data->scene.we);
 	printf("%X\n", data->scene.floor);
 	printf("%X\n", data->scene.ceiling);
+	printf("rows %d\n", data->scene.rows);
+	printf("cols %d\n", data->scene.cols);
 	printf("%d, %d, %d\n", data->scene.ceiling_rgb[0], data->scene.ceiling_rgb[1], data->scene.ceiling_rgb[2]);
 	printf("%d, %d, %d\n", data->scene.floor_rgb[0], data->scene.floor_rgb[1], data->scene.floor_rgb[2]);
 	printf("%d\n", data->scene.rows);
 	printf("%d\n", data->scene.cols);
 	printf("first map line : %d\n", check->first_map_line);
 	printf("longest map line : %d\n", check->longest_line);
+	printf("map lines: %d", check->map_lines);
+	printf("\n");
+	int rows = 0;
+	int cols = 0;
+	while( rows < data->scene.rows)
+	{
+		while (cols < data->scene.cols)
+		{
+			printf("%d", data->scene.map[rows][cols]);
+			cols++;
+		}
+		printf("\n");
+		rows++;	
+		cols = 0;
+	}
 }
 
 void parse(t_data *data)
@@ -57,8 +74,7 @@ int	main(int argc, char **argv)
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 		init_window(data);
-		mlx_loop_hook(data->m, my_keyhook, data);
-		
+		//mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_loop(data->m);
 		mlx_terminate(data->m);
 	}
