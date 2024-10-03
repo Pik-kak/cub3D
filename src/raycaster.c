@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/02 17:39:06 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/03 14:23:36 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,30 +163,14 @@ int	cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag)
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
-		if (flag)
-			draw_line(data, &ray, 0, ray_angle);
+		//if (flag)
+		//	draw_line(data, &ray, 0, ray_angle);
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-		if (flag)
-			draw_line(data, &ray, 1, ray_angle);
+	//	if (flag)
+	//		draw_line(data, &ray, 1, ray_angle);
 	}
 	return (ret_dist);
-}
-
-int	cast_rays(t_data *data)
-{
-	int		nbr_of_rays;
-	double	ray_angle;
-	int	i;
-
-	nbr_of_rays = 60;
-	i = -nbr_of_rays;
-	while(i <= nbr_of_rays) 
-	{
-		ray_angle = normalize_angle(data->scene.player.direction + (i * DEGREE));
-		cast_one_ray(data, ray_angle, data->scene.player.px, data->scene.player.py, 1);
-		i++;
-	}
 }

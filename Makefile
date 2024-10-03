@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
+#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/02 19:08:18 by pikkak           ###   ########.fr        #
+#    Updated: 2024/10/03 11:15:17 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ SRCS	=	main_bonus.c \
 			parse_scene.c \
 			parse_textr_col.c \
 			parse_utils.c \
-			mouse_hook.c
+			mouse_hook.c \
+			draw_walls.c
 
 
 BSRCS	=	fdf_bonus.c \
