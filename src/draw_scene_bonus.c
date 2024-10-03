@@ -12,6 +12,18 @@
 
 #include "../includes/cub3d_bonus.h"
 
+
+uint32_t	get_colour(int rgb[3])
+{
+	uint32_t	colour;
+	uint32_t	a;
+
+	a = 255;
+	colour = (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | a);
+	return (colour);
+}
+
+
 /* ==============================
  * If pixel is out of screen does not draw it 
  * prevents segfault
@@ -30,7 +42,8 @@ int	pixel_ok(int x, int y)
  * leaves last pixels empty to make grid
  * ==============================
  */
-void fill_square(mlx_image_t *img, int x, int y, int color)
+
+void fill_square(mlx_image_t *img, int x, int y, int colour)
 {
 	int start_x = x * (BLOCK_SIZE);
 	int start_y = y * (BLOCK_SIZE);
@@ -43,7 +56,7 @@ void fill_square(mlx_image_t *img, int x, int y, int color)
 		while (j < BLOCK_SIZE -1)
 		{
 			if (pixel_ok(start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + i, color);
+				mlx_put_pixel(img, start_x + j, start_y + i, colour);
 			j++;
 		}
 		i++;
@@ -58,9 +71,13 @@ void fill_square(mlx_image_t *img, int x, int y, int color)
 void draw_tile(t_scene *scene, mlx_image_t *img, int x, int y)
 {
 	if (scene->map[y][x] == 1)
-		fill_square(img, x, y, COL_FLAMINGO);
-	else
+	{
 		fill_square(img, x, y, COL_BLUE);
+	} //get_colour(scene->ceiling_rgb)
+	else
+	{
+		fill_square(img, x, y, get_colour(scene->floor_rgb));
+	}
 }
 
 /* ==============================
@@ -150,8 +167,8 @@ void draw_nose(t_data *data, int length, int color)
 
 void draw_player(t_data *data)
 {
-	draw_circle(data, 7, COL_LINE);
-	draw_nose(data, 16, COL_LINE);
+	draw_circle(data, 7, COL_WHITE);
+	draw_nose(data, 16, COL_WHITE);
 }
 //if we scale the window we need to be able to scale all images. PROBLEM!
 void draw_scene(t_data *data) 
@@ -164,8 +181,9 @@ void draw_scene(t_data *data)
 	draw_map(data, data->image);
 	draw_player(data);
 	collisions(data);
+
 	cast_rays(data);
-	
+
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1) 
 	{
 		mlx_delete_image(data->m, data->image);
@@ -173,5 +191,3 @@ void draw_scene(t_data *data)
 	}
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }
-
-
