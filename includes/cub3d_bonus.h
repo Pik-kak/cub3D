@@ -53,7 +53,6 @@
 #define PLAYER_SPEED 0.4
 #define BLOCK_SIZE 64
 #define GRID_GAP 1
-#define FOV PI / 3;
 
 typedef struct s_ray
 {
