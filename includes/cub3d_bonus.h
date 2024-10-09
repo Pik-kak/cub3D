@@ -23,6 +23,9 @@
 #define SUCCESS 0
 #define ERROR 1
 
+# define WIDTH 1920
+# define HEIGHT 1080
+
 # define COL_RED		0xFF0000FF
 # define COL_GREEN		0x00FF00FF
 # define COL_BLUE		0x0000FFFF
@@ -38,6 +41,7 @@
 # define COL_LINE2		0x8B0000C8
 # define COL_PINK		0xFFC0CBFF
 # define COL_RAY		0xADD8E6FF
+# define COL_GREY		0x40808080
 
 
 # define ERR_INFILE "Wrong file type"
@@ -49,11 +53,11 @@
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-#define FOV (60 * (PI / 180))  // 60 degrees in radians
-#define PLAYER_SPEED 0.4
-#define SENSITIVITY 0.002
+#define PLAYER_SPEED 1.2
+#define SENSITIVITY 0.0008
 #define BLOCK_SIZE 64
 #define GRID_GAP 1
+#define FOV PI / 3;
 
 typedef struct s_ray
 {
@@ -69,10 +73,9 @@ typedef struct s_ray
 
 typedef struct s_check
 {
-	int	fd;
 	int	player_count;
 	int longest_line;
-	int	first_map_line;
+	int	cur_file_line;
 	int map_lines;
 }				t_check;
 
@@ -104,36 +107,44 @@ typedef struct s_scene
 	int			floor_rgb[3];
 	int			cols;
 	int			rows;
+	int			minimap_status;
 }	t_scene;
 
 typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
-	int			width;
-	int			height;
+	mlx_image_t	*mimimap_image;
+	int			s_width;
+	int			s_height;
 	char		*file;
 	int			fd;
 	t_scene		scene;
 }	t_data;
 
+
 //Map parsing
 int		check_file_type(t_data *data, t_check *check);
 void	check_and_parse_file(t_data *data, t_check *check);
 void 	parse_file_for_walls_and_colours(t_data *data, t_check *check);
-
+void fill_map(t_data *data, t_check *check);
 void	read_file_for_map(t_data *data, t_check *check);
 char	*skip_spaces(char *line);
 unsigned int	rgb_to_hex(int r, int g, int b, int alpha);
-void read_file_for_longest_map_line(t_data *data, t_check *check);
+void	read_file_for_longest_map_line(t_data *data, t_check *check);
+void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check);
+void	check_map_lines(t_data *data, t_check *check);
+void	read_file_for_longest_and_lines(t_data *data, t_check *check);
+void	allocate_map(t_data *data);
+void	check_player(t_data *data);
+//void find_first_map_line(t_data *data, t_check *check);
 
 //Map drawing
 void	draw_scene(t_data *data);
 void	draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle);
-//void	set_offset(t_data *data);
+
 int		pixel_ok(t_data *data, int x, int y);
-//int32_t	get_col(t_point *start, t_point *end, t_data *data);
-//void	bresenham_line(mlx_image_t *image, t_point s, t_point e, int32_t col);
+
 
 //initialize
 void	init_data(t_data *data, char **argv);
@@ -147,29 +158,18 @@ void	init_check(t_check *check);
 double	normalize_angle(double angle);
 void	raycaster(t_data *data);
 int		cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag);
-int		cast_rays(t_data *data, mlx_image_t *image);
+int		cast_rays(t_data *data, mlx_image_t *img);
 
 //player handling
 void	collisions(t_data *data);
 
-//rotate and center
-//t_point	correct_point_offset(t_point *point, t_data *data);
-//t_point	rotate(t_point point, t_data *data);
-//t_point	rotate_x(t_point point, double angle);
-//t_point	rotate_y(t_point point, double angle);
-//t_point	rotate_z(t_point point, double angle);
-
-//t_pixel	rotate_pix(t_pixel point, t_data *data);
-//t_point	rotate_x_pix(t_pixel point, double angle);
-//t_pixel	rotate_y_pix(t_pixel point, double angle);
-//t_pixel	rotate_z_pix(t_pixel point, double angle);
-
 //utils
 int		ft_atoi_hex(char *str);
-//void	set_colours(t_point *point);
+
 
 //hooks
 void	my_keyhook(void *param);
+void	my_keyhook2(mlx_key_data_t keydata, void* param);
 void	my_mouse_hook(t_data *data);
 void	turn_player(t_player *player, double angle);
 

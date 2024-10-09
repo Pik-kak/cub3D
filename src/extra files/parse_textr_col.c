@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/09 11:07:22 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/03 11:05:52 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,16 @@ If there is some content, checks if it corresponds with the element identifiers.
 Sets the variable value if it is valid.
 */
 
-void set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
-{
-	char *str;
-	char **splitted;
-	
-	str = copy_str(pointer);
-	splitted = ft_split (str, ',');
-	if (!splitted)
-		ft_free_data_and_error(data, "malloc error");
-	free(str);
-	rgb[0] = ft_atoi(splitted[0]);
-	rgb[1] = ft_atoi(splitted[1]);
-	rgb[2] = ft_atoi(splitted[2]);
-	ft_free_double_array(splitted);
-}
-
-
-int	check_colour_line(t_data *data, char *line)
+void	check_colour_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
+	char	*str;
+	char	**splitted;
 
 	pointer = skip_spaces(line);// pointer at the beginning of the text
 	if (*pointer == '\n' || *pointer == '\0')//if we are in the end of the line	
-		return (1);
+		return ;
 	temp = pointer;
 	if (ft_strncmp(pointer, "F", 1) == 0 || ft_strncmp(pointer, "C", 1) == 0 && pointer[1] == ' ')
 	{
@@ -84,56 +69,40 @@ int	check_colour_line(t_data *data, char *line)
 	}
 	if (ft_strncmp(temp, "F", 1) == 0)
 	{
-		if (data->scene.floor_rgb[0] != -1 && data->scene.floor_rgb[1] != -1 && data->scene.floor_rgb[2] != -1)
-			ft_free_data_and_error(data, "invalid file, floor color allready set");
-		return (set_colour_line(data, temp, pointer, data->scene.floor_rgb), 0);
+		str = copy_str(pointer);
+		splitted = ft_split (str, ',');
+		if (!splitted)
+			return (ft_free_data_and_error(data, "malloc error"));
+		free(str);
+		data->scene.floor_rgb[0] = ft_atoi(splitted[0]);
+		data->scene.floor_rgb[1] = ft_atoi(splitted[1]);
+		data->scene.floor_rgb[2] = ft_atoi(splitted[2]);
+		ft_free_double_array(splitted);
 	}
 	else if (ft_strncmp(temp, "C", 1) == 0)
 	{
-		if (data->scene.ceiling_rgb[0] != -1 && data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
-			ft_free_data_and_error(data, "invalid file, ceiling color allready set");
-		return (set_colour_line(data, temp, pointer, data->scene.ceiling_rgb), 0);
+		str = copy_str(pointer);
+		splitted = ft_split (str, ',');
+		if (!splitted)
+			return (ft_free_data_and_error(data, "malloc error"));
+		free(str);
+		data->scene.ceiling = rgb_to_hex(ft_atoi(splitted[0]), ft_atoi(splitted[1]), ft_atoi(splitted[2]), 255);
+		data->scene.ceiling_rgb[0] = ft_atoi(splitted[0]);
+		data->scene.ceiling_rgb[1] = ft_atoi(splitted[1]);
+		data->scene.ceiling_rgb[2] = ft_atoi(splitted[2]);
+		ft_free_double_array(splitted);
 	}
-	return (1);
+	// add check that if the variable in question already has a value we give error
 }
 
-int set_texture_line(t_data *data, char *temp, char *pointer)
-{
-	if (ft_strncmp(temp, "NO", 2) == 0)
-	{
-		if (data->scene.no)
-			ft_free_data_and_error(data, "invalid file, double north texture path");
-		return (data->scene.no = copy_str(pointer), 0);
-	}
-	else if (ft_strncmp(temp, "SO", 2) == 0)
-	{
-		if (data->scene.so)
-			ft_free_data_and_error(data, "invalid file, double south texture path");
-		return (data->scene.so = copy_str(pointer), 0);
-	}
-	else if (ft_strncmp(temp, "EA", 2) == 0)
-	{
-		if (data->scene.ea)
-			ft_free_data_and_error(data, "invalid file, double  east texture path");
-		return (data->scene.ea = copy_str(pointer), 0);
-	}
-	else if (ft_strncmp(temp, "WE", 2) == 0)
-	{
-		if (data->scene.we)
-			ft_free_data_and_error(data, "invalid file, double west texture path");
-		return (data->scene.we = copy_str(pointer), 0);
-	}
-	return (1);
-}
-
-int	check_texture_line(t_data *data, char *line)
+void	check_texture_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
 
 	pointer = skip_spaces(line);// pointer at the beginning of the text
 	if (*pointer == '\n' || *pointer == '\0')//if we are in the end of the line	
-		return (1);
+		return ;
 	temp = pointer;
 	if ((ft_strncmp(pointer, "NO", 2) == 0 || ft_strncmp(pointer, "SO", 2) == 0 
 		|| ft_strncmp(pointer, "EA", 2) == 0 || ft_strncmp(pointer, "WE", 2) == 0) 
@@ -142,63 +111,41 @@ int	check_texture_line(t_data *data, char *line)
 		pointer = pointer + 2;//skip element identifier
 		pointer = skip_spaces(pointer);// skip spaces to the beginning of the path name
 	}
-	if (set_texture_line(data, temp, pointer) == 0)
-		return (0);
-	return (1);
+	// add check that if the variable in question already has a value we give error
+	if (ft_strncmp(temp, "NO", 2) == 0)
+		data->scene.no = copy_str(pointer);
+	else if (ft_strncmp(temp, "SO", 2) == 0)
+		data->scene.so = copy_str(pointer);
+	else if (ft_strncmp(temp, "EA", 2) == 0)
+		data->scene.ea = copy_str(pointer);
+	else if (ft_strncmp(temp, "WE", 2) == 0)
+		data->scene.we = copy_str(pointer);
 }
-
-int check_valid_line(t_data *data, char *line)
-{
-	if (check_texture_line(data, line)  == 0)
-		return (0);
-	else if (check_colour_line(data, line) == 0)
-		return (0);
-	else
-	{
-		return (ft_free_data_and_error(data, "invalid file"), 1);
-	}
-	return (1);
-}
-
-
 
 /*
 Reads the file line by line and calls check line to check that the lines contain the elements needed. Doesn't yet check floor/ceiling or stop at map
 */
-void check_file_lines(t_data *data, t_check *check)
+void parse_file_for_walls_and_colours(t_data *data, t_check *check)
 {
 	char	*line;
-	int lines;
 
-	lines = 0;
 	line = NULL;
-	while (lines < 6)
+	while (1)
 	{
 		line = get_next_line(data->fd);
 		if (!line)
 		{
-			ft_free_data_and_error(data, "malloc error");
+			break;
 		}
 		if (*line == '\n')
 		{
-			check->cur_file_line++;
 			free(line);
 			continue ;
 		}
-		else if (check_valid_line(data, line) == 0)
-		{
-			check->cur_file_line++;
-			lines++;
-		}
+		check_texture_line(data, line);
+		check_colour_line(data, line);
 		free(line);
 	}
-}
-
-void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
-{
-	data->fd = open(data->file, O_RDONLY);
-	if (data->fd < 0)
-		ft_error(ERR_OPEN);
-	check_file_lines(data, check);
+	free(line);
 }
 

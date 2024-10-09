@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/03 14:17:52 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:09:34 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	calculate_measurements(t_data *data, int wall_height, int *start, int *end)
 {
-	*start = -(wall_height / 2) + (data->height / 2);// Calculate the starting and ending points of the wall slice
+	*start = -(wall_height / 2) + (data->s_height / 2);// Calculate the starting and ending points of the wall slice
 	if (*start < 0)
 		*start = 0;
-	*end = (wall_height / 2) + (data->height/ 2);
-	if (*end >= data->height)
-		*end = data->height - 1;
+	*end = (wall_height / 2) + (data->s_height/ 2);
+	if (*end >= data->s_height)
+		*end = data->s_height - 1;
 }
 
 void draw_walls(t_data *data, int ray, int wall_height, int dist)
@@ -30,7 +30,7 @@ void draw_walls(t_data *data, int ray, int wall_height, int dist)
 
 	i = 0;
 	calculate_measurements(data, wall_height, &start, &end);
-	while (i < data->height)
+	while (i < data->s_height)
 	{
 		if (i < start)
 		{
@@ -60,16 +60,17 @@ int	cast_rays(t_data *data, mlx_image_t *image)
 	int		dist;
 	int		wall_height;
 
-	nbr_of_rays = data->width;//Number of rays corresponds to screen width
-	angle_step = FOV / nbr_of_rays;//Divide FOV into equal slices for each ray
+	nbr_of_rays = data->s_width;//Number of rays corresponds to screen width
+	angle_step = PI / 3 / nbr_of_rays;//Divide FOV into equal slices for each ray
 	i = 0;
 	while(i <= (nbr_of_rays -1)) 
 	{
-		ray_angle = normalize_angle(data->scene.player.direction - (FOV / 2) + (i * angle_step));//Calculate ray angle starting from the left-most point of the FOV
+		ray_angle = normalize_angle(data->scene.player.direction - (PI / 3 / 2) + (i * angle_step));//Calculate ray angle starting from the left-most point of the FOV
 		dist = cast_one_ray(data, ray_angle, data->scene.player.px, data->scene.player.py, 1);
-		wall_height = (64 * data->height) / (dist);
+		wall_height = (64 * data->s_height) / (dist);
 		draw_walls(data, i, wall_height, dist);// Draw the wall slice for this ray
 		i++;
 	}
 	return (SUCCESS);
 }
+

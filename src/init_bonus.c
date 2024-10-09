@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 14:28:09 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:19:51 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ Initializes the window to fit the screen if the default size is too big
 */
 void	init_window(t_data *data)
 {
-	int	s_width;//these are the new measurements
-	int	s_height;
+	int	m_width;//these are the new measurements
+	int	m_height;
 	
-	mlx_get_monitor_size(0, &s_width, &s_height);//Gets the monitor size
-	if (s_width != data->width || s_height != data->height)//if there is a difference
+	mlx_get_monitor_size(0, &m_width, &m_height);//Gets the monitor size
+	if (m_width != data->s_width || m_height != data->s_height)//if there is a difference
 	{
-		if (s_width < data->width)//if screen is smaller than the original window size
-			data->width = s_width;
-		if (s_height < data->height)//if screen is smaller than the original window size
-			data->height = s_height;
+		if (m_width < data->s_width)//if screen is smaller than the original window size
+			data->s_width = m_width;
+		if (m_height < data->s_height)//if screen is smaller than the original window size
+			data->s_height = m_height;
 		mlx_terminate(data->m);
-		data->m = mlx_init(data->width, data-> height, "Cub3D", false);
+		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 	}
@@ -55,16 +55,17 @@ void init_scene(t_data *data)
 	data->scene.so = NULL;
 	data->scene.ea = NULL;
 	data->scene.we = NULL;
-	data->scene.cols = 8;
-	data->scene.rows = 8;
+	data->scene.cols = 0;
+	data->scene.rows = 0;
 	data->scene.ceiling = COL_BLUE;
 	data->scene.floor = COL_GREEN;
-	data->scene.ceiling_rgb[0] = 255;
-	data->scene.ceiling_rgb[1] = 0;
-	data->scene.ceiling_rgb[2] = 0;
-	data->scene.floor_rgb[0] = 0;
-	data->scene.floor_rgb[1] = 0;
-	data->scene.floor_rgb[2] = 255;
+	data->scene.ceiling_rgb[0] = -1;
+	data->scene.ceiling_rgb[1] = -1;
+	data->scene.ceiling_rgb[2] = -1;
+	data->scene.floor_rgb[0] = -1;
+	data->scene.floor_rgb[1] = -1;
+	data->scene.floor_rgb[2] = -1;
+	data->scene.minimap_status = 1;
 	/*	data->scene.map = malloc(data->scene.rows * sizeof(int*));
 	if (!data->scene.map)
 	{
@@ -109,18 +110,17 @@ void init_scene(t_data *data)
 
 void	init_check(t_check *check)
 {	
-	check->fd = -1;
 	check->player_count = 0;
 	check->longest_line = 0;
-	check->first_map_line = 0;
+	check->cur_file_line = 0;
 	check->map_lines = 0;
 }
 
 void	init_data(t_data *data, char **argv)
 {
 	data->file = argv[1];
-	data->height = 1080;
-	data->width = 1920;
+	data->s_height = 1080;
+	data->s_width = 1920;
 	init_scene(data);
 	init_player(&data->scene.player);
 }
