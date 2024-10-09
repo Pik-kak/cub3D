@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hooks_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/02 19:14:21 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/09 15:20:15 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,4 +152,19 @@ void	my_keyhook(void *param)
 		ft_free_data_and_exit(data);
 	my_mouse_hook(param);
 	draw_scene(data);
+}
+
+
+void my_keyhook2(mlx_key_data_t keydata, void* param)
+{
+	t_data	*data;
+
+	data = param;
+	if (keydata.key == MLX_KEY_TAB && keydata.action == MLX_PRESS)
+	{
+		if (data->scene.minimap_status == 3)
+			data->scene.minimap_status = 1;
+		else
+			data->scene.minimap_status = 3;
+	}
 }

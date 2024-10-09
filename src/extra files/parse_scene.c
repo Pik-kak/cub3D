@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/03 14:52:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/09 09:58:05 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,73 @@ void allocate_map(t_data *data, t_check *check)
 }
 
 
+
+
+/*
+Checks that the file type ends with .cub
+*/
+int	check_file_type(t_data *data, t_check *check)
+{
+	char			*file_name;
+	char			*file_type;
+	unsigned int	i;
+
+	i = 0;
+	file_type = ".cub";
+	file_name = ft_strrchr(data->file, '.');
+	if (!file_name)
+		return (ERROR);
+	while (file_name[i] != '\0' && file_type[i] == file_name[i])
+		i++;
+	return (file_name[i] - file_type[i]);
+}
+
+
+void set_player_position(t_player *player, int dir, int i, int ii)
+{
+	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
+	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
+	if (dir == 'N')
+		player->direction = 3 / 2 * PI;
+	if (dir == 'E')
+		player->direction = 0;
+	if (dir == 'S')
+		player->direction = PI / 2;
+	if (dir == 'W')
+		player->direction = PI;
+}
+
+/*check
+make another check for vaalid map.
+*/
+void	check_player(t_data *data)
+{
+	int	i;
+	int	ii;
+	int player_found;
+
+	player_found = 0;
+	i = 0;
+	while (i < data->scene.rows)
+	{
+		ii = 0;
+		while (ii < data->scene.cols)
+		{
+			if (data->scene.map[i][ii] == 'N' || data->scene.map[i][ii] == 'S' 
+                 || data->scene.map[i][ii] == 'E' || data->scene.map[i][ii] == 'W')
+			{
+				set_player_position(&data->scene.player, data->scene.map[i][ii], i, ii);
+				player_found++;
+			}
+			ii++;
+		}
+		i++;
+	}
+	if (player_found != 1)
+		ft_free_data_and_error(data, "map not valid");
+}
+
+
 /*
 Opens ffile several times and runs parsing aand check functions
 */
@@ -67,67 +134,6 @@ void	check_and_parse_file(t_data *data, t_check *check)
 	if (data->fd < 0)
 		ft_error(ERR_OPEN);
 	fill_map(data, check);
+	check_player(data);
 	close(data->fd);
-}
-
-/*
-Checks that the file type ends with .cub
-*/
-int	check_file_type(t_data *data, t_check *check)
-{
-	char			*file_name;
-	char			*file_type;
-	unsigned int	i;
-
-	i = 0;
-	file_type = ".cub";
-	file_name = ft_strrchr(data->file, '.');
-	if (!file_name)
-		return (ERROR);
-	while (file_name[i] != '\0' && file_type[i] == file_name[i])
-		i++;
-	return (file_name[i] - file_type[i]);
-}
-
-
-void set_player_position(t_player *player, char dir, int i, int ii)
-{
-	player->px = ii * BLOCK_SIZE;
-	player->py = i * BLOCK_SIZE;
-	if (dir == 'N')
-		player->direction = 3 / 2 * PI;
-	if (dir == 'E')
-		player->direction = 0;
-	if (dir == 'S')
-		player->direction = PI / 2;
-	if (dir == 'W')
-		player->direction = PI;
-}
-
-void	check_map(t_data *data)
-{
-	int	i;
-	int	ii;
-	int player_found;
-
-	player_found = 0;
-	i = -1;
-	while (data->scene.map[i++] != NULL)
-	{
-		ii = 0;
-		while (data->scene.map[i][ii] != '\0')
-		{
-			if (data->scene.map[i][ii] == 'N' || data->scene.map[i][ii] == 'S' 
-                 || data->scene.map[i][ii] == 'E' || data->scene.map[i][ii] == 'W')
-			{
-				set_player_position(&data->scene.player, data->scene.map[i][ii], i, ii);
-				player_found++;
-			}
-			else if (data->scene.map[i][ii] != '0' && data->scene.map[i][ii] != '1' && data->scene.map[i][ii] != ' ')
-				ft_free_data_and_error(data, "map not valid");
-			ii++;
-		}
-	}
-	if (player_found != 1)
-		ft_free_data_and_error(data, "map not valid");
 }

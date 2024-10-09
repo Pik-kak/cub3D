@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 11:24:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/07 11:07:05 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,14 +169,13 @@ int	cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag)
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-	//	if (flag)
-	//		draw_line(data, &ray, 1, ray_angle);
+		//if (flag)
+		//	draw_line(data, &ray, 1, ray_angle);
 	}
 	return (ret_dist);
 }
 
-
-int	cast_rays(t_data *data)
+/*int	cast_rays(t_data *data)
 {
 	int		nbr_of_rays;
 	double	ray_angle;
@@ -192,6 +191,7 @@ int	cast_rays(t_data *data)
 		i++;
 	}
 	return (ray_length);
-}
+}*/
+
 
 

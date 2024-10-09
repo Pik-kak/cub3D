@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 12:51:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/09 12:52:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	ft_free_data_and_error(t_data *data, char *error)
 	int	i;
 
 	write(2, "Error\n", 6);
-	perror(error);
+	write(2, error, ft_strlen(error));
+	write(2, "\n", 1);
 	i = 0;
 	while (i < data->scene.rows)
 	{
@@ -46,6 +47,7 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		i++;
 	}
 	free(data->scene.map);
+	
 	if (data->scene.no != NULL)
 		free(data->scene.no);
 	if (data->scene.so != NULL)

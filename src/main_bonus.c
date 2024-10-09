@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 15:01:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/09 15:16:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void print_parsing(t_data *data, t_check *check)
 	printf("%d, %d, %d\n", data->scene.floor_rgb[0], data->scene.floor_rgb[1], data->scene.floor_rgb[2]);
 	printf("%d\n", data->scene.rows);
 	printf("%d\n", data->scene.cols);
-	printf("first map line : %d\n", check->first_map_line);
+	printf("current map line : %d\n", check->cur_file_line);
 	printf("longest map line : %d\n", check->longest_line);
 	printf("map lines: %d", check->map_lines);
 	printf("\n");
@@ -43,17 +43,48 @@ void print_parsing(t_data *data, t_check *check)
 		rows++;	
 		cols = 0;
 	}
-}
+}void init_map(t_data *data)
+{
+	int rows;
+	int cols;
 
+	rows = 0;
+	while( rows < data->scene.rows)
+	{
+		cols = 0;
+		while (cols < data->scene.cols)
+		{
+			data->scene.map[rows][cols] = -1;
+			cols++;
+		}
+		rows++;	
+	}
+}
 void parse(t_data *data)
 {
-	t_check check;
+	t_check *check;
 
-	init_check(&check);
-	if (check_file_type(data, &check) != 0)
+	init_check(check);
+	if (check_file_type(data, check) != 0)
 		ft_error(ERR_INFILE);
-	check_and_parse_file(data, &check);
-	print_parsing(data, &check);
+	check_and_set_texttr_and_col_lines(data, check);
+	check_map_lines(data, check);
+	data->fd = open(data->file, O_RDONLY);
+	if (data->fd < 0)
+		ft_error(ERR_OPEN);
+	read_file_for_longest_and_lines(data, check);
+	data->scene.rows = check->map_lines + 2;
+	data->scene.cols = check->longest_line + 2;
+	allocate_map(data);
+	init_map(data);
+	close(data->fd);
+	data->fd = open(data->file, O_RDONLY);
+	if (data->fd < 0)
+		ft_error(ERR_OPEN);
+	fill_map(data, check);
+	close(data->fd);
+	check_player(data);
+	print_parsing(data, check);
 }
 
 int	main(int argc, char **argv)
@@ -70,11 +101,13 @@ int	main(int argc, char **argv)
 	{
 		init_data(data, argv);
 		parse(data);
-		data->m = mlx_init(data->width, data->height, "Cub3D", false);
+		
+		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 		init_window(data);
-		//mlx_loop_hook(data->m, my_keyhook, data);
+		mlx_loop_hook(data->m, my_keyhook, data);
+		mlx_key_hook(data->m, &my_keyhook2, data);
 		mlx_loop(data->m);
 		mlx_terminate(data->m);
 	}
