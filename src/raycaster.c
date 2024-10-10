@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/07 11:07:05 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/10 15:39:17 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void vertical_cast(t_ray *ray, double ray_angle)
 		first it casts ray to find wall in horizontal block sides, then vertical and 
 		draws ray to which ray is shorter and nearer player.
 */
-int	cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag)
+int	cast_one_ray(t_data *data, double ray_angle, double x, double y)
 {
 	t_ray	ray;
 	int		ret_dist;
@@ -163,35 +163,11 @@ int	cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag)
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
-		//if (flag)
-		//	draw_line(data, &ray, 0, ray_angle);
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-		//if (flag)
-		//	draw_line(data, &ray, 1, ray_angle);
+		//draw_line(data, &ray, 1, ray_angle);
 	}
 	return (ret_dist);
 }
-
-/*int	cast_rays(t_data *data)
-{
-	int		nbr_of_rays;
-	double	ray_angle;
-	int		ray_length;
-	int	i;
-
-	nbr_of_rays = 60;
-	i = -nbr_of_rays;
-	while(i <= nbr_of_rays) 
-	{
-		ray_angle = normalize_angle(data->scene.player.direction + (i * DEGREE));
-		ray_length = cast_one_ray(data, ray_angle, data->scene.player.px, data->scene.player.py, 1);
-		i++;
-	}
-	return (ray_length);
-}*/
-
-
-
