@@ -32,21 +32,21 @@ void draw_walls(t_data *data, int ray, int wall_height)
 	calculate_measurements(data, wall_height, &start, &end);
 	while (i < data->s_height)
 	{
-		if (i < start)
-		{
-			if (pixel_ok(data, ray, i))
-				mlx_put_pixel(data->image, ray, i, COL_BLUE);
-		}
-		else if (i >= start && i <= end)
+		//if (i < start)
+		//{
+		//	if (pixel_ok(data, ray, i))
+		//		mlx_put_pixel(data->image, ray, i, COL_BLUE);
+		//}
+		if (i >= start && i <= end)
 		{
 			if (pixel_ok(data, ray, i))
 				mlx_put_pixel(data->image, ray, i, COL_FLAMINGO);
 		}
-		else
-		{
-			if (pixel_ok(data, ray, i))
-				mlx_put_pixel(data->image, ray, i, COL_BLUE);
-		}
+		//else
+		//{
+		//	if (pixel_ok(data, ray, i))
+		//		mlx_put_pixel(data->image, ray, i, COL_BLUE);
+		//}
 		i++;
 	}
 }

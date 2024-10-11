@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/09 15:16:01 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:54:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void print_parsing(t_data *data, t_check *check)
 		rows++;	
 		cols = 0;
 	}
-}void init_map(t_data *data)
+}
+
+void init_map(t_data *data)
 {
 	int rows;
 	int cols;
@@ -57,13 +59,14 @@ void print_parsing(t_data *data, t_check *check)
 			data->scene.map[rows][cols] = -1;
 			cols++;
 		}
-		rows++;	
+		rows++;
 	}
 }
 void parse(t_data *data)
 {
 	t_check *check;
 
+	check = (t_check *)malloc(sizeof (t_check));
 	init_check(check);
 	if (check_file_type(data, check) != 0)
 		ft_error(ERR_INFILE);
@@ -82,15 +85,17 @@ void parse(t_data *data)
 	if (data->fd < 0)
 		ft_error(ERR_OPEN);
 	fill_map(data, check);
+	flood_fill(data, (t_point){data->scene.cols, data->scene.rows}, (t_point){0,0}, 32);
+	fill_maze_if_spaces(data);
 	close(data->fd);
 	check_player(data);
+	free(check);
 	print_parsing(data, check);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	*data;
-	t_check	*check;
 
 	if (argc != 2)
 		ft_error(ERR_ARG);

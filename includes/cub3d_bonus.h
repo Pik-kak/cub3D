@@ -59,6 +59,13 @@
 #define GRID_GAP 1
 #define FOV PI / 3;
 
+
+typedef struct	s_point
+{
+	int x;
+	int y;
+} t_point;
+
 typedef struct s_ray
 {
 	int		**map;
@@ -126,8 +133,8 @@ typedef struct s_data
 //Map parsing
 int		check_file_type(t_data *data, t_check *check);
 void	check_and_parse_file(t_data *data, t_check *check);
-void 	parse_file_for_walls_and_colours(t_data *data, t_check *check);
-void fill_map(t_data *data, t_check *check);
+void	parse_file_for_walls_and_colours(t_data *data, t_check *check);
+void	fill_map(t_data *data, t_check *check);
 void	read_file_for_map(t_data *data, t_check *check);
 char	*skip_spaces(char *line);
 unsigned int	rgb_to_hex(int r, int g, int b, int alpha);
@@ -137,13 +144,16 @@ void	check_map_lines(t_data *data, t_check *check);
 void	read_file_for_longest_and_lines(t_data *data, t_check *check);
 void	allocate_map(t_data *data);
 void	check_player(t_data *data);
-//void find_first_map_line(t_data *data, t_check *check);
+void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
+void fill_maze_if_spaces(t_data *data);
 
 //Map drawing
 void	draw_scene(t_data *data);
 void	draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle);
 
 int		pixel_ok(t_data *data, int x, int y);
+void	draw_ceiling_and_floor(t_data *data);
+
 
 
 //initialize
