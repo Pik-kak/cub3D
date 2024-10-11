@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/09 15:34:14 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:44:29 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void set_player_position(t_player *player, int dir, int i, int ii)
 	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
 	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
 	if (dir == 'N')
-		player->direction = 3 / 2 * PI;
+		player->direction = 1.5 * PI;
 	if (dir == 'E')
 		player->direction = 0;
 	if (dir == 'S')
@@ -111,8 +111,8 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 		{
 			map_found = 1;
 			check->map_lines++;	
-			if (ft_strlen(line) >= check->longest_line)
-				check->longest_line = ft_strlen(line) - 1;
+			if (ft_strlen(line) >= check->longest_line )
+				check->longest_line = ft_strlen(ft_strtrim(line, "\n"));
 		}
 		free(line);
 	}
@@ -126,23 +126,20 @@ void fill_row(t_data *data, char *line, int row)
 	
 	i = 0;
 	cols = 0;
-	printf("line %s", line);
 	if  (line[i] == '\n' || ft_strlen(line) < 2)
-		ft_free_data_and_error(data, "invalid fileee");
+		ft_free_data_and_error(data, "invalid file");
 	data->scene.map[row][cols] = ' ';
 	cols++;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		if (line[i] == ' ')
-			data->scene.map[row][cols] = ' ';
-		else if(line[i] == '1')
+			data->scene.map[row][cols] = 32;
+		else if (line[i] == '1')
 			data->scene.map[row][cols] = 1;
 		else if (line[i] == '0')
 			data->scene.map[row][cols] = 0;
-		else if (line[i] == 'N' || line[i] == 'E' || line[i] == 'S' || line[i] == 'W')
-		{
+		else 
 			data->scene.map[row][cols] = line[i];
-		}
 		i++;
 		cols++;
 	}
@@ -224,5 +221,24 @@ void check_map_lines(t_data *data, t_check *check)
 		}
 		free(line);
 		close(data->fd);
+	}
+}
+
+void fill_maze_if_spaces(t_data *data)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < data->scene.rows)
+	{
+		j = 0;
+		while(j < data->scene.cols)
+		{
+			if (data->scene.map[i][j] == 32)
+				data->scene.map[i][j] = 1;
+			j++;
+		}
+		i++;
 	}
 }

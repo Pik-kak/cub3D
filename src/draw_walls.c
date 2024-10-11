@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/07 11:09:34 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:41:07 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,21 @@ void draw_walls(t_data *data, int ray, int wall_height, int dist)
 	calculate_measurements(data, wall_height, &start, &end);
 	while (i < data->s_height)
 	{
-		if (i < start)
-		{
-			if (pixel_ok(data, ray, i))
-				mlx_put_pixel(data->image, ray, i, COL_BLUE);
-		}
-		else if (i >= start && i <= end)
+		//if (i < start)
+		//{
+		//	if (pixel_ok(data, ray, i))
+		//		mlx_put_pixel(data->image, ray, i, COL_BLUE);
+		//}
+		if (i >= start && i <= end)
 		{
 			if (pixel_ok(data, ray, i))
 				mlx_put_pixel(data->image, ray, i, COL_FLAMINGO);
 		}
-		else
-		{
-			if (pixel_ok(data, ray, i))
-				mlx_put_pixel(data->image, ray, i, COL_BLUE);
-		}
+		//else
+		//{
+		//	if (pixel_ok(data, ray, i))
+		//		mlx_put_pixel(data->image, ray, i, COL_BLUE);
+		//}
 		i++;
 	}
 }

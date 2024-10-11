@@ -211,6 +211,7 @@ void draw_scene(t_data *data)
 	if (!data->mimimap_image)
 		ft_free_data_and_error(data, ERR_MLX);
 	collisions(data);
+	draw_ceiling_and_floor(data);
 	cast_rays(data, data->image);
 	draw_minimap(data);
 	draw_player(data);
@@ -228,3 +229,27 @@ void draw_scene(t_data *data)
 	mlx_set_instance_depth(&data->mimimap_image->instances[0], data->scene.minimap_status);
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }
+
+
+void draw_ceiling_and_floor(t_data *data)
+{
+	int x;
+	int y;
+
+	x = 0;
+	
+	while (x <= data->s_width)
+	{
+		y = 0;
+		while( y < data->s_height)
+		{
+			if (y < data->s_height / 2)
+				mlx_put_pixel(data->image, x, y, get_colour(data->scene.ceiling_rgb));
+			else
+				mlx_put_pixel(data->image, x, y, get_colour(data->scene.floor_rgb));
+			y++;
+		}
+		x++;
+	}
+}
+
