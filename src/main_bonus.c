@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/11 12:26:45 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:54:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void parse(t_data *data)
 	if (data->fd < 0)
 		ft_error(ERR_OPEN);
 	fill_map(data, check);
-	flood_fill(data, data->scene.map, (t_point){data->scene.cols, data->scene.rows}, (t_point){0,0});
+	flood_fill(data, (t_point){data->scene.cols, data->scene.rows}, (t_point){0,0}, 32);
 	fill_maze_if_spaces(data);
 	close(data->fd);
 	check_player(data);

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/11 12:17:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/11 12:54:58 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,43 +77,38 @@ void allocate_map(t_data *data)
 }
 
 
-void	fill(t_data *data, int **tab, t_point size, t_point cur, int to_fill)
+void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 {
+	int **matrix = data->scene.map;
+
 	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x)
 		return;
-	if (tab[cur.y][cur.x] != 1 && tab[cur.y][cur.x] != 32 && tab[cur.y][cur.x] != -1)
+	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32 && matrix[cur.y][cur.x] != -1)
 	{
 		ft_free_data_and_error(data, "invalid file");
 		return;
 	}
-	if (tab[cur.y][cur.x] == 1 || tab[cur.y][cur.x] == -1)
+	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
 		return;
-	tab[cur.y][cur.x] = -1;
-	fill(data, tab, size, (t_point){cur.x - 1, cur.y}, to_fill);
-	fill(data, tab, size, (t_point){cur.x + 1, cur.y}, to_fill);
-	fill(data, tab, size, (t_point){cur.x, cur.y - 1}, to_fill);
-	fill(data, tab, size, (t_point){cur.x, cur.y + 1}, to_fill);
+	matrix[cur.y][cur.x] = -1;
+	flood_fill(data, size, (t_point){cur.x - 1, cur.y}, to_fill);
+	flood_fill(data, size, (t_point){cur.x + 1, cur.y}, to_fill);
+	flood_fill(data, size, (t_point){cur.x, cur.y - 1}, to_fill);
+	flood_fill(data, size, (t_point){cur.x, cur.y + 1}, to_fill);
 }
 
 
 
-
-
-void	flood_fill(t_data *data, int **tab, t_point size, t_point begin)
+/*int	fill(int **matrix, t_point size, t_point cur, int to_fill)
 {
-	fill(data, tab, size, begin, 32);
-}
-
-/*int	fill(int **tab, t_point size, t_point cur, int to_fill)
-{
-	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x || tab[cur.y][cur.x] != to_fill)
+	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x || matrix[cur.y][cur.x] != to_fill)
 		return (0);
 
-	tab[cur.y][cur.x] = 2;
-	fill(tab, size, (t_point){cur.x - 1, cur.y}, to_fill);
-	fill(tab, size, (t_point){cur.x + 1, cur.y}, to_fill);
-	fill(tab, size, (t_point){cur.x, cur.y - 1}, to_fill);
-	fill(tab, size, (t_point){cur.x, cur.y + 1}, to_fill);
+	matrix[cur.y][cur.x] = 2;
+	fill(matrix, size, (t_point){cur.x - 1, cur.y}, to_fill);
+	fill(matrix, size, (t_point){cur.x + 1, cur.y}, to_fill);
+	fill(matrix, size, (t_point){cur.x, cur.y - 1}, to_fill);
+	fill(matrix, size, (t_point){cur.x, cur.y + 1}, to_fill);
 	return (0);
 }*/
 

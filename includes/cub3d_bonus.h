@@ -144,7 +144,7 @@ void	check_map_lines(t_data *data, t_check *check);
 void	read_file_for_longest_and_lines(t_data *data, t_check *check);
 void	allocate_map(t_data *data);
 void	check_player(t_data *data);
-void	flood_fill(t_data *data, int **tab, t_point size, t_point begin);
+void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
 void fill_maze_if_spaces(t_data *data);
 
 //Map drawing
