@@ -167,7 +167,7 @@ void	init_check(t_check *check);
 //raycasting
 double	normalize_angle(double angle);
 void	raycaster(t_data *data);
-int		cast_one_ray(t_data *data, double ray_angle, double x, double y, int flag);
+int		cast_one_ray(t_data *data, double ray_angle, double x, double y);
 int		cast_rays(t_data *data, mlx_image_t *img);
 
 //player handling
