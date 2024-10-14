@@ -6,13 +6,12 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/11 12:54:02 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/14 11:30:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
-
-void print_parsing(t_data *data, t_check *check)
+/*void print_parsing(t_data *data, t_check *check)
 {
 	printf("%s\n", data->scene.no);
 	printf("%s\n", data->scene.ea);
@@ -43,7 +42,8 @@ void print_parsing(t_data *data, t_check *check)
 		rows++;	
 		cols = 0;
 	}
-}
+}*/
+
 
 void init_map(t_data *data)
 {
@@ -62,6 +62,17 @@ void init_map(t_data *data)
 		rows++;
 	}
 }
+
+void free_before_map(t_data *data)
+{
+	free(data->scene.ea);
+	free(data->scene.so);
+	free(data->scene.no);
+	free(data->scene.we);
+	free(data);
+	ft_error("File cannot be opened");
+}
+
 void parse(t_data *data)
 {
 	t_check *check;
@@ -69,12 +80,16 @@ void parse(t_data *data)
 	check = (t_check *)malloc(sizeof (t_check));
 	init_check(check);
 	if (check_file_type(data, check) != 0)
-		ft_error(ERR_INFILE);
+	{
+		free(data);
+		ft_error("Wrong file type");
+	}
+
 	check_and_set_texttr_and_col_lines(data, check);
 	check_map_lines(data, check);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(ERR_OPEN);
+		free_before_map(data);
 	read_file_for_longest_and_lines(data, check);
 	data->scene.rows = check->map_lines + 2;
 	data->scene.cols = check->longest_line + 2;
@@ -83,14 +98,14 @@ void parse(t_data *data)
 	close(data->fd);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(ERR_OPEN);
+		ft_free_data_and_error(data, "File cannot be opened");
 	fill_map(data, check);
 	flood_fill(data, (t_point){data->scene.cols, data->scene.rows}, (t_point){0,0}, 32);
 	fill_maze_if_spaces(data);
 	close(data->fd);
 	check_player(data);
 	free(check);
-	print_parsing(data, check);
+	//print_parsing(data, check);
 }
 
 int	main(int argc, char **argv)
@@ -98,18 +113,17 @@ int	main(int argc, char **argv)
 	t_data	*data;
 
 	if (argc != 2)
-		ft_error(ERR_ARG);
+		ft_error("Invalid amount of arguments");
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
-		ft_error(ERR_MALLOC);
+		ft_error("malloc error");
 	else
 	{
 		init_data(data, argv);
 		parse(data);
-		
 		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
-			ft_free_data_and_error(data, ERR_MLX);
+			ft_free_data_and_error(data, "MLX error");
 		init_window(data);
 		mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_key_hook(data->m, &my_keyhook2, data);

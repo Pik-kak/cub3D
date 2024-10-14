@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/09 11:07:22 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/14 13:16:36 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int set_texture_line(t_data *data, char *temp, char *pointer)
 	else if (ft_strncmp(temp, "EA", 2) == 0)
 	{
 		if (data->scene.ea)
-			ft_free_data_and_error(data, "invalid file, double  east texture path");
+			ft_free_data_and_error(data, "invalid file, double east texture path");
 		return (data->scene.ea = copy_str(pointer), 0);
 	}
 	else if (ft_strncmp(temp, "WE", 2) == 0)

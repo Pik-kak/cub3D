@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/11 12:44:29 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/14 09:43:55 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	check_player(t_data *data)
 		i++;
 	}
 	if (player_found != 1)
-		ft_free_data_and_error(data, "invalid file, too many players");
+		ft_free_data_and_error(data, "invalid file, wrong amount of players");
 }
 
 //helper function to check that there is no illegal char's in map
@@ -79,6 +79,7 @@ int check_map_line(char *line, t_check *check)
 void read_file_for_longest_and_lines(t_data *data, t_check *check)
 {
 	char	*line;
+	char	*temp;
 	int		i;
 	int		map_found;
 	
@@ -112,7 +113,11 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 			map_found = 1;
 			check->map_lines++;	
 			if (ft_strlen(line) >= check->longest_line )
-				check->longest_line = ft_strlen(ft_strtrim(line, "\n"));
+			{
+				temp = ft_strtrim(line , "\n");
+				check->longest_line = ft_strlen(temp);
+				free (temp);
+			}	
 		}
 		free(line);
 	}
