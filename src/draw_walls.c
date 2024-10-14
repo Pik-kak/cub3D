@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/14 15:50:25 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/14 10:27:47 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	calculate_measurements(t_data *data, int wall_height, int *start, int *end)
 	if (*end >= data->s_height)
 		*end = data->s_height - 1;
 }
+
 float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 {
 	float distance_from_center;
@@ -166,6 +167,33 @@ float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 	opac = 1 - (distance_from_center / 1000);
 	vert_opac = 1 - (fabs((float)(i - start - (end - start) * shift) / (end - start)) * 0.5);
 	return opac * vert_opac;
+}
+=======
+//Util function to get color from an image
+/*uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
+{
+	int pixel_index = (tex_y * image->width + tex_x) * 4;// Assuming each pixel is 4 bytes (RGBA)
+
+	uint8_t r = image->pixels[pixel_index];	// Get the pixel color (adjust channels if needed)
+	uint8_t g = image->pixels[pixel_index + 1];
+	uint8_t b = image->pixels[pixel_index + 2];
+	uint8_t a = image->pixels[pixel_index + 3];
+	return (r << 24 | g << 16 | b << 8 | a);// Combine the color channels into a single 32-bit value
+}
+
+void	draw_texture(t_data *data, int ray, int start, int wall_height, mlx_image_t *image, int i)
+{
+	int tex_y; // Texture Y coordinate
+	static double step;
+	double tex_pos;
+
+	step = 1.0 * image->height / wall_height;// Calculate the step size for the texture mapping
+	tex_pos = (start - data->s_height / 2 + wall_height / 2) * step;// Calculate the initial texture Y coordinate
+	tex_y = (int)tex_pos & (image->height - 1); // Clamp tex_y to image height
+	tex_pos += step;
+	uint32_t color = get_image_color(image, data->tex_x, tex_y);	// Get the color from the image
+	if (pixel_ok(data, ray, i))
+		mlx_put_pixel(data->image, ray, i, color); // Put the color on screen
 }
 
 void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height)
@@ -187,6 +215,7 @@ void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height)
 		}
 		else if (i >= start && i <= end)
 		{
+			//draw_texture(data, ray, start, wall_height, data->walls->no, i);
 			if (pixel_ok(data, ray, i))
 				mlx_put_pixel(data->image, ray, i, adjust_opacity(COL_BLUE, final_opac));
 		}
@@ -197,12 +226,12 @@ void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height)
 		}
 		i++;
 	}
-}*/
+}
 
 
 
 
-/*void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height)
+void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height)
 {
 	int i;
 	int start;
@@ -258,3 +287,4 @@ int	cast_rays(t_data *data, mlx_image_t *image)
 	}
 	return (SUCCESS);
 }
+

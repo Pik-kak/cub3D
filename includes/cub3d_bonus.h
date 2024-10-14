@@ -100,6 +100,22 @@ typedef struct s_player
 	bool		col_left;
 }	t_player;
 
+typedef struct s_textures
+{
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*ea;
+	mlx_texture_t	*we;
+}	t_textures;
+
+typedef struct s_walls
+{
+	mlx_image_t	*no;
+	mlx_image_t	*so;
+	mlx_image_t	*ea;
+	mlx_image_t	*we;
+}	t_walls;
+
 typedef struct s_scene
 {
 	t_player	player;
@@ -122,11 +138,15 @@ typedef struct s_data
 	mlx_t		*m;
 	mlx_image_t	*image;
 	mlx_image_t	*mimimap_image;
+	mlx_image_t	*txtr;
+	t_textures	*txtrs;
+	t_walls		*walls;
 	int			s_width;
 	int			s_height;
 	char		*file;
 	int			fd;
 	t_scene		scene;
+	double		tex_x;
 }	t_data;
 
 
