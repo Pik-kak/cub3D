@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/09 15:19:51 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:36:15 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_window(t_data *data)
 		mlx_terminate(data->m);
 		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
-			ft_free_data_and_error(data, ERR_MLX);
+			ft_free_data_and_error(data, "MLX error");
 	}
 }
 
@@ -66,46 +66,6 @@ void init_scene(t_data *data)
 	data->scene.floor_rgb[1] = -1;
 	data->scene.floor_rgb[2] = -1;
 	data->scene.minimap_status = 1;
-	/*	data->scene.map = malloc(data->scene.rows * sizeof(int*));
-	if (!data->scene.map)
-	{
-		ft_free_data_and_exit(data);
-	}
-	row = 0;
-	while (row < 8)
-	{
-		data->scene.map[row] = malloc(data->scene.cols * sizeof(int));
-		if (!data->scene.map[row])
-		{
-			ft_free_data_and_exit(data);
-		}
-		row++;
-	}
-	int temp_map[8][8] = 
-	{
-		{1,1,1,1,1,1,1,1},
-		{1,0,0,0,0,0,0,1},
-		{1,0,0,1,1,0,0,1},
-		{1,0,0,0,0,0,0,1},
-		{1,0,0,0,0,0,0,1},
-		{1,0,1,1,0,0,0,1},
-		{1,0,0,1,0,0,0,1},
-		{1,1,1,1,1,1,1,1}
-	};
-	int i = 0;
-	while (i < 8)
-	{
-		int j = 0;
-		while (j < 8)
-		{
-			data->scene.map[i][j] = temp_map[i][j];
-			j++;
-		}
-		i++;
-	}*/
-
-
-	
 }
 
 void	init_check(t_check *check)

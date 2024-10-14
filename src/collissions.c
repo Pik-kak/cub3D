@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collissions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:52:25 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/10 15:51:47 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:36:25 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,4 @@ void collisions(t_data *data)
 		data->scene.player.col_left = true;
 	else
 		data->scene.player.col_left = false;
-	/*	if (data->scene.player.col_front)
-		printf("front collision\n");
-	if (data->scene.player.col_right)
-		printf("right collision\n");
-	if (data->scene.player.col_left)
-		printf("left collision\n");
-	if (data->scene.player.col_back)
-		printf("back collision\n");*/
 }

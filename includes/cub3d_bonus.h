@@ -46,16 +46,16 @@
 
 # define ERR_INFILE "Wrong file type"
 # define ERR_ARG "Invalid amount of arguments"
-# define ERR_OPEN "File caannot be opened"
+# define ERR_OPEN "File cannot be opened"
 # define ERR_MALLOC "Malloc error"
 # define ERR_MLX "MLX error"
 
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-#define PLAYER_SPEED 1.2
+#define PLAYER_SPEED 2.2
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 64
+#define BLOCK_SIZE 128
 #define GRID_GAP 1
 #define FOV PI / 3;
 
@@ -165,7 +165,7 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check);
 void	allocate_map(t_data *data);
 void	check_player(t_data *data);
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
-void fill_maze_if_spaces(t_data *data);
+void 	fill_maze_if_spaces(t_data *data);
 
 //Map drawing
 void	draw_scene(t_data *data);
@@ -173,6 +173,8 @@ void	draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle);
 
 int		pixel_ok(t_data *data, int x, int y);
 void	draw_ceiling_and_floor(t_data *data);
+int		adjust_opacity(int color, float opacity);
+uint32_t	get_colour(int rgb[3]);
 
 
 

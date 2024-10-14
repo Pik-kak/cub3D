@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/09 12:54:05 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:37:15 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void fill_map(t_data *data, t_check *check)
 	row++;
 	while(lines < check->cur_file_line)
 	{
-		printf("line %d; %s\n", lines, line);
 		line = get_next_line(data->fd);
 		free(line);
 		lines++;
@@ -101,7 +100,6 @@ void fill_map(t_data *data, t_check *check)
 			break;
 		if (*line == '\n' && check->map_lines > 0)
 			ft_free_data_and_error(data, "invalid file, empty line in map");
-		//fill_row(data, line, row);
 		free(line);
 		check->map_lines--;
 		row++;
