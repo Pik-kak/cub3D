@@ -212,4 +212,7 @@ void	ft_error(char *error);
 void	ft_free_data_and_error(t_data *data, char *error);
 void	ft_free_double_array(char **array);
 
+//textures
+void	get_textures(t_data *data);
+
 #endif
