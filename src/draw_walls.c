@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/14 10:27:47 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/16 16:14:35 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 }
 =======
 //Util function to get color from an image
-/*uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
+uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
 {
 	int pixel_index = (tex_y * image->width + tex_x) * 4;// Assuming each pixel is 4 bytes (RGBA)
 
