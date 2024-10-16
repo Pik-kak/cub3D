@@ -231,7 +231,6 @@ void draw_scene(t_data *data)
 	/*data->mimimap_image = mlx_new_image(data->m, data->s_width, data->s_height);
 	if (!data->mimimap_image)
 		ft_free_data_and_error(data, "MLX error");*/
-	draw_background(bg, COL_BLACK);
 	collisions(data);
 	cast_rays(data, data->image);
 	//draw_flaslight(data);

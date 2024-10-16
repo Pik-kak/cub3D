@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/14 10:25:23 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/16 16:07:36 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
-
-void	get_textures(t_data *data)
-{
-	data->txtrs = ft_calloc(1, sizeof(struct s_textures));
-	data->txtrs->no = mlx_load_png("./textures/wall_txtr.png");//data->scene.no);
-	data->txtrs->so = mlx_load_png("./textures/wall_txtr.png");//data->scene.so);
-	data->txtrs->ea = mlx_load_png("./textures/wall_txtr.png");//data->scene.ea);
-	data->txtrs->we = mlx_load_png("./textures/wall_txtr.png");//data->scene.we);
-	get_images(data);
-}
 
 void	get_images(t_data *data)
 {
@@ -34,3 +24,14 @@ void	get_images(t_data *data)
 	mlx_delete_texture(data->txtrs->ea);
 	mlx_delete_texture(data->txtrs->we);
 }
+
+void	get_textures(t_data *data)
+{
+	data->txtrs = ft_calloc(1, sizeof(struct s_textures));
+	data->txtrs->no = mlx_load_png("textures/scaled_test_txtr.png");//data->scene.no);
+	data->txtrs->so = mlx_load_png("textures/scaled_test_txtr.png");//data->scene.so);
+	data->txtrs->ea = mlx_load_png("textures/scaled_test_txtr.png");//data->scene.ea);
+	data->txtrs->we = mlx_load_png("textures/scaled_test_txtr.png");//data->scene.we);
+	get_images(data);
+}
+
