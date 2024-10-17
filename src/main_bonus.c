@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/14 11:30:54 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/17 17:00:13 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	main(int argc, char **argv)
 		if (!data->m)
 			ft_free_data_and_error(data, "MLX error");
 		init_window(data);
+		get_textures(data);
 		mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_key_hook(data->m, &my_keyhook2, data);
 		mlx_loop(data->m);

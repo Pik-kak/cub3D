@@ -6,7 +6,7 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/14 10:29:14 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/17 23:19:58 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,33 +163,12 @@ int	cast_one_ray(t_data *data, double ray_angle, double x, double y)
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
+		data->tex_x = (int)(ray.rxry[1]) % BLOCK_SIZE;
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-		//draw_line(data, &ray, 1, ray_angle);
+		data->tex_x = (int)(ray.rxry[1]) % BLOCK_SIZE;
 	}
-	return (ret_dist);
+		return (ret_dist);
 }
-
-/*int	cast_one_ray(t_data *data, double ray_angle, double x, double y)
-{
-	t_ray	ray;
-	int		ret_dist;
-
-	init_ray(data, &ray, ray_angle);
-	horizontal_cast(&ray, ray_angle);
-	vertical_cast(&ray, ray_angle);
-	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
-	{
-		ret_dist = ray.dist_h;
-	//	data->tex_x = (ray.rxry[0] - floor(ray.rxry[0] / BLOCK_SIZE) * BLOCK_SIZE) * BLOCK_SIZE; // Assuming texture_width is the width of your texture
-	}
-	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
-	{
-		ret_dist = ray.dist_v;
-	//	data->tex_x = (ray.rxry[0] - floor(ray.rxry[0] / BLOCK_SIZE) * BLOCK_SIZE) * BLOCK_SIZE;
-		//draw_line(data, &ray, 1, ray_angle);
-	}
-	return (ret_dist);
-}*/
