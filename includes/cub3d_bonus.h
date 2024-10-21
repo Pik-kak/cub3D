@@ -151,7 +151,7 @@ typedef struct s_data
 
 
 //Map parsing
-int		check_file_type(t_data *data, t_check *check);
+int		check_filetype(char *filename, char *filetype);
 void	check_and_parse_file(t_data *data, t_check *check);
 void	parse_file_for_walls_and_colours(t_data *data, t_check *check);
 void	fill_map(t_data *data, t_check *check);
