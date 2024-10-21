@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/09 09:58:05 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:24:32 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,6 @@ void allocate_map(t_data *data, t_check *check)
 		row++;
 	}
 }
-
-
-
-
-/*
-Checks that the file type ends with .cub
-*/
-int	check_file_type(t_data *data, t_check *check)
-{
-	char			*file_name;
-	char			*file_type;
-	unsigned int	i;
-
-	i = 0;
-	file_type = ".cub";
-	file_name = ft_strrchr(data->file, '.');
-	if (!file_name)
-		return (ERROR);
-	while (file_name[i] != '\0' && file_type[i] == file_name[i])
-		i++;
-	return (file_name[i] - file_type[i]);
-}
-
 
 void set_player_position(t_player *player, int dir, int i, int ii)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/17 17:00:13 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:15:19 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void parse(t_data *data)
 
 	check = (t_check *)malloc(sizeof (t_check));
 	init_check(check);
-	if (check_file_type(data, check) != 0)
+	if (check_filetype(data->file, ".cub") != 0)
 	{
 		free(data);
 		ft_error("Wrong file type");

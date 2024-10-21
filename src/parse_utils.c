@@ -3,34 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/11 12:54:58 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:24:52 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
 /*
-rgb to hexadecimal 
+Checks that the file type ends with .cub
 */
-
-int	check_file_type(t_data *data, t_check *check)
+int	check_filetype(char *filename, char *filetype)
 {
-	char			*file_name;
-	char			*file_type;
+	char			*file_end;
 	unsigned int	i;
 
 	i = 0;
-	file_type = ".cub";
-	file_name = ft_strrchr(data->file, '.');
-	if (!file_name)
+	file_end = ft_strrchr(filename, '.');
+	if (!file_end)
 		return (ERROR);
-	while (file_name[i] != '\0' && file_type[i] == file_name[i])
+	while (file_end[i] != '\0' && filetype[i] == file_end[i])
 		i++;
-	return (file_name[i] - file_type[i]);
+	return (file_end[i] - filetype[i]);
 }
+
+/*
+rgb to hexadecimal 
+*/
 
 unsigned int rgb_to_hex(int r, int g, int b, int alpha)
 {
