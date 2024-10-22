@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/21 15:29:04 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:02:12 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_directory(char *file)
 {
 	int	fd;
 
-	fd = open(file, O_DIRECTORY);
+	fd = open(file, __O_DIRECTORY);
 	if (fd >= 0)
 	{
 		close (fd);
@@ -56,10 +56,10 @@ void	get_textures(t_data *data)
 {
 	data->txtrs = ft_calloc(1, sizeof(struct s_textures));
 	check_texture_file(data, data->scene.no);
-	data->txtrs->no = mlx_load_png("textures/wall.png");//data->scene.no);
-	data->txtrs->so = mlx_load_png("textures/wall.png");//data->scene.so);
-	data->txtrs->ea = mlx_load_png("textures/wall.png");//data->scene.ea);
-	data->txtrs->we = mlx_load_png("textures/wall.png");//data->scene.we);
+	data->txtrs->no = mlx_load_png(data->scene.no);
+	data->txtrs->so = mlx_load_png(data->scene.so);
+	data->txtrs->ea = mlx_load_png(data->scene.ea);
+	data->txtrs->we = mlx_load_png(data->scene.we);
 	get_images(data);
 }
 

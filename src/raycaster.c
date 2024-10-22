@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/17 23:19:58 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:03:55 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ bool check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
 	by calling check_if_wall_found function, which sets total length of ray to struct 
  */
 
-void horizontal_cast(t_ray *ray, double ray_angle)
+void horizontal_cast(t_ray *ray)
 {
 	int size;
 	int grid_x;
 	int grid_y;
 
 	size = ray->cols + ray->rows;
-	check_direction_horizontal(ray, ray_angle);
+	check_direction_horizontal(ray, ray->angle);
 	while (size > 0)
 	{
 		grid_x = (int)(ray->rxry[0] / BLOCK_SIZE);
@@ -123,14 +123,14 @@ void horizontal_cast(t_ray *ray, double ray_angle)
 	by calling check_if_wall_found function, which sets total length of ray to struct 
  */
 
-void vertical_cast(t_ray *ray, double ray_angle)
+void vertical_cast(t_ray *ray)
 {
 	int size;
 	int grid_x;
 	int grid_y;
 
 	size = ray->cols + ray->rows;
-	check_direction_vertical(ray, ray_angle);
+	check_direction_vertical(ray, ray->angle);
 	while (size > 0)
 	{
 		grid_x = (int)(ray->rxry[0] / BLOCK_SIZE);
@@ -152,23 +152,53 @@ void vertical_cast(t_ray *ray, double ray_angle)
 		first it casts ray to find wall in horizontal block sides, then vertical and 
 		draws ray to which ray is shorter and nearer player.
 */
-int	cast_one_ray(t_data *data, double ray_angle, double x, double y)
+void	cast_one_ray(t_data *data, t_ray *ray)
 {
-	t_ray	ray;
+	int		ret_dist;
+
+	horizontal_cast(ray);
+	vertical_cast(ray);
+	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
+	{
+		ray->dist = ray->dist_h;
+		ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;
+		if (ray->angle > PI * 3 / 2 && ray->angle > PI / 2)
+			ray->wall = data->walls->we;
+		else
+			ray->wall = data->walls->ea; 
+	}
+	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
+	{
+		ray->dist = ray->dist_v;
+		data->tex_x = (int)(ray->rxry[0]) % BLOCK_SIZE;
+		if (ray->angle > PI)
+		{
+			ray->wall = data->walls->no;
+		}
+		else
+		{
+			ray->wall = data->walls->so;
+		}
+			
+	}
+}
+
+int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
+{
+	t_ray 	ray;
 	int		ret_dist;
 
 	init_ray(data, &ray, ray_angle);
-	horizontal_cast(&ray, ray_angle);
-	vertical_cast(&ray, ray_angle);
+	
+	horizontal_cast(&ray);
+	vertical_cast(&ray);
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
-		data->tex_x = (int)(ray.rxry[1]) % BLOCK_SIZE;
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-		data->tex_x = (int)(ray.rxry[1]) % BLOCK_SIZE;
 	}
-		return (ret_dist);
+	return (ret_dist);
 }

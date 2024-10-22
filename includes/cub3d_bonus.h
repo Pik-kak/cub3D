@@ -55,7 +55,7 @@
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 2.2
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 128
+#define BLOCK_SIZE 32
 #define GRID_GAP 1
 #define FOV PI / 3;
 
@@ -66,18 +66,26 @@ typedef struct	s_point
 	int y;
 } t_point;
 
+
 typedef struct s_ray
 {
+	float	angle;
 	int		**map;
 	double	pxpy[2];
-	double	rxry[2];
+	double	rxry[2];   //point where ray finds wall
 	double	xoyo[2];
 	int		dist_v;
 	int		dist_h;
+	int		dist;
 	int		cols;
 	int		rows;
+	mlx_image_t		*wall;
+	double dist_to_next_hor;  // Precomputed distance to next horizontal grid line
+	double dist_to_next_ver;  // Precomputed distance to next vertical grid line
+	int		dir_hor;
+	int		dir_ver;
+	double	tex_x;
 }	t_ray;
-
 typedef struct s_check
 {
 	int	player_count;
@@ -128,6 +136,8 @@ typedef struct s_scene
 	int			ceiling;
 	int			ceiling_rgb[3];
 	int			floor_rgb[3];
+	uint32_t	col_floor;
+	uint32_t	col_ceiling;
 	int			cols;
 	int			rows;
 	int			minimap_status;
@@ -189,8 +199,9 @@ void	init_check(t_check *check);
 //raycasting
 double	normalize_angle(double angle);
 void	raycaster(t_data *data);
-int		cast_one_ray(t_data *data, double ray_angle, double x, double y);
+void	cast_one_ray(t_data *data, t_ray *ray);
 int		cast_rays(t_data *data, mlx_image_t *img);
+int	cast_collission_ray(t_data *data, double ray_angle, double x, double y);
 
 //player handling
 void	collisions(t_data *data);
