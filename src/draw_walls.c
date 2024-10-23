@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/22 12:48:04 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/22 17:59:29 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
 	}
 }
 
-int cast_rays(t_data *data, mlx_image_t *image)
+int cast_rays(t_data *data)
 {
 	int     nbr_of_rays;
 	double  ray_angle;
@@ -150,7 +150,7 @@ float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end, flo
 	opac = fmax(0.0f, 1.0f - (distance_from_center / 1000)); // Ensure opacity does not go below 0
 
 	// Limit the maximum opacity based on distance (further away walls have reduced opacity)
-	float max_distance = 1000.0f; // Set a maximum distance threshold
+	float max_distance = 1000.0f; //	double		tex_x; Set a maximum distance threshold
 	float distance_factor = fmin(distance / max_distance, 1.0f); // Normalize distance to [0, 1]
 	vert_opac = 1.0f - (fabs((float)(i - start - (end - start) * shift) / (end - start)) * 0.5);
 
@@ -162,14 +162,14 @@ float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 {
 	float distance_from_center;
 	float opac;
-	float vert_opac;
+	float vert_opac;	double		tex_x;
 
 	distance_from_center = fabs((float)nbr_of_rays / 2 - (float)ray);
 	opac = 1 - (distance_from_center / 1000);
 	vert_opac = 1 - (fabs((float)(i - start) / (end - start)) * 0.5);
 	return opac * vert_opac;
 }
-
+	double		tex_x;
 void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height, float distance)
 {
 	int i;
@@ -215,7 +215,7 @@ void	calculate_measurements(t_data *data, int wall_height, int *start, int *end)
 
 float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 {
-	float distance_from_center;
+	float distance_from_center;	double		tex_x;
 	float opac;
 	float vert_opac;
 	float shift;

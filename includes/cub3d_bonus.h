@@ -55,7 +55,7 @@
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 2.2
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 32
+#define BLOCK_SIZE 256
 #define GRID_GAP 1
 #define FOV PI / 3;
 
@@ -156,7 +156,6 @@ typedef struct s_data
 	char		*file;
 	int			fd;
 	t_scene		scene;
-	double		tex_x;
 }	t_data;
 
 
@@ -200,7 +199,7 @@ void	init_check(t_check *check);
 double	normalize_angle(double angle);
 void	raycaster(t_data *data);
 void	cast_one_ray(t_data *data, t_ray *ray);
-int		cast_rays(t_data *data, mlx_image_t *img);
+int		cast_rays(t_data *data);
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y);
 
 //player handling

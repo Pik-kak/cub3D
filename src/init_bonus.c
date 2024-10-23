@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/22 12:46:58 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:06:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ void	init_check(t_check *check)
 
 void	init_data(t_data *data, char **argv)
 {
+	data->m = NULL;
+	data->image = NULL;
+	data->mimimap_image = NULL;
+	data->txtr = NULL;
+	data->walls = NULL;
 	data->file = argv[1];
 	data->s_height = 1080;
 	data->s_width = 1920;
@@ -105,4 +110,6 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->wall = 0;
 	ray->dir_hor = 0;
 	ray->dir_ver = 0;
+	ray->tex_x = 0;
+	
 }

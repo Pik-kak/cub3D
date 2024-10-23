@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/22 13:03:55 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:08:47 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 void	check_direction_horizontal(t_ray *ray, double ray_angle)
 {
 	double	a_tan;
+	double	floored;
 
+	floored = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE;
 	a_tan = -1 / tan(ray_angle);
 	if (ray_angle > PI)
 	{
-		ray->rxry[1] = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE - 0.0001;
+		ray->rxry[1] = floored - 0.0001;
 		ray->rxry[0] = (ray->pxpy[1] - ray->rxry[1]) * a_tan + ray->pxpy[0];
 		ray->xoyo[1] = -BLOCK_SIZE;
 		ray->xoyo[0] = -(ray->xoyo[1]) * a_tan;
 	}
 	else if (ray_angle < PI)
 	{
-		ray->rxry[1] = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE + BLOCK_SIZE;
+		ray->rxry[1] = floored + BLOCK_SIZE;
 		ray->rxry[0] = (ray->pxpy[1] - ray->rxry[1]) * a_tan + ray->pxpy[0];
 		ray->xoyo[1] = BLOCK_SIZE;
 		ray->xoyo[0] = -(ray->xoyo[1]) * a_tan;
@@ -49,23 +51,25 @@ void	check_direction_horizontal(t_ray *ray, double ray_angle)
 void	check_direction_vertical(t_ray *ray, double ray_angle)
 {
 	double	n_tan;
-
+	double floored;
+	
+	floored = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE;
 	n_tan = -tan(ray_angle);
-	if (fabs(ray_angle - 0.5 * PI) < 0.001 || fabs(ray_angle - 1.5 * PI) < 0.001) //looking up or down
+	if (fabs(ray_angle - 0.5 * PI) < 0.0001 || fabs(ray_angle - 1.5 * PI) < 0.0001) //looking up or down
 	{
 		ray->rxry[0] = ray->pxpy[0];
 		ray->rxry[1] = ray->pxpy[1];
 	} 
 	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)  // looking east
 	{
-		ray->rxry[0] = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE + BLOCK_SIZE;  
+		ray->rxry[0] = floored + BLOCK_SIZE;  
 		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
 		ray->xoyo[0] = BLOCK_SIZE;
 		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
 	} 
 	else
 	{
-		ray->rxry[0] = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE - 0.0001;
+		ray->rxry[0] = floored - 0.0001;
 		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
 		ray->xoyo[0] = -BLOCK_SIZE;
 		ray->xoyo[1] = -(ray->xoyo[0]) * n_tan;
@@ -154,30 +158,34 @@ void vertical_cast(t_ray *ray)
 */
 void	cast_one_ray(t_data *data, t_ray *ray)
 {
-	int		ret_dist;
-
 	horizontal_cast(ray);
 	vertical_cast(ray);
 	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
 	{
 		ray->dist = ray->dist_h;
-		ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;
-		if (ray->angle > PI * 3 / 2 && ray->angle > PI / 2)
-			ray->wall = data->walls->we;
+		if (ray->angle > 0 && ray->angle < PI)
+		{
+			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->so->width / BLOCK_SIZE);
+			ray->wall = data->walls->so;
+		}
 		else
-			ray->wall = data->walls->ea; 
+		{
+			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->no->width / BLOCK_SIZE);
+			ray->wall = data->walls->no; 
+		}
 	}
 	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
 	{
 		ray->dist = ray->dist_v;
-		data->tex_x = (int)(ray->rxry[0]) % BLOCK_SIZE;
-		if (ray->angle > PI)
+		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
 		{
-			ray->wall = data->walls->no;
+			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->ea->width / BLOCK_SIZE);
+			ray->wall = data->walls->ea;
 		}
 		else
 		{
-			ray->wall = data->walls->so;
+			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->we->width / BLOCK_SIZE);
+			ray->wall = data->walls->we;
 		}
 			
 	}

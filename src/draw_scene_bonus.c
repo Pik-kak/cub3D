@@ -198,65 +198,20 @@ void draw_player(t_data *data)
 //this makes now different image for minimap , works with TAB
 
 
-static void	draw_background(mlx_image_t *image, int32_t col)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < (int)image->width)
-	{
-		y = -1;
-		while (++y < HEIGHT)
-			mlx_put_pixel(image, x, y, col);
-		x++;
-	}
-}
-
 
 void draw_scene(t_data *data) 
 {
-	
-	mlx_image_t *bg;
-	//mlx_delete_image(data->m, data->mimimap_image);
-	mlx_delete_image(data->m, data->image);
-
+	data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
+	if (!data->m)
+		ft_free_data_and_error(data, "MLX error");
+	init_window(data);
 	data->image = mlx_new_image(data->m, data->s_width, data->s_height);
-	bg = mlx_new_image(data->m, data->s_width, data->s_height);
-	
 	if (!data->image)
 		ft_free_data_and_error(data, "MLX error");
-
-
-	/*data->mimimap_image = mlx_new_image(data->m, data->s_width, data->s_height);
-	if (!data->mimimap_image)
-		ft_free_data_and_error(data, "MLX error");*/
-	collisions(data);
-	cast_rays(data, data->image);
-	//draw_flaslight(data);
-	//draw_minimap(data);
-	//draw_player(data);
-	if (mlx_image_to_window(data->m, bg, 0, 0) == -1)
-	{
-		mlx_delete_image(data->m, bg);
-		ft_free_data_and_error(data, "MLX error");
-	}
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1)
 	{
 		mlx_delete_image(data->m, data->image);
 		ft_free_data_and_error(data, "MLX error");
 	}
-	/*	if (mlx_image_to_window(data->m, data->mimimap_image, 0, 0) == -1)
-	{
-		mlx_delete_image(data->m, data->image);
-		mlx_delete_image(data->m, data->mimimap_image);
-		ft_free_data_and_error(data, "MLX error");
-	}
-	mlx_set_instance_depth(&data->mimimap_image->instances[0], data->scene.minimap_status);*/
-	mlx_set_instance_depth(&bg->instances[0], 1);
-	mlx_set_instance_depth(&data->image->instances[0], 2);
-	mlx_delete_image(data->m, bg);
 }
-
-
 
