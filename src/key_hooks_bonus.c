@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/14 10:42:17 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:30:41 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,33 @@ void turn_player(t_player *player, double angle)
 	player->dposy = sin(player->direction) * 5;
 }
 
+/*void	my_keyhook(void *param)
+{
+	t_data	*data;
+
+	data = param;
+	if (mlx_is_key_down(data->m, MLX_KEY_W))
+		move_player_forward(&data->scene.player);
+	if (mlx_is_key_down(data->m, MLX_KEY_S))
+		move_player_backward(&data->scene.player);
+	if (mlx_is_key_down(data->m, MLX_KEY_D))
+		move_player_right(&data->scene.player);
+	if (mlx_is_key_down(data->m, MLX_KEY_A))
+		move_player_left(&data->scene.player);
+	if (mlx_is_key_down(data->m, MLX_KEY_LEFT))
+		turn_player(&data->scene.player, -0.1);
+	if (mlx_is_key_down(data->m, MLX_KEY_RIGHT))
+		turn_player(&data->scene.player, 0.1);
+	if (mlx_is_key_down(data->m, MLX_KEY_ESCAPE))
+		ft_free_data_and_exit(data);
+	collisions(data);
+	cast_rays(data);
+	if (data->scene.minimap_status == 3)
+		draw_minimap(data);
+	my_mouse_hook(param);
+}*/
+
+
 void	my_keyhook(void *param)
 {
 	t_data	*data;
@@ -153,6 +180,7 @@ void	my_keyhook(void *param)
 	my_mouse_hook(param);
 	draw_scene(data);
 }
+
 
 
 void my_keyhook2(mlx_key_data_t keydata, void* param)

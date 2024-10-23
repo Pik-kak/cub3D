@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/21 15:15:19 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:30:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ void parse(t_data *data)
 	//print_parsing(data, check);
 }
 
+
+
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -133,3 +136,24 @@ int	main(int argc, char **argv)
 	}
 	ft_free_data_and_exit(data);
 }
+
+
+
+/*int	main(int argc, char **argv)
+{
+	t_data	*data;
+
+	if (argc != 2)
+		ft_error("Invalid amount of arguments");
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		ft_error("malloc error");
+	init_data(data, argv);
+	parse(data);
+	draw_scene(data);
+	mlx_loop_hook(data->m, my_keyhook, data);
+	mlx_key_hook(data->m, &my_keyhook2, data);
+	mlx_loop(data->m);
+	mlx_terminate(data->m);
+	ft_free_data_and_exit(data);
+}*/

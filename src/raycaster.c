@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/17 23:19:58 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:07:23 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 void	check_direction_horizontal(t_ray *ray, double ray_angle)
 {
 	double	a_tan;
+	double	floored;
 
+	floored = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE;
 	a_tan = -1 / tan(ray_angle);
 	if (ray_angle > PI)
 	{
-		ray->rxry[1] = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE - 0.0001;
+		ray->rxry[1] = floored - 0.0001;
 		ray->rxry[0] = (ray->pxpy[1] - ray->rxry[1]) * a_tan + ray->pxpy[0];
 		ray->xoyo[1] = -BLOCK_SIZE;
 		ray->xoyo[0] = -(ray->xoyo[1]) * a_tan;
 	}
 	else if (ray_angle < PI)
 	{
-		ray->rxry[1] = floor(ray->pxpy[1] / BLOCK_SIZE) * BLOCK_SIZE + BLOCK_SIZE;
+		ray->rxry[1] = floored + BLOCK_SIZE;
 		ray->rxry[0] = (ray->pxpy[1] - ray->rxry[1]) * a_tan + ray->pxpy[0];
 		ray->xoyo[1] = BLOCK_SIZE;
 		ray->xoyo[0] = -(ray->xoyo[1]) * a_tan;
@@ -49,23 +51,25 @@ void	check_direction_horizontal(t_ray *ray, double ray_angle)
 void	check_direction_vertical(t_ray *ray, double ray_angle)
 {
 	double	n_tan;
-
+	double floored;
+	
+	floored = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE;
 	n_tan = -tan(ray_angle);
-	if (fabs(ray_angle - 0.5 * PI) < 0.001 || fabs(ray_angle - 1.5 * PI) < 0.001) //looking up or down
+	if (fabs(ray_angle - 0.5 * PI) < 0.0001 || fabs(ray_angle - 1.5 * PI) < 0.0001) //looking up or down
 	{
 		ray->rxry[0] = ray->pxpy[0];
 		ray->rxry[1] = ray->pxpy[1];
 	} 
 	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)  // looking east
 	{
-		ray->rxry[0] = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE + BLOCK_SIZE;  
+		ray->rxry[0] = floored + BLOCK_SIZE;  
 		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
 		ray->xoyo[0] = BLOCK_SIZE;
 		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
 	} 
 	else
 	{
-		ray->rxry[0] = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE - 0.0001;
+		ray->rxry[0] = floored - 0.0001;
 		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
 		ray->xoyo[0] = -BLOCK_SIZE;
 		ray->xoyo[1] = -(ray->xoyo[0]) * n_tan;
@@ -95,14 +99,14 @@ bool check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
 	by calling check_if_wall_found function, which sets total length of ray to struct 
  */
 
-void horizontal_cast(t_ray *ray, double ray_angle)
+void horizontal_cast(t_ray *ray)
 {
 	int size;
 	int grid_x;
 	int grid_y;
 
 	size = ray->cols + ray->rows;
-	check_direction_horizontal(ray, ray_angle);
+	check_direction_horizontal(ray, ray->angle);
 	while (size > 0)
 	{
 		grid_x = (int)(ray->rxry[0] / BLOCK_SIZE);
@@ -123,14 +127,14 @@ void horizontal_cast(t_ray *ray, double ray_angle)
 	by calling check_if_wall_found function, which sets total length of ray to struct 
  */
 
-void vertical_cast(t_ray *ray, double ray_angle)
+void vertical_cast(t_ray *ray)
 {
 	int size;
 	int grid_x;
 	int grid_y;
 
 	size = ray->cols + ray->rows;
-	check_direction_vertical(ray, ray_angle);
+	check_direction_vertical(ray, ray->angle);
 	while (size > 0)
 	{
 		grid_x = (int)(ray->rxry[0] / BLOCK_SIZE);
@@ -152,23 +156,58 @@ void vertical_cast(t_ray *ray, double ray_angle)
 		first it casts ray to find wall in horizontal block sides, then vertical and 
 		draws ray to which ray is shorter and nearer player.
 */
-int	cast_one_ray(t_data *data, double ray_angle, double x, double y)
+void	cast_one_ray(t_data *data, t_ray *ray)
 {
-	t_ray	ray;
+	horizontal_cast(ray);
+	vertical_cast(ray);
+	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
+	{
+		ray->dist = ray->dist_h;
+		if (ray->angle > 0 && ray->angle < PI)
+		{
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;
+			ray->wall = data->walls->so;
+		}
+		else
+		{
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;
+			ray->wall = data->walls->no; 
+		}
+	}
+	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
+	{
+		ray->dist = ray->dist_v;
+		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
+		{
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;;
+			ray->wall = data->walls->ea;
+		}
+		else
+		{
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;
+			//ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->we->width / BLOCK_SIZE);
+			ray->wall = data->walls->we;
+		}
+			
+	}	
+}
+
+int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
+{
+	t_ray 	ray;
 	int		ret_dist;
 
 	init_ray(data, &ray, ray_angle);
-	horizontal_cast(&ray, ray_angle);
-	vertical_cast(&ray, ray_angle);
+	
+	horizontal_cast(&ray);
+	vertical_cast(&ray);
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
-		data->tex_x = (int)(ray.rxry[1]) % BLOCK_SIZE;
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
-		data->tex_x = (int)(ray.rxry[1]) % BLOCK_SIZE;
 	}
-		return (ret_dist);
+	return (ret_dist);
 }

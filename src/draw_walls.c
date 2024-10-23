@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/17 23:28:38 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:39:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
 	return (r << 24 | g << 16 | b << 8 | a);// Combine the color channels into a single 32-bit value
 }
 
-void	draw_texture(t_data *data, int ray, int start, int end, int wall_height, mlx_image_t *image, int i)
+void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, int wall_height, mlx_image_t *image, int i)
 {
 	double		step;//Tells us how much to move along the texture for each pixel we draw. It's calculated by dividing the height of the texture (image->height) by the height of the wall slice (wall_height).
 	double		tex_start;//the starting position in the texture
@@ -65,64 +65,63 @@ void	draw_texture(t_data *data, int ray, int start, int end, int wall_height, ml
 		else
 			tex_y = (int)tex_start;
 		tex_start += step;  // Move to the next pixel in texture
-		color = get_image_color(image, data->tex_x, tex_y);  // Get the color from the texture
-		if (pixel_ok(data, ray, i))
-			mlx_put_pixel(data->image, ray, i, color);  // Draw the pixel onto the screen
+		color = get_image_color(image, ray->tex_x, tex_y);  // Get the color from the texture
+		if (pixel_ok(data, ray_count, i))
+			mlx_put_pixel(data->image, ray_count, i, color);  // Draw the pixel onto the screen
 		i++;
 	}
 }
 
-void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height)
+void draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
 {
 	int i;
 	int start;
 	int end;
-	float final_opac;
-
+	
 	i = 0;
 	calculate_measurements(data, wall_height, &start, &end);
+	
 	while (i < data->s_height)
 	{
-		//mlx_put_pixel(data->image, ray, i, COL_BG);//?
 		if (i < start)
 		{
-			if (pixel_ok(data, ray, i))
-				mlx_put_pixel(data->image, ray, i, adjust_opacity(get_colour(data->scene.ceiling_rgb), 0.8));
+			if (pixel_ok(data, ray_count, i))
+				mlx_put_pixel(data->image, ray_count, i, data->scene.col_ceiling);
 		}
 		else if (i >= start && i <= end)
 		{
-			final_opac = calculate_opacity(ray, nbr_of_rays, start, end);
-			draw_texture(data, ray, start, end, wall_height, data->walls->no, i);
-			i = end;
+			draw_texture(data, ray, ray_count, start, end, wall_height, ray->wall, i);
+			i = end + 1;
 		}
 		else
-			if (pixel_ok(data, ray, i))
-				mlx_put_pixel(data->image, ray, i, adjust_opacity(get_colour(data->scene.floor_rgb), 0.8));
+			if (pixel_ok(data, ray_count, i))
+				mlx_put_pixel(data->image, ray_count, i, data->scene.col_floor);
 		i++;
 	}
 }
 
-int	cast_rays(t_data *data, mlx_image_t *image)
+int cast_rays(t_data *data)
 {
-	int		nbr_of_rays;
-	double	ray_angle;
-	double	angle_step;
-	int		i;
-	int		dist;
-	int		wall_height;
+	int     nbr_of_rays;
+	double  ray_angle;
+	double  angle_step;
+	int     ray_count;
+	int     wall_height;
+	t_ray   ray;
 
-	nbr_of_rays = data->s_width;//Number of rays corresponds to screen width
-	angle_step = (PI / 3) / (nbr_of_rays);//Divide FOV into equal slices for each ray. FOV is 60degrees
-	i = 0;
-	while(i <= (data->s_width))
+	nbr_of_rays = data->s_width; 
+	angle_step = PI / 3 / nbr_of_rays; 
+	ray_count = 0;
+	while (ray_count < data->s_width)
 	{
-		ray_angle = normalize_angle(data->scene.player.direction - (PI / 3 / 2) + (i * angle_step));//Calculate ray angle starting from the left-most point of the FOV
-		dist = cast_one_ray(data, ray_angle, data->scene.player.px, data->scene.player.py);
-		ray_angle = normalize_angle((data->scene.player.direction - ray_angle));//find distance between the player angle and ray angle
-		dist = dist*cos(ray_angle);//multiply the ray distance with the cosin of the new angle
-		wall_height = (BLOCK_SIZE * data->s_height) / (dist);
-		draw_walls(data, i, nbr_of_rays, wall_height);// Draw the wall slice for this ray
-		i++;
+		ray_angle = normalize_angle(data->scene.player.direction - (PI / 3 / 2) + (ray_count * angle_step)); 
+		init_ray(data, &ray, ray_angle);
+		cast_one_ray(data, &ray);
+		ray.angle = normalize_angle((data->scene.player.direction - ray.angle));
+		ray.dist = ray.dist * cos(ray.angle);
+		wall_height = (BLOCK_SIZE * data->s_height) / ray.dist;
+		draw_walls(data, ray_count, &ray, wall_height);
+		ray_count++;
 	}
 	return (SUCCESS);
 }
@@ -151,7 +150,7 @@ float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end, flo
 	opac = fmax(0.0f, 1.0f - (distance_from_center / 1000)); // Ensure opacity does not go below 0
 
 	// Limit the maximum opacity based on distance (further away walls have reduced opacity)
-	float max_distance = 1000.0f; // Set a maximum distance threshold
+	float max_distance = 1000.0f; //	double		tex_x; Set a maximum distance threshold
 	float distance_factor = fmin(distance / max_distance, 1.0f); // Normalize distance to [0, 1]
 	vert_opac = 1.0f - (fabs((float)(i - start - (end - start) * shift) / (end - start)) * 0.5);
 
@@ -163,14 +162,14 @@ float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 {
 	float distance_from_center;
 	float opac;
-	float vert_opac;
+	float vert_opac;	double		tex_x;
 
 	distance_from_center = fabs((float)nbr_of_rays / 2 - (float)ray);
 	opac = 1 - (distance_from_center / 1000);
 	vert_opac = 1 - (fabs((float)(i - start) / (end - start)) * 0.5);
 	return opac * vert_opac;
 }
-
+	double		tex_x;
 void draw_walls(t_data *data, int ray, int nbr_of_rays, int wall_height, float distance)
 {
 	int i;
@@ -216,7 +215,7 @@ void	calculate_measurements(t_data *data, int wall_height, int *start, int *end)
 
 float calculate_opacity(int ray, int nbr_of_rays, int i, int start, int end)
 {
-	float distance_from_center;
+	float distance_from_center;	double		tex_x;
 	float opac;
 	float vert_opac;
 	float shift;

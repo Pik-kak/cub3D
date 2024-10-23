@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/14 15:36:15 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:03:12 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ void	init_check(t_check *check)
 
 void	init_data(t_data *data, char **argv)
 {
+	data->m = NULL;
+	data->image = NULL;
+	data->mimimap_image = NULL;
+	data->txtr = NULL;
+	data->walls = NULL;
 	data->file = argv[1];
 	data->s_height = 1080;
 	data->s_width = 1920;
@@ -87,6 +92,7 @@ void	init_data(t_data *data, char **argv)
 
 void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 {
+	ray->angle = ray_angle;
 	ray->map = data->scene.map;
 	ray->pxpy[0] = data->scene.player.px;
 	ray->pxpy[1] = data->scene.player.py;
@@ -94,8 +100,16 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->rxry[1] = ray->pxpy[1];
 	ray->xoyo[0] = 0;
 	ray->xoyo[1] = 0;
+	ray->dist = 0;
 	ray->dist_h = 0;
 	ray->dist_v = 0;
+	ray->dist_to_next_hor = 0;
+	ray->dist_to_next_ver = 0;
 	ray->cols = data->scene.cols;
 	ray->rows = data->scene.rows;
+	ray->wall = NULL;
+	ray->dir_hor = 0;
+	ray->dir_ver = 0;
+	ray->tex_x = 0;
+	
 }

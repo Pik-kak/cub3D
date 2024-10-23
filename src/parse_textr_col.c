@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/14 13:16:36 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/22 12:36:13 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,5 +200,7 @@ void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
 	if (data->fd < 0)
 		ft_error(ERR_OPEN);
 	check_file_lines(data, check);
+	data->scene.col_ceiling = get_colour(data->scene.ceiling_rgb);
+	data->scene.col_floor = get_colour(data->scene.floor_rgb);
 }
 
