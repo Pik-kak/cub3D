@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/22 18:06:08 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:03:12 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->dist_to_next_ver = 0;
 	ray->cols = data->scene.cols;
 	ray->rows = data->scene.rows;
-	ray->wall = 0;
+	ray->wall = NULL;
 	ray->dir_hor = 0;
 	ray->dir_ver = 0;
 	ray->tex_x = 0;

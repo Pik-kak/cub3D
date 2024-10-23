@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/22 18:08:47 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:07:23 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,12 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 		ray->dist = ray->dist_h;
 		if (ray->angle > 0 && ray->angle < PI)
 		{
-			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->so->width / BLOCK_SIZE);
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;
 			ray->wall = data->walls->so;
 		}
 		else
 		{
-			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->no->width / BLOCK_SIZE);
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;
 			ray->wall = data->walls->no; 
 		}
 	}
@@ -179,16 +179,17 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 		ray->dist = ray->dist_v;
 		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
 		{
-			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->ea->width / BLOCK_SIZE);
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;;
 			ray->wall = data->walls->ea;
 		}
 		else
 		{
-			ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->we->width / BLOCK_SIZE);
+			ray->tex_x = (int)(ray->rxry[1]) % BLOCK_SIZE;;
+			//ray->tex_x = (int)(fmod(ray->rxry[0], BLOCK_SIZE)) * (data->walls->we->width / BLOCK_SIZE);
 			ray->wall = data->walls->we;
 		}
 			
-	}
+	}	
 }
 
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)

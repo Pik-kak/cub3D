@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/22 17:54:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 10:30:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,37 @@ void parse(t_data *data)
 }
 
 
+
+
 int	main(int argc, char **argv)
+{
+	t_data	*data;
+
+	if (argc != 2)
+		ft_error("Invalid amount of arguments");
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		ft_error("malloc error");
+	else
+	{
+		init_data(data, argv);
+		parse(data);
+		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
+		if (!data->m)
+			ft_free_data_and_error(data, "MLX error");
+		init_window(data);
+		get_textures(data);
+		mlx_loop_hook(data->m, my_keyhook, data);
+		mlx_key_hook(data->m, &my_keyhook2, data);
+		mlx_loop(data->m);
+		mlx_terminate(data->m);
+	}
+	ft_free_data_and_exit(data);
+}
+
+
+
+/*int	main(int argc, char **argv)
 {
 	t_data	*data;
 
@@ -126,4 +156,4 @@ int	main(int argc, char **argv)
 	mlx_loop(data->m);
 	mlx_terminate(data->m);
 	ft_free_data_and_exit(data);
-}
+}*/

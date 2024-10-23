@@ -55,7 +55,7 @@
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 2.2
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 256
+#define BLOCK_SIZE 128
 #define GRID_GAP 1
 #define FOV PI / 3;
 
@@ -184,6 +184,7 @@ int		pixel_ok(t_data *data, int x, int y);
 void	draw_ceiling_and_floor(t_data *data);
 int		adjust_opacity(int color, float opacity);
 uint32_t	get_colour(int rgb[3]);
+void draw_minimap(t_data *data);
 
 
 

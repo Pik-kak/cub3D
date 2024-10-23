@@ -92,38 +92,14 @@ void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y)
 	{
 		fill_square(data, img, x, y, COL_LINE);
 	} //get_colour(scene->ceiling_rgb)
-	else
+	else if(scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
+	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
 	{
 		int grey = get_rgba(128, 128, 128, 255);  // Start with a fully opaque grey
         int semi_transparent_grey = adjust_opacity(grey, 0.8);  // Adjust opacity to 50%
 		fill_square(data, img, x, y, semi_transparent_grey);
 	}
 }
-
-
-/* ==============================
- * Draws map tile by tile
- * ==============================
- */
-
-void draw_minimap(t_data *data)
-{
-	int x;
-	int y;
-
-	y = 0;
-	while (y < data->scene.rows)
-	{
-		x = 0;
-		while (x < data->scene.cols)
-		{
-			draw_tile(data, &data->scene, data->mimimap_image, x, y);
-			x++;
-		}
-		y++;
-	}
-}
-
 
 /* ==============================
  * Draws player "body" as circle
@@ -150,7 +126,7 @@ void draw_circle(t_data *data, int radius, int color)
 				int px = cx + x;
 				int py = cy + y;
 				if (pixel_ok(data, px, py))
-					mlx_put_pixel(data->mimimap_image, px, py, color);
+					mlx_put_pixel(data->image, px, py, color);
 			}
 			x++;
 		}
@@ -180,12 +156,13 @@ void draw_nose(t_data *data, int length, int color)
 		c_x = (data->scene.player.px * (BLOCK_SIZE / 6) / BLOCK_SIZE) + (i * cos(dir));
 		c_y = (data->scene.player.py * (BLOCK_SIZE / 6) / BLOCK_SIZE)+ (i * sin(dir));
 		if (pixel_ok(data, c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
-			mlx_put_pixel(data->mimimap_image, c_x + 1 * sin(dir), c_y - 1 * cos(dir), color);
+			mlx_put_pixel(data->image, c_x + 1 * sin(dir), c_y - 1 * cos(dir), color);
 		if (pixel_ok(data, c_x - 1 * sin(dir), c_y + 1 * cos(dir)))
-			mlx_put_pixel(data->mimimap_image, c_x - 1 * sin(dir), c_y + 1 * cos(dir), color);
+			mlx_put_pixel(data->image, c_x - 1 * sin(dir), c_y + 1 * cos(dir), color);
 		i++;
 	}
 }
+
 
 void draw_player(t_data *data)
 {
@@ -193,14 +170,56 @@ void draw_player(t_data *data)
 	draw_nose(data, 8, COL_WHITE);
 }
 
-//if we scale the window we need to be able to scale all images. PROBLEM!
 
-//this makes now different image for minimap , works with TAB
+/* ==============================
+ * Draws map tile by tile
+ * ==============================
+ */
 
+
+void draw_minimap(t_data *data)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < data->scene.rows)
+	{
+		x = 0;
+		while (x < data->scene.cols)
+		{
+			draw_tile(data, &data->scene, data->image, x, y);
+			x++;
+		}
+		y++;
+	}
+	draw_player(data);
+}
 
 
 void draw_scene(t_data *data) 
 {
+	mlx_delete_image(data->m, data->image);
+	data->image = mlx_new_image(data->m, data->s_width, data->s_height);
+	if (!data->image)
+		ft_free_data_and_error(data, "MLX error");
+	collisions(data);
+	cast_rays(data);
+	if (data->scene.minimap_status == 3)
+		draw_minimap(data);
+	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1)
+	{
+		mlx_delete_image(data->m, data->image);
+		ft_free_data_and_error(data, "MLX error");
+	}
+	mlx_set_instance_depth(&data->image->instances[0], 2);
+}
+
+
+
+
+/*void draw_scene(t_data *data) 
+{	
 	data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 	if (!data->m)
 		ft_free_data_and_error(data, "MLX error");
@@ -208,10 +227,16 @@ void draw_scene(t_data *data)
 	data->image = mlx_new_image(data->m, data->s_width, data->s_height);
 	if (!data->image)
 		ft_free_data_and_error(data, "MLX error");
+	else if (data->scene.minimap_status == 1 && data->mimimap_image)
+	{
+		mlx_delete_image(data->m, data->mimimap_image);
+		data->mimimap_image = NULL;
+	}
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1)
 	{
 		mlx_delete_image(data->m, data->image);
 		ft_free_data_and_error(data, "MLX error");
 	}
+	//mlx_set_instance_depth(&data->image->instances[0], 2);
 }
-
+*/
