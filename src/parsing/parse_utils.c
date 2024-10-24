@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/24 11:47:58 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/24 14:53:14 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,49 +98,4 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	flood_fill(data, size, (t_point){cur.x, cur.y + 1}, to_fill);
 }
 
-
-
-/*int	fill(int **matrix, t_point size, t_point cur, int to_fill)
-{
-	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x || matrix[cur.y][cur.x] != to_fill)
-		return (0);
-
-	matrix[cur.y][cur.x] = 2;
-	fill(matrix, size, (t_point){cur.x - 1, cur.y}, to_fill);
-	fill(matrix, size, (t_point){cur.x + 1, cur.y}, to_fill);
-	fill(matrix, size, (t_point){cur.x, cur.y - 1}, to_fill);
-	fill(matrix, size, (t_point){cur.x, cur.y + 1}, to_fill);
-	return (0);
-}*/
-
-/*int fill(t_data *data, int **matrix, t_fpoint size, t_fpoint cur, int to_fill)
-{
-	
-	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x  || matrix[cur.x][cur.y] != 32)
-		return (0);
-	//if (matrix[cur.y][cur.x] != to_fill && matrix[cur.y][cur.x] != 1)
-	//	return (1);
-	if (matrix[cur.y][cur.x] == to_fill)
-		matrix[cur.y][cur.x] = 2;
-	fill(data, matrix, size, (t_fpoint){cur.x - 1, cur.y}, to_fill); // left
-	fill(data, matrix, size, (t_fpoint){cur.x + 1, cur.y}, to_fill); // right
-	fill(data, matrix, size, (t_fpoint){cur.x, cur.y - 1}, to_fill); // up
-	fill(data, matrix, size, (t_fpoint){cur.x, cur.y + 1}, to_fill); // down
-
-	return (0);
-}
-
-void flood_fill(t_data *data)
-{
-	t_fpoint begin;
-	t_fpoint last;
-	
-	last.x = data->scene.cols - 1;
-	last.y = data->scene.rows - 1;
-	begin.x = 0;
-	begin.y = 0;
-
-	if (fill(data, data->scene.map, last, begin, 32) != 0)
-		ft_free_data_and_error(data, "invalid map");
-}*/
 

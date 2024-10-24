@@ -189,7 +189,6 @@ void draw_minimap(t_data *data);
 
 //initialize
 void	init_data(t_data *data, char **argv);
-void	init_window(t_data *data);
 void	init_z_factor(t_data *data);
 void	init_ray(t_data *data, t_ray *ray, double ray_angle);
 void	init_check(t_check *check);
@@ -224,5 +223,9 @@ void	ft_free_double_array(char **array);
 
 //textures
 void	get_textures(t_data *data);
+
+//draw_utils
+void calculate_measurements(t_data *data, int wall_height, int *start, int *end);
+float calculate_opacity(int ray, int nbr_of_rays, int start, int end);
 
 #endif

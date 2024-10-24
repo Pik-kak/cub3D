@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 10:51:21 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:57:43 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ void vertical_cast(t_ray *ray)
 }
 
 /* 
-
 	casts One ray to given angle
 		first it casts ray to find wall in horizontal block sides, then vertical and 
 		draws ray to which ray is shorter and nearer player.
@@ -166,35 +165,30 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 	vertical_cast(ray);
 	if (hor_x == ray->rxry[1])
 		hor_x -= 0.0001;
-	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
+	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h <= ray->dist_v))//if horizontal hit is > 0 and vertical is 0 or horizonta < vertical
 	{
 		ray->dist = ray->dist_h;
 		if (ray->angle > 0 && ray->angle < PI)
 		{
-			//ray->tex_x = (int)(ray->rxry[0]);
 			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->so->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->so;
 		}
 		else
 		{
-			//ray->tex_x = (int)(ray->rxry[0]);
 			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->no->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->no;
-			//printf("ray angle %f\n", ray->angle);
 		}
 	}
-	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
+	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v < ray->dist_h))//if vertical hit > 0 and horizontal = 0 or vertical is < horizontal
 	{
 		ray->dist = ray->dist_v;
 		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
 		{
-			//ray->tex_x = (int)(ray->rxry[1]);
 			ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)data->walls->ea->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->ea;
 		}
 		else
 		{
-			//ray->tex_x = (int)(ray->rxry[1]);
 			ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)data->walls->we->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->we;
 		}
@@ -202,6 +196,32 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 }
 
 
+	/*
+	if (ray->dist_h == ray->dist_v)
+	{
+		ray->dist = ray->dist_h;
+		if (ray->angle > 0 && ray->angle < PI)
+		{
+			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->so->width / (double)BLOCK_SIZE);
+			ray->wall = data->walls->so;
+		}
+		if (ray->angle >= PI && ray->angle <= 2 * PI)
+		{
+			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->no->width / (double)BLOCK_SIZE);
+			ray->wall = data->walls->no;
+		}
+		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
+		{
+			ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)data->walls->ea->width / (double)BLOCK_SIZE);
+			ray->wall = data->walls->ea;
+		}
+		if (ray->angle >= PI / 2 && ray->angle <= 3 * PI / 2)
+		{
+			ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)data->walls->we->width / (double)BLOCK_SIZE);
+			ray->wall = data->walls->we;
+		}
+			return ;
+	}*/
 
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 {
@@ -222,3 +242,7 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	}
 	return (ret_dist);
 }
+
+
+
+
