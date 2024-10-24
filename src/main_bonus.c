@@ -6,44 +6,11 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 11:36:40 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:09:28 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
-/*void print_parsing(t_data *data, t_check *check)
-{
-	printf("%s\n", data->scene.no);
-	printf("%s\n", data->scene.ea);
-	printf("%s\n", data->scene.so);
-	printf("%s\n", data->scene.we);
-	printf("%X\n", data->scene.floor);
-	printf("%X\n", data->scene.ceiling);
-	printf("rows %d\n", data->scene.rows);
-	printf("cols %d\n", data->scene.cols);
-	printf("%d, %d, %d\n", data->scene.ceiling_rgb[0], data->scene.ceiling_rgb[1], data->scene.ceiling_rgb[2]);
-	printf("%d, %d, %d\n", data->scene.floor_rgb[0], data->scene.floor_rgb[1], data->scene.floor_rgb[2]);
-	printf("%d\n", data->scene.rows);
-	printf("%d\n", data->scene.cols);
-	printf("current map line : %d\n", check->cur_file_line);
-	printf("longest map line : %d\n", check->longest_line);
-	printf("map lines: %d", check->map_lines);
-	printf("\n");
-	int rows = 0;
-	int cols = 0;
-	while( rows < data->scene.rows)
-	{
-		while (cols < data->scene.cols)
-		{
-			printf("%d", data->scene.map[rows][cols]);
-			cols++;
-		}
-		printf("\n");
-		rows++;	
-		cols = 0;
-	}
-}*/
-
 
 void init_map(t_data *data)
 {
@@ -105,11 +72,7 @@ void parse(t_data *data)
 	close(data->fd);
 	check_player(data);
 	free(check);
-	//print_parsing(data, check);
 }
-
-
-
 
 int	main(int argc, char **argv)
 {
@@ -135,24 +98,3 @@ int	main(int argc, char **argv)
 	}
 	ft_free_data_and_exit(data);
 }
-
-
-
-/*int	main(int argc, char **argv)
-{
-	t_data	*data;
-
-	if (argc != 2)
-		ft_error("Invalid amount of arguments");
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		ft_error("malloc error");
-	init_data(data, argv);
-	parse(data);
-	draw_scene(data);
-	mlx_loop_hook(data->m, my_keyhook, data);
-	mlx_key_hook(data->m, &my_keyhook2, data);
-	mlx_loop(data->m);
-	mlx_terminate(data->m);
-	ft_free_data_and_exit(data);
-}*/

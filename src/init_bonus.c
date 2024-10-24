@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/23 15:57:40 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/24 12:02:58 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
-
-/*
-Initializes the window to fit the screen if the default size is too big
-*/
-void	init_window(t_data *data)
-{
-	int	m_width;//these are the new measurements
-	int	m_height;
-	
-	mlx_get_monitor_size(0, &m_width, &m_height);//Gets the monitor size
-	if (m_width != data->s_width || m_height != data->s_height)//if there is a difference
-	{
-		if (m_width < data->s_width)//if screen is smaller than the original window size
-			data->s_width = m_width;
-		if (m_height < data->s_height)//if screen is smaller than the original window size
-			data->s_height = m_height;
-		mlx_terminate(data->m);
-		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
-		if (!data->m)
-			ft_free_data_and_error(data, "MLX error");
-	}
-}
 
 void init_player(t_player *player)
 {

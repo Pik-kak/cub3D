@@ -6,7 +6,7 @@
 #    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/24 11:49:03 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/10/24 14:52:11 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ DRAW_DIR	= $(SRC_DIR)draw_and_texture/
 DRAW_SRCS	= draw_scene_bonus.c \
 				draw_line.c \
 				draw_walls.c \
-				textures.c
+				textures.c \
+				draw_utils.c
 
 BONUS_DIR	= bonus/
 BSRCS		= fdf_bonus.c \
