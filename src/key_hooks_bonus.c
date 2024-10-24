@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/23 15:18:17 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/24 23:02:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,9 @@ void	my_keyhook(void *param)
 	if (mlx_is_key_down(data->m, MLX_KEY_A))
 		move_player_left(&data->scene.player);
 	if (mlx_is_key_down(data->m, MLX_KEY_LEFT))
-		turn_player(&data->scene.player, -0.1);
+		turn_player(&data->scene.player, -0.05);
 	if (mlx_is_key_down(data->m, MLX_KEY_RIGHT))
-		turn_player(&data->scene.player, 0.1);
+		turn_player(&data->scene.player, 0.05);
 	if (mlx_is_key_down(data->m, MLX_KEY_ESCAPE))
 		ft_free_data_and_exit(data);
 	my_mouse_hook(data);

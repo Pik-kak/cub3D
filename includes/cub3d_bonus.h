@@ -55,7 +55,7 @@
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 2.2
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 64
+#define BLOCK_SIZE 128
 #define GRID_GAP 1
 #define FOV PI / 3;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 12:09:28 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:06:42 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void parse(t_data *data)
 	if (data->fd < 0)
 		free_before_map(data);
 	read_file_for_longest_and_lines(data, check);
-	data->scene.rows = check->map_lines + 2;
-	data->scene.cols = check->longest_line + 2;
+	data->scene.rows = check->map_lines + 12;
+	data->scene.cols = check->longest_line + 12;
 	allocate_map(data);
 	init_map(data);
 	close(data->fd);

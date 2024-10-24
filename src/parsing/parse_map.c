@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 11:48:18 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:06:23 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void set_player_position(t_player *player, int dir, int i, int ii)
 		player->direction = PI / 2;
 	if (dir == 'W')
 		player->direction = PI;
-	
 }
 
 //checks number of players too be 1 
@@ -134,8 +133,8 @@ void fill_row(t_data *data, char *line, int row)
 	cols = 0;
 	if  (line[i] == '\n' || ft_strlen(line) < 2)
 		ft_free_data_and_error(data, "invalid file");
-	data->scene.map[row][cols] = ' ';
-	cols++;
+	while(cols++ < 5)
+		data->scene.map[row][cols] = ' ';
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		if (line[i] == ' ')
@@ -176,11 +175,11 @@ void fill_map(t_data *data, t_check *check)
 	int		lines;
 	int		row;
 	
-	row = 0;
+	row = -1;
 	lines = 1;
 	line = NULL;
-	fill_extra_row(data, row);
-	row++;
+	while (++row < 5)
+		fill_extra_row(data, row);
 	while(lines <= check->cur_file_line)
 	{
 		line = get_next_line(data->fd);
@@ -197,7 +196,8 @@ void fill_map(t_data *data, t_check *check)
 		lines++;
 		row++;
 	}
-	fill_extra_row(data, row);
+	while (++row < check->map_lines + 5)
+		fill_extra_row(data, row);
 }
 
 //after checking and etting texttures and colors in parse_textr_col.c this checks that there is no unallowed charachters after that

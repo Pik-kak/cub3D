@@ -61,16 +61,13 @@ int	pixel_ok(t_data *data, int x, int y)
  * ==============================
  */
 
-void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo, int yo)
+void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color)
 {
-	int start_x; 
-	int start_y;
-	int i;
+	int start_x = x * (BLOCK_SIZE / 6);
+	int start_y = y * (BLOCK_SIZE / 6);
+	int i = 0;
 	int j;
-	
-	start_x = xo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12 - (int)data->scene.player.px % BLOCK_SIZE / 6;
-	start_y = yo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12 - (int)data->scene.player.py % BLOCK_SIZE / 6;
-	i = 0;
+
 	while (i < BLOCK_SIZE / 6)
 	{
 		j = 0;
@@ -89,21 +86,19 @@ void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo
  * ==============================
  */
 
-void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y, int i, int j)
+void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y)
 {
 	if (scene->map[y][x] == 1)
 	{
-		fill_square(data, img, x, y, COL_LINE, i, j);
-	} 
+		fill_square(data, img, x, y, COL_LINE);
+	} //get_colour(scene->ceiling_rgb)
 	else if(scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
 	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
 	{
 		int grey = get_rgba(128, 128, 128, 255);  // Start with a fully opaque grey
         int semi_transparent_grey = adjust_opacity(grey, 0.8);  // Adjust opacity to 50%
-		fill_square(data, img, x, y, semi_transparent_grey, i, j);
+		fill_square(data, img, x, y, semi_transparent_grey);
 	}
-	else
-		fill_square(data, img, x, y, adjust_opacity(COL_BRICK_RED, 0.8), i, j);
 }
 
 /* ==============================
@@ -115,12 +110,11 @@ void draw_circle(t_data *data, int radius, int color)
 {
 	int y;
 	int x;
-	int cxy[2];
-	int pxy[2];
-	
+	int cx;
+	int cy;
 
-	cxy[0] = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12;
-	cxy[1] = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12;
+	cx = data->scene.player.px * (BLOCK_SIZE / 6) / BLOCK_SIZE;
+	cy = data->scene.player.py * (BLOCK_SIZE / 6) / BLOCK_SIZE;
 	y = -radius;
 	while (y <= radius)
 	{
@@ -129,10 +123,10 @@ void draw_circle(t_data *data, int radius, int color)
 		{
 			if (x * x + y * y <= radius * radius)
 			{
-				pxy[0] = cxy[0] + x;
-				pxy[1] = cxy[1] + y;
-				if (pixel_ok(data, pxy[0], pxy[1]))
-					mlx_put_pixel(data->image, pxy[0], pxy[1], color);
+				int px = cx + x;
+				int py = cy + y;
+				if (pixel_ok(data, px, py))
+					mlx_put_pixel(data->image, px, py, color);
 			}
 			x++;
 		}
@@ -159,8 +153,8 @@ void draw_nose(t_data *data, int length, int color)
 
 	while (i < length)
 	{
-		c_x = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12 + (i * cos(dir));
-		c_y = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12 + (i * sin(dir));
+		c_x = (data->scene.player.px * (BLOCK_SIZE / 6) / BLOCK_SIZE) + (i * cos(dir));
+		c_y = (data->scene.player.py * (BLOCK_SIZE / 6) / BLOCK_SIZE)+ (i * sin(dir));
 		if (pixel_ok(data, c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
 			mlx_put_pixel(data->image, c_x + 1 * sin(dir), c_y - 1 * cos(dir), color);
 		if (pixel_ok(data, c_x - 1 * sin(dir), c_y + 1 * cos(dir)))
@@ -185,37 +179,19 @@ void draw_player(t_data *data)
 
 void draw_minimap(t_data *data)
 {
-	int start_x;
-	int start_y;
-	int end_x;
-	int end_y;
-	int i;
-	int j;
-	
-	start_y = (int)data->scene.player.py / BLOCK_SIZE - 5;
-	end_x = (int)data->scene.player.px / BLOCK_SIZE + 5;
-	end_y = (int)data->scene.player.py / BLOCK_SIZE + 5;
-	if (start_y < 0)
-		start_y = 0;
-	if (end_x > data->scene.cols)
-		end_x = data->scene.cols;
-	if (end_y > data->scene.rows)
-		end_y = data->scene.rows;
-	i = 1;
-	while (start_y < end_y)
+	int x;
+	int y;
+
+	y = 0;
+	while (y < data->scene.rows)
 	{
-		j = 1;
-		start_x = (int)data->scene.player.px / BLOCK_SIZE - 5;
-		if (start_x < 0)
-			start_x = 0;
-		while (start_x < end_x)
+		x = 0;
+		while (x < data->scene.cols)
 		{
-			draw_tile(data, &data->scene, data->image, start_x, start_y, j, i);
-			start_x++;
-			j++;
+			draw_tile(data, &data->scene, data->image, x, y);
+			x++;
 		}
-		start_y++;
-		i++;
+		y++;
 	}
 	draw_player(data);
 }
@@ -238,6 +214,8 @@ void draw_scene(t_data *data)
 	}
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }
+
+
 
 
 /*void draw_scene(t_data *data) 
