@@ -1,5 +1,5 @@
 TODO
-- Fix minimap view (Timo)
+- Fix minimap view (Timo) 			partly done (check opacity)
 - Remove texture boundaries
 - Norm and simplify where necessary
 - Check leaks
@@ -11,3 +11,4 @@ TODO
 - Doors which can open and close
 - Animated sprite
 - Make separate bonus file/program
+- check collissions for floating point exeption error
