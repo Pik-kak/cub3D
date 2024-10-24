@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
+#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/23 14:59:02 by tsaari           ###   ########.fr        #
+#    Updated: 2024/10/24 11:30:34 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,38 +31,44 @@ MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
 LIBFT =	libft/libft.a
-SRC_DIR = src/
-BONUS_DIR = bonus/
 
-SRCS	=	main_bonus.c \
-			draw_scene_bonus.c \
-			free_and_exit_bonus.c \
-			key_hooks_bonus.c \
-			init_bonus.c \
-			raycaster.c \
-			draw_line.c \
-			collissions.c \
-			parse_textr_col.c \
-			mouse_hook.c \
-			parse_utils.c \
-			draw_walls.c \
-			parse_map.c \
-			textures.c
+SRC_DIR		= src/
+MAIN_SRCS		= main_bonus.c \
+				init_bonus.c \
+				free_and_exit_bonus.c \
+				key_hooks_bonus.c \
+				raycaster.c \
+				collissions.c \
+				mouse_hook.c 
+
+PARS_DIR	= $(SRC_DIR)parsing/
+PARS_SRCS	= parse_textr_col.c \
+				parse_utils.c \
+				parse_map.c 
+			
+DRAW_DIR	= $(SRC_DIR)draw_and_texture/
+DRAW_SRCS	= draw_scene_bonus.c \
+				draw_line.c \
+				draw_walls.c \
+				textures.c
+
+BONUS_DIR	= bonus/
+BSRCS		= fdf_bonus.c \
+				parse_map_bonus.c \
+				draw_map_bonus.c \
+				utils1_bonus.c \
+				free_and_exit_bonus.c \
+				rotate_and_center_bonus.c \
+				draw_utils_bonus.c \
+				key_hooks_bonus.c \
+				hook_utils_bonus.c \
+				utils2_bonus.c
+
+VPATH		+= $(SRC_DIR):$(PARS_DIR):$(DRAW_DIR)
 
 
-BSRCS	=	fdf_bonus.c \
-			parse_map_bonus.c \
-			draw_map_bonus.c \
-			utils1_bonus.c \
-			free_and_exit_bonus.c \
-			rotate_and_center_bonus.c \
-			draw_utils_bonus.c \
-			key_hooks_bonus.c \
-			hook_utils_bonus.c \
-			utils2_bonus.c
-
-OBJS	= $(SRCS:%.c=$(OBJ_DIR)/%.o)
-BOBJS	= $(BSRCS:%.c=$(BOBJ_DIR)/%.o)
+OBJS = $(MAIN_SRCS:%.c=$(OBJ_DIR)/%.o) $(PARS_SRCS:%.c=$(OBJ_DIR)/%.o) $(DRAW_SRCS:%.c=$(OBJ_DIR)/%.o)
+BOBJS		= $(BSRCS:%.c=$(BOBJ_DIR)/%.o)
 
 OBJ_DIR			= obj
 BOBJ_DIR		= bobj
