@@ -6,7 +6,7 @@
 #    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/24 11:30:34 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/10/24 11:49:03 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
 LIBFT =	libft/libft.a
 
 SRC_DIR		= src/
-MAIN_SRCS		= main_bonus.c \
+MAIN_SRCS	= main_bonus.c \
 				init_bonus.c \
 				free_and_exit_bonus.c \
 				key_hooks_bonus.c \
@@ -83,7 +83,7 @@ $(OBJ_DIR):
 $(BOBJ_DIR):
 	@mkdir -p $(BOBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)%.c
+$(OBJ_DIR)/%.o: %.c
 	@$(CC) -c $< -o $@
 	@echo "\033[0;36mObject $@ [\033[0;32mOK\033[0;36m]\033[0m"
 
