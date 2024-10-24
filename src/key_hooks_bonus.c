@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/23 10:30:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 15:18:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	my_keyhook(void *param)
 		turn_player(&data->scene.player, 0.1);
 	if (mlx_is_key_down(data->m, MLX_KEY_ESCAPE))
 		ft_free_data_and_exit(data);
-	my_mouse_hook(param);
+	my_mouse_hook(data);
 	draw_scene(data);
 }
 

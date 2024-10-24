@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/23 10:39:01 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 16:38:43 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
 	uint8_t	b;
 	uint8_t	a;
 	
+	//printf("%d ", tex_x);
 	pixel_index = (tex_y * image->width + tex_x) * 4;// Assuming each pixel is 4 bytes (RGBA)
 	r = image->pixels[pixel_index];	// Get the pixel color (adjust channels if needed)
 	g = image->pixels[pixel_index + 1];
@@ -52,20 +53,22 @@ uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
 void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, int wall_height, mlx_image_t *image, int i)
 {
 	double		step;//Tells us how much to move along the texture for each pixel we draw. It's calculated by dividing the height of the texture (image->height) by the height of the wall slice (wall_height).
-	double		tex_start;//the starting position in the texture
-	int			tex_y;
+	double			tex_start;//the starting position in the texture
+	double		tex_y;
 	uint32_t	color;
+	
 
 	step = 1.0 * image->height / wall_height;// Calculate step size for texture mapping
 	tex_start = (start - data->s_height / 2 + wall_height / 2) * step;  // Initialize texture position, centering the wall on the screen
 	while (i <= end)  // Loop through the wall slice
 	{
 		if (tex_start >= image->height)
-			tex_y = (int)(tex_start - image->height);
+			tex_y = (tex_start - image->height);
 		else
-			tex_y = (int)tex_start;
+			tex_y = tex_start;
 		tex_start += step;  // Move to the next pixel in texture
-		color = get_image_color(image, ray->tex_x, tex_y);  // Get the color from the texture
+		color = get_image_color(image, (int)ray->tex_x, tex_y);  // Get the color from the texture
+		//printf("%d ", (int)ray->tex_x);
 		if (pixel_ok(data, ray_count, i))
 			mlx_put_pixel(data->image, ray_count, i, color);  // Draw the pixel onto the screen
 		i++;
