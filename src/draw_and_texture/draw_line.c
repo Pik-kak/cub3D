@@ -6,12 +6,12 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 09:18:59 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 14:17:35 by kkauhane         ###   ########.fr       */
-/*   Updated: 2024/10/02 11:12:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/24 11:48:04 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+
+#include "../../includes/cub3d_bonus.h"
 
 
 void draw_line(t_data *data, t_ray *ray, int vert_or_hor, double angle)
