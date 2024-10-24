@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/21 15:24:32 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/23 14:53:32 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ void set_player_position(t_player *player, int dir, int i, int ii)
 	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
 	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
 	if (dir == 'N')
-		player->direction = 3 / 2 * PI;
+		player->direction = PI * 3 / 2;
 	if (dir == 'E')
 		player->direction = 0;
 	if (dir == 'S')
 		player->direction = PI / 2;
 	if (dir == 'W')
 		player->direction = PI;
+
+	printf(" 1 %f", player->direction *180 / PI);
 }
 
 /*check

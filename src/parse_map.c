@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/14 09:43:55 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 14:55:58 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void set_player_position(t_player *player, int dir, int i, int ii)
 		player->direction = PI / 2;
 	if (dir == 'W')
 		player->direction = PI;
+	
 }
 
 //checks number of players too be 1 

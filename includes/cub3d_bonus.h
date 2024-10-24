@@ -55,7 +55,7 @@
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 2.2
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 128
+#define BLOCK_SIZE 64
 #define GRID_GAP 1
 #define FOV PI / 3;
 
@@ -80,8 +80,7 @@ typedef struct s_ray
 	int		cols;
 	int		rows;
 	mlx_image_t		*wall;
-	double dist_to_next_hor;  // Precomputed distance to next horizontal grid line
-	double dist_to_next_ver;  // Precomputed distance to next vertical grid line
+
 	int		dir_hor;
 	int		dir_ver;
 	double	tex_x;

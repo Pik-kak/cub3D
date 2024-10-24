@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 19:15:21 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/14 11:24:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/23 15:09:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	my_mouse_hook(t_data *data)
 
 	center_x = data->s_width / 2;
 	center_y = data->s_height / 2;
+	mlx_set_mouse_pos(data->m, center_x, center_y);
 	mlx_get_mouse_pos(data->m, &x, &y);
 	change_x = x - center_x;
 	if (change_x != 0)
