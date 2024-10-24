@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 10:20:54 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/24 10:51:21 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ void vertical_cast(t_ray *ray)
 		draws ray to which ray is shorter and nearer player.
 */
 
-
 void	cast_one_ray(t_data *data, t_ray *ray)
 {
 	double hor_x;
@@ -181,7 +180,7 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 			//ray->tex_x = (int)(ray->rxry[0]);
 			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->no->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->no;
-			printf("ray angle %f\n", ray->angle);
+			//printf("ray angle %f\n", ray->angle);
 		}
 	}
 	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
