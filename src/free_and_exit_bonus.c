@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 08:07:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:57:06 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	ft_error(char *error)
+void	ft_error(t_data *data, char *error)
 {
 	perror(error);
+	if (data)
+		free(data);
 	exit(1);
 }
 
@@ -47,7 +49,6 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		i++;
 	}
 	free(data->scene.map);
-	
 	if (data->scene.no != NULL)
 		free(data->scene.no);
 	if (data->scene.so != NULL)
@@ -56,7 +57,6 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
-	mlx_delete_image(data->m, data->image);
 	mlx_terminate(data->m);
 	free(data);
 	data = NULL;
@@ -82,7 +82,6 @@ void	ft_free_data_and_exit(t_data *data)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
-	mlx_delete_image(data->m, data->image);
 	mlx_terminate(data->m);
 	free(data);
 	data = NULL;
