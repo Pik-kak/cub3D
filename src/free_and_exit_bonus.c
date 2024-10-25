@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/09 12:52:00 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 08:07:31 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
+	mlx_delete_image(data->m, data->image);
+	mlx_terminate(data->m);
 	free(data);
 	data = NULL;
 	exit(1);
@@ -80,6 +82,8 @@ void	ft_free_data_and_exit(t_data *data)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
+	mlx_delete_image(data->m, data->image);
+	mlx_terminate(data->m);
 	free(data);
 	data = NULL;
 	exit(0);

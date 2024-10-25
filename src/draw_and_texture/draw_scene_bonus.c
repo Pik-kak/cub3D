@@ -61,13 +61,14 @@ int	pixel_ok(t_data *data, int x, int y)
  * ==============================
  */
 
+
 void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo, int yo)
 {
 	int start_x; 
 	int start_y;
 	int i;
 	int j;
-	
+
 	start_x = xo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12 - (int)data->scene.player.px % BLOCK_SIZE / 6;
 	start_y = yo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12 - (int)data->scene.player.py % BLOCK_SIZE / 6;
 	i = 0;
@@ -77,12 +78,13 @@ void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo
 		while (j < BLOCK_SIZE / 6)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + i, color);
+				mlx_put_pixel(img, start_x + j, start_y + i, darken_color(color, 0.4));
 			j++;
 		}
 		i++;
 	}
 }
+
 
 /* ==============================
  * Draws walls (1) or free space 
@@ -98,16 +100,14 @@ void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y, int
 	else if(scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
 	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
 	{
-		int grey = get_rgba(128, 128, 128, 255);  // Start with a fully opaque grey
-        int semi_transparent_grey = adjust_opacity(grey, 0.8);  // Adjust opacity to 50%
-		fill_square(data, img, x, y, semi_transparent_grey, i, j);
+		fill_square(data, img, x, y, COL_GREEN, i, j);
 	}
 	else
-		fill_square(data, img, x, y, adjust_opacity(COL_BRICK_RED, 0.8), i, j);
+		fill_square(data, img, x, y, COL_BRICK_RED, i, j);
 }
 
 /* ==============================
- * Draws player "body" as circle
+ * Draws player "body" as circlew
  * 
  * ==============================
  */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 16:57:43 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/25 10:40:41 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,28 @@ void	check_direction_vertical(t_ray *ray, double ray_angle)
 	double	n_tan;
 	double floored;
 	
-	floored = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE;
-	n_tan = -tan(ray_angle);
+	floored = floor(ray->pxpy[0] / BLOCK_SIZE) * BLOCK_SIZE; //floor rounds down to next int and multiplies again with Block size so we go to next grid line
+	n_tan = -tan(ray_angle); // negative tangent is needed for this
 	if (fabs(ray_angle - 0.5 * PI) < 0.0001 || fabs(ray_angle - 1.5 * PI) < 0.0001) //looking up or down
 	{
-		ray->rxry[0] = ray->pxpy[0];
+		ray->rxry[0] = ray->pxpy[0];  //if angle goes up or down it does not move, because it cannot hit any vertical walls
 		ray->rxry[1] = ray->pxpy[1];
 	} 
 	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)  // looking east
 	{
-		ray->rxry[0] = floored + BLOCK_SIZE;  
-		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
+		ray->rxry[0] = floored + BLOCK_SIZE; //next point x is original point/BLOCk SIZE rounded down + BLOCK SIZE so we get to next grid line to right   
+		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1]; //next point y is calculated from from distance from starting point x to next gridline x  starting point y and 
+		//xoyo is calculation of how our point x abd y changes when we continue to next grid line 
 		ray->xoyo[0] = BLOCK_SIZE;
 		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
 	} 
-	else
+	else //looking west
 	{
-		ray->rxry[0] = floored - 0.0001;
-		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
+		ray->rxry[0] = floored - 0.0001; //next x point to left is rounded doun to next grid line and added small amount to avoid dividing by zero 
+		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1]; // next y calculation
+		//xoyo calculationa as before, but moving left on grid
 		ray->xoyo[0] = -BLOCK_SIZE;
-		ray->xoyo[1] = -(ray->xoyo[0]) * n_tan;
+		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
 	}
 }
 
@@ -126,7 +128,9 @@ void horizontal_cast(t_ray *ray)
 	calls check dir function and then divides found block side and checks if next block is wall
 	by calling check_if_wall_found function, which sets total length of ray to struct 
  */
-
+	int max_distance;
+	double factor;
+	int dist;
 void vertical_cast(t_ray *ray)
 {
 	int size;
@@ -169,29 +173,19 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 	{
 		ray->dist = ray->dist_h;
 		if (ray->angle > 0 && ray->angle < PI)
-		{
-			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->so->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->so;
-		}
 		else
-		{
-			ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)data->walls->no->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->no;
-		}
+		ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)ray->wall->width / (double)BLOCK_SIZE);
 	}
 	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v < ray->dist_h))//if vertical hit > 0 and horizontal = 0 or vertical is < horizontal
 	{
 		ray->dist = ray->dist_v;
 		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
-		{
-			ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)data->walls->ea->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->ea;
-		}
 		else
-		{
-			ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)data->walls->we->width / (double)BLOCK_SIZE);
 			ray->wall = data->walls->we;
-		}
+		ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)ray->wall->width / (double)BLOCK_SIZE);
 	}
 }
 
