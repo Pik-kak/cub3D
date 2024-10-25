@@ -3,47 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/24 11:47:43 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/25 20:43:58 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-/*
-Mallocs a copy and copies the string until ' ', ' \n' or '\0' and returns the copy
-if there is content after the path returns error
-*/
-char	*copy_str(char *line)
-{
-	int		i;
-	char	*ret;
 
-	i = 0;
-	while(line[i] && line[i] != ' ' && line[i] != '\n')//while there is content other than ' ', ' \n' or '\0'
-		i++;
-	if (i == 0)
-		return (NULL);
-	ret = (char *)malloc((i + 1) * sizeof(char));//mallocs the path string
-	if (!ret)
-		ft_error(ERR_MALLOC);
-	i = 0;
-	while(line[i] != ' ' && line[i] != '\n' && line[i])//copies the path
-	{
-		ret[i] = line[i];
-		i++;
-	}
-	ret[i] = '\0';
-	line = skip_spaces(&line[i]);//skips the spaces after the path
-	if (*line != '\n' && *line!= '\0')// if there is something else in the end returns 
-	{
-		free(ret);
-		ft_error("element not valid, extra characters");
-	}
-	return (ret);
-}
 
 /*
 Skips the spaces in the beginning.
@@ -56,7 +25,7 @@ void set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 	char *str;
 	char **splitted;
 	
-	str = copy_str(pointer);
+	str = copy_str(data, pointer);
 	splitted = ft_split (str, ',');
 	if (!splitted)
 		ft_free_data_and_error(data, "malloc error");
@@ -103,25 +72,25 @@ int set_texture_line(t_data *data, char *temp, char *pointer)
 	{
 		if (data->scene.no)
 			ft_free_data_and_error(data, "invalid file, double north texture path");
-		return (data->scene.no = copy_str(pointer), 0);
+		return (data->scene.no = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "SO", 2) == 0)
 	{
 		if (data->scene.so)
 			ft_free_data_and_error(data, "invalid file, double south texture path");
-		return (data->scene.so = copy_str(pointer), 0);
+		return (data->scene.so = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "EA", 2) == 0)
 	{
 		if (data->scene.ea)
 			ft_free_data_and_error(data, "invalid file, double east texture path");
-		return (data->scene.ea = copy_str(pointer), 0);
+		return (data->scene.ea = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "WE", 2) == 0)
 	{
 		if (data->scene.we)
 			ft_free_data_and_error(data, "invalid file, double west texture path");
-		return (data->scene.we = copy_str(pointer), 0);
+		return (data->scene.we = copy_str(data, pointer), 0);
 	}
 	return (1);
 }
@@ -198,7 +167,7 @@ void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
 {
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(ERR_OPEN);
+		ft_error(data, ERR_OPEN);
 	check_file_lines(data, check);
 	data->scene.col_ceiling = get_colour(data->scene.ceiling_rgb);
 	data->scene.col_floor = get_colour(data->scene.floor_rgb);
