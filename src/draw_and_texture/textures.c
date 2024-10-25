@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/24 11:48:39 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:31:58 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,26 @@ void	get_images(t_data *data)
 	data->walls->so = mlx_texture_to_image(data->m, data->txtrs->so);
 	data->walls->ea = mlx_texture_to_image(data->m, data->txtrs->ea);
 	data->walls->we = mlx_texture_to_image(data->m, data->txtrs->we);
+	data->walls->door = mlx_texture_to_image(data->m, data->txtrs->door);
 	mlx_delete_texture(data->txtrs->no);
 	mlx_delete_texture(data->txtrs->so);
 	mlx_delete_texture(data->txtrs->ea);
 	mlx_delete_texture(data->txtrs->we);
+	mlx_delete_texture(data->txtrs->door);
 }
 
 void	get_textures(t_data *data)
 {
 	data->txtrs = ft_calloc(1, sizeof(struct s_textures));
 	check_texture_file(data, data->scene.no);
+	check_texture_file(data, data->scene.so);
+	check_texture_file(data, data->scene.ea);
+	check_texture_file(data, data->scene.we);
 	data->txtrs->no = mlx_load_png(data->scene.no);
 	data->txtrs->so = mlx_load_png(data->scene.so);
 	data->txtrs->ea = mlx_load_png(data->scene.ea);
 	data->txtrs->we = mlx_load_png(data->scene.we);
+	data->txtrs->door =mlx_load_png("./textures/Door_Industrial_01_Brown.png");
 	get_images(data);
 }
 

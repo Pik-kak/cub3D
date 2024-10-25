@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 10:40:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 15:06:44 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,10 @@ void	check_direction_vertical(t_ray *ray, double ray_angle)
 
 bool check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
 {
-	if (ray->map[grid_y][grid_x] == 1)
+	if (ray->map[grid_y][grid_x] == 1 || ray->map[grid_y][grid_x] == 2)
 	{
+		if (ray->map[grid_y][grid_x] == 2)
+			ray->is_door = true;
 		if (hor_or_ver == 1)
 			ray->dist_h = (int)round(hypot(ray->rxry[0] - ray->pxpy[0], ray->rxry[1] - ray->pxpy[1]));
 		else
@@ -128,9 +130,6 @@ void horizontal_cast(t_ray *ray)
 	calls check dir function and then divides found block side and checks if next block is wall
 	by calling check_if_wall_found function, which sets total length of ray to struct 
  */
-	int max_distance;
-	double factor;
-	int dist;
 void vertical_cast(t_ray *ray)
 {
 	int size;
@@ -163,9 +162,12 @@ void vertical_cast(t_ray *ray)
 void	cast_one_ray(t_data *data, t_ray *ray)
 {
 	double hor_x;
+	bool hor_door;
 	
 	horizontal_cast(ray);
 	hor_x = ray->rxry[0];
+	hor_door = ray->is_door;
+	ray->is_door = false;
 	vertical_cast(ray);
 	if (hor_x == ray->rxry[1])
 		hor_x -= 0.0001;
@@ -176,6 +178,11 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 			ray->wall = data->walls->so;
 		else
 			ray->wall = data->walls->no;
+		if (hor_door)
+		{
+			ray->wall = data->walls->door;
+			ray->is_door = true;
+		}	
 		ray->tex_x = (fmod(hor_x, BLOCK_SIZE)) * ((double)ray->wall->width / (double)BLOCK_SIZE);
 	}
 	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v < ray->dist_h))//if vertical hit > 0 and horizontal = 0 or vertical is < horizontal
@@ -185,8 +192,11 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 			ray->wall = data->walls->ea;
 		else
 			ray->wall = data->walls->we;
+		if (ray->is_door)
+			ray->wall = data->walls->door;
 		ray->tex_x = (fmod(ray->rxry[1], BLOCK_SIZE)) * ((double)ray->wall->width / (double)BLOCK_SIZE);
 	}
+	
 }
 
 
@@ -221,9 +231,8 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 {
 	t_ray 	ray;
 	int		ret_dist;
-
-	init_ray(data, &ray, ray_angle);
 	
+	init_ray(data, &ray, ray_angle);
 	horizontal_cast(&ray);
 	vertical_cast(&ray);
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
@@ -237,6 +246,43 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	return (ret_dist);
 }
 
+void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
+{
+	t_ray 	ray;
+	bool hor_door;
+	int hor_grid_x;
+	int hor_grid_y;
+	
+	init_ray(data, &ray, ray_angle);
+	horizontal_cast(&ray);
+	hor_door = ray.is_door;
+	ray.is_door = false;
+	hor_grid_x = (int)(ray.rxry[0] / BLOCK_SIZE);
+	hor_grid_y = (int)(ray.rxry[1] / BLOCK_SIZE);
+	vertical_cast(&ray);
+	
+	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
+	{
+		
+		if (hor_door)
+		{
+			if (data->scene.map[hor_grid_y][hor_grid_x] = 0)
+				data->scene.map[hor_grid_y][hor_grid_x] = 2;
+			else
+				data->scene.map[hor_grid_y][hor_grid_x] = 0;
+		}
+	}
+	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
+	{
+		if (ray.is_door)
+		{
+			if (data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 2)
+				data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 0;
+			else
+				data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 2;
+		}
+	}
+}
 
 
 

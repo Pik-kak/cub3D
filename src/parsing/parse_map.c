@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 23:06:23 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 14:46:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int check_map_line(char *line, t_check *check)
 		return (1);
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '1' && line[i] != '0' && line[i] != 'N' && line[i] != 'E' && line[i] != 'S' && line[i] != 'W' && line[i] != '\n')
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != '0' && line[i] != 2 && line[i] != 'N' && line[i] != 'E' && line[i] != 'S' && line[i] != 'W' && line[i] != '\n')
 			return (1);
 		i++;
 	}
@@ -130,10 +130,10 @@ void fill_row(t_data *data, char *line, int row)
 	int cols;
 	
 	i = 0;
-	cols = 0;
+	cols = -1;
 	if  (line[i] == '\n' || ft_strlen(line) < 2)
 		ft_free_data_and_error(data, "invalid file");
-	while(cols++ < 5)
+	while(cols++ < SPACE_AROUND_MAP)
 		data->scene.map[row][cols] = ' ';
 	while (line[i] != '\n' && line[i] != '\0')
 	{
@@ -143,6 +143,8 @@ void fill_row(t_data *data, char *line, int row)
 			data->scene.map[row][cols] = 1;
 		else if (line[i] == '0')
 			data->scene.map[row][cols] = 0;
+		else if (line[i] == '2')
+			data->scene.map[row][cols] = 2;
 		else 
 			data->scene.map[row][cols] = line[i];
 		i++;
@@ -174,12 +176,15 @@ void fill_map(t_data *data, t_check *check)
 	char	*line;
 	int		lines;
 	int		row;
-	
-	row = -1;
+
+	row = 0;
 	lines = 1;
 	line = NULL;
-	while (++row < 5)
+	while (row < SPACE_AROUND_MAP)
+	{
 		fill_extra_row(data, row);
+		row++;
+	}
 	while(lines <= check->cur_file_line)
 	{
 		line = get_next_line(data->fd);
@@ -196,8 +201,12 @@ void fill_map(t_data *data, t_check *check)
 		lines++;
 		row++;
 	}
-	while (++row < check->map_lines + 5)
+	while (row < check->map_lines + 2 * SPACE_AROUND_MAP)
+	{
 		fill_extra_row(data, row);
+		row++;
+	}
+		
 }
 
 //after checking and etting texttures and colors in parse_textr_col.c this checks that there is no unallowed charachters after that
