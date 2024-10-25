@@ -1,5 +1,5 @@
 TODO
-- Fix minimap view (Timo) 			partly done (check opacity)
+- Fix minimap view (Timo) 			done
 - Remove texture boundaries
 - Norm and simplify where necessary
 - Check leaks
@@ -8,7 +8,8 @@ TODO
 - Arrange into folders (Karo)
 - Divide into several headers
 - Fix player start direction
-- Doors which can open and close
+- Doors which can open and close			you can make door disappear using space key
 - Animated sprite
 - Make separate bonus file/program
 - check collissions for floating point exeption error
+- if maze is not surrounded by wals, gives invalid file error, but segfaults (freeing??)

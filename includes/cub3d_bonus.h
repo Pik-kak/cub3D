@@ -53,11 +53,12 @@
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-#define PLAYER_SPEED 2.2
+#define PLAYER_SPEED 1
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 128
+#define BLOCK_SIZE 64
 #define GRID_GAP 1
 #define FOV PI / 3;
+#define SPACE_AROUND_MAP 5
 
 
 typedef struct	s_point
@@ -80,7 +81,7 @@ typedef struct s_ray
 	int		cols;
 	int		rows;
 	mlx_image_t		*wall;
-
+	bool 	is_door;
 	int		dir_hor;
 	int		dir_ver;
 	double	tex_x;
@@ -113,6 +114,7 @@ typedef struct s_textures
 	mlx_texture_t	*so;
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
+	mlx_texture_t	*door;
 }	t_textures;
 
 typedef struct s_walls
@@ -121,6 +123,7 @@ typedef struct s_walls
 	mlx_image_t	*so;
 	mlx_image_t	*ea;
 	mlx_image_t	*we;
+	mlx_image_t *door;
 }	t_walls;
 
 typedef struct s_scene
@@ -146,7 +149,6 @@ typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
-	mlx_image_t	*mimimap_image;
 	mlx_image_t	*txtr;
 	t_textures	*txtrs;
 	t_walls		*walls;
@@ -198,6 +200,7 @@ void	raycaster(t_data *data);
 void	cast_one_ray(t_data *data, t_ray *ray);
 int		cast_rays(t_data *data);
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y);
+void	cast_door_ray(t_data *data, double ray_angle, double x, double y);
 
 //player handling
 void	collisions(t_data *data);
@@ -227,5 +230,8 @@ void calculate_measurements(t_data *data, int wall_height, int *start, int *end)
 float calculate_opacity(int ray, int nbr_of_rays, int start, int end);
 int squared_distance(int x1, int y1, int x2, int y2);
 uint32_t darken_color(uint32_t color, double factor);
+
+
+void print_parsing(t_data *data);
 
 #endif

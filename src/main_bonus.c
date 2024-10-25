@@ -6,11 +6,43 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 23:06:42 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 14:47:25 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
+
+void print_parsing(t_data *data)
+{
+	/*printf("%s\n", data->scene.no);
+	printf("%s\n", data->scene.ea);
+	printf("%s\n", data->scene.so);
+	printf("%s\n", data->scene.we);
+	printf("%X\n", data->scene.floor);
+	printf("%X\n", data->scene.ceiling);
+	printf("rows %d\n", data->scene.rows);
+	printf("cols %d\n", data->scene.cols);
+	printf("%d, %d, %d\n", data->scene.ceiling_rgb[0], data->scene.ceiling_rgb[1], data->scene.ceiling_rgb[2]);
+	printf("%d, %d, %d\n", data->scene.floor_rgb[0], data->scene.floor_rgb[1], data->scene.floor_rgb[2]);
+	printf("%d\n", data->scene.rows);
+	printf("%d\n", data->scene.cols);*/
+
+	printf("\n");
+	int rows = 0;
+	int cols = 0;
+	while( rows < data->scene.rows)
+	{
+		while (cols < data->scene.cols)
+		{
+			printf("%d", data->scene.map[rows][cols]);
+			cols++;
+		}
+		printf("\n");
+		rows++;	
+		cols = 0;
+	}
+}
+
 
 void init_map(t_data *data)
 {
@@ -51,15 +83,14 @@ void parse(t_data *data)
 		free(data);
 		ft_error("Wrong file type");
 	}
-
 	check_and_set_texttr_and_col_lines(data, check);
 	check_map_lines(data, check);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 		free_before_map(data);
 	read_file_for_longest_and_lines(data, check);
-	data->scene.rows = check->map_lines + 12;
-	data->scene.cols = check->longest_line + 12;
+	data->scene.rows = check->map_lines + 10;
+	data->scene.cols = check->longest_line + 10;
 	allocate_map(data);
 	init_map(data);
 	close(data->fd);
@@ -71,6 +102,7 @@ void parse(t_data *data)
 	fill_maze_if_spaces(data);
 	close(data->fd);
 	check_player(data);
+	print_parsing(data);
 	free(check);
 }
 

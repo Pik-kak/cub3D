@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/24 23:02:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 13:05:49 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,9 @@ void my_keyhook2(mlx_key_data_t keydata, void* param)
 			data->scene.minimap_status = 1;
 		else
 			data->scene.minimap_status = 3;
+	}
+	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
+	{
+		cast_door_ray(data, normalize_angle(data->scene.player.direction), data->scene.player.px, data->scene.player.py);
 	}
 }
