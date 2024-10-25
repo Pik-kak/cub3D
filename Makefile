@@ -6,7 +6,7 @@
 #    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/25 20:45:20 by pikkak           ###   ########.fr        #
+#    Updated: 2024/10/25 21:48:54 by pikkak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ PARS_DIR	= $(SRC_DIR)parsing/
 PARS_SRCS	= parse_textr_col.c \
 				parse_utils.c \
 				parse_utils2.c \
-				parse_map.c 
+				parse_map.c \
+				fill_map.c
 			
 DRAW_DIR	= $(SRC_DIR)draw_and_texture/
 DRAW_SRCS	= draw_scene_bonus.c \
