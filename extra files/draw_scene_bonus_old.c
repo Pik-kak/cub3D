@@ -65,16 +65,25 @@ void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color)
 {
 	int start_x = x * (BLOCK_SIZE / 6);
 	int start_y = y * (BLOCK_SIZE / 6);
-	int i = 0;
+	int i;
 	int j;
 
+	double max_distance;
+	double factor;
+	double dist;
+	
+	max_distance = squared_distance(0, 0, 5 * BLOCK_SIZE, 5 * BLOCK_SIZE);
+	i = 0;
 	while (i < BLOCK_SIZE / 6)
 	{
+		dist = squared_distance(BLOCK_SIZE * 5, BLOCK_SIZE * 5, start_x + j, start_y + i);
+		factor = 1 - (dist / max_distance);
+		printf("%f", factor);
 		j = 0;
 		while (j < BLOCK_SIZE / 6)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + i, color);
+				mlx_put_pixel(img, start_x + j, start_y + igrey, darken_color(color, factor));
 			j++;
 		}
 		i++;
@@ -167,7 +176,7 @@ void draw_nose(t_data *data, int length, int color)
 void draw_player(t_data *data)
 {
 	draw_circle(data, 4, COL_WHITE);
-	draw_nose(data, 8, COL_WHITE);
+	draw_nose(data, 16, COL_WHITE);
 }
 
 
@@ -195,7 +204,6 @@ void draw_minimap(t_data *data)
 	}
 	draw_player(data);
 }
-
 
 void draw_scene(t_data *data) 
 {

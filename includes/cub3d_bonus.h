@@ -185,8 +185,6 @@ int		adjust_opacity(int color, float opacity);
 uint32_t	get_colour(int rgb[3]);
 void draw_minimap(t_data *data);
 
-
-
 //initialize
 void	init_data(t_data *data, char **argv);
 void	init_z_factor(t_data *data);
@@ -227,5 +225,7 @@ void	get_textures(t_data *data);
 //draw_utils
 void calculate_measurements(t_data *data, int wall_height, int *start, int *end);
 float calculate_opacity(int ray, int nbr_of_rays, int start, int end);
+int squared_distance(int x1, int y1, int x2, int y2);
+uint32_t darken_color(uint32_t color, double factor);
 
 #endif
