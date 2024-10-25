@@ -177,6 +177,28 @@ void draw_player(t_data *data)
 }
 
 
+void draw_minimap_box(t_data *data)
+{
+	int x;
+	int y;
+
+	y = 0;
+	while (y < 2 * BLOCK_SIZE)
+	{
+		x = 0;
+		while (x < 2 * BLOCK_SIZE)
+		{
+			if (x < 40 || y < 40 || x > 2 * BLOCK_SIZE - 40 || y > 2 * BLOCK_SIZE - 40)
+			{
+				if (pixel_ok(data, x, y))
+					mlx_put_pixel(data->image, x, y, data->scene.col_ceiling);
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
 /* ==============================
  * Draws map tile by tile
  * ==============================
@@ -217,6 +239,7 @@ void draw_minimap(t_data *data)
 		start_y++;
 		i++;
 	}
+	draw_minimap_box(data);
 	draw_player(data);
 }
 
