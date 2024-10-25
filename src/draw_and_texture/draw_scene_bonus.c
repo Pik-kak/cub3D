@@ -97,7 +97,7 @@ void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y, int
 	{
 		fill_square(data, img, x, y, COL_LINE, i, j);
 	} 
-	else if(scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
+	else if(scene->map[y][x] == 0 || scene->map[y][x] == 3 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
 	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
 	{
 		fill_square(data, img, x, y, COL_GREEN, i, j);

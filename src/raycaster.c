@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 15:06:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 19:32:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ bool check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
 	{
 		if (ray->map[grid_y][grid_x] == 2)
 			ray->is_door = true;
+		if (hor_or_ver == 1)
+			ray->dist_h = (int)round(hypot(ray->rxry[0] - ray->pxpy[0], ray->rxry[1] - ray->pxpy[1]));
+		else
+			ray->dist_v = (int)round(hypot(ray->rxry[0] - ray->pxpy[0], ray->rxry[1] - ray->pxpy[1]));
+		return (true);
+	}
+	else if (ray->map[grid_y][grid_x] == 3 && ray->open_door)  //if door is open this returns width to cast_door function 
+	{
+		ray->is_door = true;
 		if (hor_or_ver == 1)
 			ray->dist_h = (int)round(hypot(ray->rxry[0] - ray->pxpy[0], ray->rxry[1] - ray->pxpy[1]));
 		else
@@ -254,34 +263,36 @@ void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
 	int hor_grid_y;
 	
 	init_ray(data, &ray, ray_angle);
+	ray.open_door = true;
 	horizontal_cast(&ray);
 	hor_door = ray.is_door;
 	ray.is_door = false;
 	hor_grid_x = (int)(ray.rxry[0] / BLOCK_SIZE);
 	hor_grid_y = (int)(ray.rxry[1] / BLOCK_SIZE);
 	vertical_cast(&ray);
-	
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
-		
 		if (hor_door)
 		{
-			if (data->scene.map[hor_grid_y][hor_grid_x] = 0)
+			printf("hor\n");
+			if (data->scene.map[hor_grid_y][hor_grid_x] == 2)
+				data->scene.map[hor_grid_y][hor_grid_x] = 3;
+			else if (data->scene.map[hor_grid_y][hor_grid_x] == 3)
 				data->scene.map[hor_grid_y][hor_grid_x] = 2;
-			else
-				data->scene.map[hor_grid_y][hor_grid_x] = 0;
 		}
 	}
 	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
 	{
 		if (ray.is_door)
 		{
-			if (data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 2)
-				data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 0;
-			else
+			printf("ver\n");
+			if (data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] == 2)
+				data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 3;
+			else if (data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] == 3)
 				data->scene.map[(int)ray.rxry[1] / BLOCK_SIZE][(int)ray.rxry[0] / BLOCK_SIZE] = 2;
 		}
 	}
+	//print_parsing(data);
 }
 
 
