@@ -3,9 +3,9 @@ TODO
 - Remove texture boundaries
 - Norm and simplify where necessary
 - Check leaks
-- Error messages and error handling
+- Error messages and error handling 
 - Check map error handling
-- Arrange into folders (Karo)
+- Arrange into folders (Karo)		done
 - Divide into several headers
 - Fix player start direction
 - Doors which can open and close			you can make door disappear using space key
