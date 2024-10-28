@@ -6,6 +6,7 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
+/*   Updated: 2024/10/28 21:11:45 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +79,7 @@ void allocate_map(t_data *data)
 
 
 
-void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
+/*void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 {
 	int **matrix = data->scene.map;
 
@@ -95,6 +96,6 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	flood_fill(data, size, (t_point){cur.x + 1, cur.y}, to_fill);
 	flood_fill(data, size, (t_point){cur.x, cur.y - 1}, to_fill);
 	flood_fill(data, size, (t_point){cur.x, cur.y + 1}, to_fill);
-}
+}*/
 
 
