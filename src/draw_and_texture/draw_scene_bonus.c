@@ -97,17 +97,19 @@ void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y, int
 	{
 		fill_square(data, img, x, y, COL_LINE, i, j);
 	} 
-	else if(scene->map[y][x] == 0 || scene->map[y][x] == 3 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
+	else if(scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
 	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
 	{
 		fill_square(data, img, x, y, COL_GREEN, i, j);
 	}
-	else
+	else if (scene->map[y][x] == 2 || scene->map[y][x] == 3)
+		fill_square(data, img, x, y, COL_BLUE, i, j);
+	else 
 		fill_square(data, img, x, y, COL_BRICK_RED, i, j);
 }
 
 /* ==============================
- * Draws player "body" as circlew
+ * Draws player "body" as circle
  * 
  * ==============================
  */
@@ -141,9 +143,9 @@ void draw_circle(t_data *data, int radius, int color)
 }
 
 /* ==============================
- * Draws player "nOSE" as circle
+ * Draws player "nose"
  * Calculate the center coordinates for the current length
- * Draw two pixels side by side
+ * Draw two pixels in line side by side
  * ==============================
  */
 
@@ -154,7 +156,7 @@ void draw_nose(t_data *data, int length, int color)
 	int c_y;
 	int i;
 
-	dir = data->scene.player.direction;
+	dir = data->scene.player.dir;
 	i = 0;
 
 	while (i < length)
@@ -188,7 +190,7 @@ void draw_minimap_box(t_data *data)
 		x = 0;
 		while (x < 2 * BLOCK_SIZE)
 		{
-			if (x < 40 || y < 40 || x > 2 * BLOCK_SIZE - 40 || y > 2 * BLOCK_SIZE - 40)
+			if (x < 38 || y < 38 || x > 2 * BLOCK_SIZE - 38 || y > 2 * BLOCK_SIZE - 38)
 			{
 				if (pixel_ok(data, x, y))
 					mlx_put_pixel(data->image, x, y, data->scene.col_ceiling);

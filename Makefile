@@ -6,7 +6,7 @@
 #    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/10/25 21:48:54 by pikkak           ###   ########.fr        #
+#    Updated: 2024/10/28 15:07:18 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ endif
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -lm -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -lm -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
@@ -38,8 +38,11 @@ MAIN_SRCS	= main_bonus.c \
 				free_and_exit_bonus.c \
 				key_hooks_bonus.c \
 				raycaster.c \
+				raycaster_utils.c \
+				raycast_math.c \
 				collissions.c \
-				mouse_hook.c 
+				mouse_hook.c \
+				player_movement.c
 
 PARS_DIR	= $(SRC_DIR)parsing/
 PARS_SRCS	= parse_textr_col.c \

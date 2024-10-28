@@ -6,15 +6,15 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 19:54:35 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/28 14:14:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void init_player(t_player *player)
+void	init_player(t_player *player)
 {
-	player->direction = 0.0f;
+	player->dir = 0.0f;
 	player->px = 100.0;
 	player->py = 100.0;
 	player->dposx = cos(player->px) * 5;
@@ -25,10 +25,10 @@ void init_player(t_player *player)
 	player->col_left = false;
 }
 
-void init_scene(t_data *data)
+void	init_scene(t_data *data)
 {
-	int row;
-	
+	int	row;
+
 	data->scene.no = NULL;
 	data->scene.so = NULL;
 	data->scene.ea = NULL;
@@ -59,6 +59,7 @@ void	init_data(t_data *data, char **argv)
 	data->m = NULL;
 	data->image = NULL;
 	data->txtr = NULL;
+	data->txtrs = NULL;
 	data->walls = NULL;
 	data->file = argv[1];
 	data->s_height = 1080;
@@ -71,6 +72,7 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 {
 	ray->angle = ray_angle;
 	ray->is_door = false;
+	ray->open_door = false;
 	ray->map = data->scene.map;
 	ray->pxpy[0] = data->scene.player.px;
 	ray->pxpy[1] = data->scene.player.py;
@@ -81,6 +83,7 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->dist = 0;
 	ray->dist_h = 0;
 	ray->dist_v = 0;
+	ray->hor_x = 0;
 	ray->open_door = false;
 	ray->cols = data->scene.cols;
 	ray->rows = data->scene.rows;

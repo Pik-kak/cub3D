@@ -34,7 +34,6 @@ void	ft_free_double_array(char **array)
 	array = NULL;
 }
 
-
 void	ft_free_data_and_error(t_data *data, char *error)
 {
 	int	i;
@@ -57,11 +56,17 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
-	mlx_terminate(data->m);
+	if (data->walls)
+		free(data->walls);
+	if (data->txtrs)
+		free(data->txtrs);
+	if (data->m)
+		mlx_terminate(data->m);
 	free(data);
 	data = NULL;
 	exit(1);
 }
+
 
 void	ft_free_data_and_exit(t_data *data)
 {
@@ -70,7 +75,7 @@ void	ft_free_data_and_exit(t_data *data)
 	i = 0;
 	while (i < data->scene.rows)
 	{
-		free(data->scene.map[i]); 
+		free(data->scene.map[i]);
 		i++;
 	}
 	free(data->scene.map);
@@ -82,7 +87,12 @@ void	ft_free_data_and_exit(t_data *data)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
-	mlx_terminate(data->m);
+	if (data->walls)
+		free(data->walls);
+	if (data->txtrs)
+		free(data->txtrs);
+	if (data->m)
+		mlx_terminate(data->m);
 	free(data);
 	data = NULL;
 	exit(0);
