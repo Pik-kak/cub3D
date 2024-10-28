@@ -55,7 +55,7 @@
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 #define PLAYER_SPEED 1
 #define SENSITIVITY 0.0008
-#define BLOCK_SIZE 64
+#define BLOCK_SIZE 128
 #define GRID_GAP 1
 #define FOV PI / 3;
 #define SPACE_AROUND_MAP 5
@@ -81,7 +81,8 @@ typedef struct s_ray
 	int		cols;
 	int		rows;
 	mlx_image_t		*wall;
-	bool 	is_door;
+	bool	is_door;
+	bool	open_door;
 	int		dir_hor;
 	int		dir_ver;
 	double	tex_x;

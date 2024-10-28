@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 14:55:39 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 19:54:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	init_data(t_data *data, char **argv)
 	data->txtr = NULL;
 	data->walls = NULL;
 	data->file = argv[1];
-	data->s_height = 540;
-	data->s_width = 960;
+	data->s_height = 1080;
+	data->s_width = 1920;
 	init_scene(data);
 	init_player(&data->scene.player);
 }
@@ -81,12 +81,11 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->dist = 0;
 	ray->dist_h = 0;
 	ray->dist_v = 0;
-
+	ray->open_door = false;
 	ray->cols = data->scene.cols;
 	ray->rows = data->scene.rows;
 	ray->wall = NULL;
 	ray->dir_hor = 0;
 	ray->dir_ver = 0;
 	ray->tex_x = 0;
-	
 }
