@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
+
 /*   Updated: 2024/10/28 13:34:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -121,92 +122,9 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 		}
 		free(line);
 	}
-}
-//raeds line and fills every row
-
-void fill_row(t_data *data, char *line, int row)
-{
-	int i;
-	int cols;
-	
-	i = 0;
-	cols = -1;
-	if  (line[i] == '\n' || ft_strlen(line) < 2)
-		ft_free_data_and_error(data, "invalid file");
-	while(cols++ < SPACE_AROUND_MAP)
-		data->scene.map[row][cols] = ' ';
-	while (line[i] != '\n' && line[i] != '\0')
-	{
-		if (line[i] == ' ')
-			data->scene.map[row][cols] = 32;
-		else if (line[i] == '1')
-			data->scene.map[row][cols] = 1;
-		else if (line[i] == '0')
-			data->scene.map[row][cols] = 0;
-		else if (line[i] == '2')
-			data->scene.map[row][cols] = 2;
-		else 
-			data->scene.map[row][cols] = line[i];
-		i++;
-		cols++;
-	}
-	while(cols < data->scene.cols)
-	{
-		data->scene.map[row][cols] = ' ';
-		cols++;
-	}
-}
-//extra rows added with ' ' 
-void fill_extra_row(t_data *data, int row)
-{
-	int i;
-	
-	i = 0;
-	while (i < data->scene.cols)
-	{
-		data->scene.map[row][i] = ' ';
-		i++;
-	}
-}
-
-//after checks this fills 2D arrow with map content and adds ' ' around everything
-
-void fill_map(t_data *data, t_check *check)
-{
-	char	*line;
-	int		lines;
-	int		row;
-
-	row = 0;
-	lines = 1;
-	line = NULL;
-	while (row < SPACE_AROUND_MAP)
-	{
-		fill_extra_row(data, row);
-		row++;
-	}
-	while(lines <= check->cur_file_line)
-	{
-		line = get_next_line(data->fd);
-		free(line);
-		lines++;
-	}
-	while (lines <= check->cur_file_line + check->map_lines)
-	{
-		line = get_next_line(data->fd);
-		if (!line)
-			break;
-		fill_row(data, line, row);
-		free(line);
-		lines++;
-		row++;
-	}
-	while (row < check->map_lines + 2 * SPACE_AROUND_MAP)
-	{
-		fill_extra_row(data, row);
-		row++;
-	}
-		
+	close(data->fd);
+	data->scene.rows = check->map_lines + 10;
+	data->scene.cols = check->longest_line + 10;
 }
 
 //after checking and etting texttures and colors in parse_textr_col.c this checks that there is no unallowed charachters after that
@@ -236,24 +154,5 @@ void check_map_lines(t_data *data, t_check *check)
 		}
 		free(line);
 		close(data->fd);
-	}
-}
-
-void fill_maze_if_spaces(t_data *data)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < data->scene.rows)
-	{
-		j = 0;
-		while(j < data->scene.cols)
-		{
-			if (data->scene.map[i][j] == 32)
-				data->scene.map[i][j] = 1;
-			j++;
-		}
-		i++;
 	}
 }

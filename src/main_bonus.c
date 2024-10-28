@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
 /*   Updated: 2024/10/28 14:26:04 by tsaari           ###   ########.fr       */
@@ -36,8 +36,7 @@ void	free_before_map(t_data *data)
 	free(data->scene.so);
 	free(data->scene.no);
 	free(data->scene.we);
-	free(data);
-	ft_error("File cannot be opened");
+	ft_error(data, ERR_OPEN);
 }
 
 void	set_map(t_data *data, t_check *check)
@@ -69,13 +68,10 @@ void	parse(t_data *data)
 	check = (t_check *)malloc(sizeof (t_check));
 	init_check(check);
 	if (check_filetype(data->file, ".cub") != 0)
-	{
-		free(data);
-		ft_error("Wrong file type");
-	}
+		ft_error(data, ERR_INFILE);
 	check_and_set_texttr_and_col_lines(data, check);
 	check_map_lines(data, check);
-	data->fd = open(data->file, O_RDONLY);
+	data->fd = open(data->file, O_RDONLY);//Open the file again from the beginning
 	if (data->fd < 0)
 		free_before_map(data);
 	read_file_for_longest_and_lines(data, check);
@@ -90,22 +86,24 @@ int	main(int argc, char **argv)
 	t_data	*data;
 
 	if (argc != 2)
-		ft_error("Invalid amount of arguments");
+	{
+		write(2, ERR_ARG, 27);
+		return (0);
+	}
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
-		ft_error("malloc error");
+		ft_error(data, ERR_MALLOC);
 	else
 	{
 		init_data(data, argv);
 		parse(data);
 		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
-			ft_free_data_and_error(data, "MLX error");
+			ft_free_data_and_error(data, ERR_MLX);
 		get_textures(data);
 		mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_key_hook(data->m, &my_keyhook2, data);
 		mlx_loop(data->m);
-		mlx_terminate(data->m);
 	}
 	ft_free_data_and_exit(data);
 }

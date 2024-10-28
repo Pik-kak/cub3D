@@ -3,10 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/28 14:10:55 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +63,19 @@ void allocate_map(t_data *data)
 	data->scene.map = malloc(data->scene.rows * sizeof(int*));
 	if (!data->scene.map)
 	{
-		ft_free_data_and_error(data, "malloc error");
+		ft_free_data_and_error(data, ERR_MALLOC);
 	}
 	while (row < data->scene.rows)
 	{
 		data->scene.map[row] = malloc(data->scene.cols * sizeof(int));
 		if (!data->scene.map[row])
 		{
-			ft_free_data_and_error(data, "malloc error");
+			ft_free_data_and_error(data, ERR_MALLOC);
 		}
 		row++;
 	}
 }
+
 
 
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)

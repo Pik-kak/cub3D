@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:08:05 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/23 14:53:32 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:38:08 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ void	check_and_parse_file(t_data *data, t_check *check)
 {
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(ERR_OPEN);
+		ft_error(data, ERR_OPEN);
 	parse_file_for_walls_and_colours(data, check);
 	close(data->fd);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(ERR_OPEN);
+		ft_error(data, ERR_OPEN);
 	read_file_for_longest_map_line(data, check);
 	close(data->fd);
 	data->scene.rows = check->map_lines + 2;
@@ -111,7 +111,7 @@ void	check_and_parse_file(t_data *data, t_check *check)
 	allocate_map(data, check);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(ERR_OPEN);
+		ft_error(data, ERR_OPEN);
 	fill_map(data, check);
 	check_player(data);
 	close(data->fd);

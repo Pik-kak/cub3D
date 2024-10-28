@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
+#    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
 #    Updated: 2024/10/28 15:07:18 by tsaari           ###   ########.fr        #
@@ -47,7 +47,9 @@ MAIN_SRCS	= main_bonus.c \
 PARS_DIR	= $(SRC_DIR)parsing/
 PARS_SRCS	= parse_textr_col.c \
 				parse_utils.c \
-				parse_map.c 
+				parse_utils2.c \
+				parse_map.c \
+				fill_map.c
 			
 DRAW_DIR	= $(SRC_DIR)draw_and_texture/
 DRAW_SRCS	= draw_scene_bonus.c \

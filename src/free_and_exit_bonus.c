@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 14:18:59 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/25 20:57:06 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	ft_error(char *error)
+void	ft_error(t_data *data, char *error)
 {
 	perror(error);
+	if (data)
+		free(data);
 	exit(1);
 }
 

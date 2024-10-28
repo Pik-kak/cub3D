@@ -178,6 +178,7 @@ void	allocate_map(t_data *data);
 void	check_player(t_data *data);
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
 void 	fill_maze_if_spaces(t_data *data);
+char	*copy_str(t_data *data, char *line);
 
 //Map drawing
 void	draw_scene(t_data *data);
@@ -231,7 +232,7 @@ void	turn_player(t_player *player, double angle);
 //free and error
 void	ft_free_data_and_array_error(t_data *data, char **array, char *error);
 void	ft_free_data_and_exit(t_data *data);
-void	ft_error(char *error);
+void	ft_error(t_data *data, char *error);
 void	ft_free_data_and_error(t_data *data, char *error);
 void	ft_free_double_array(char **array);
 
