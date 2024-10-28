@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/28 13:31:59 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/28 22:15:26 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	Assumes each pixel is 4 bytes (RGBA)
 	Combines the color channels into a single 32-bit value
 */
-uint32_t get_image_color(mlx_image_t *image, int tex_x, int tex_y)
+uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y)
 {
 	int		pixel_index;
 	uint8_t	r;
@@ -58,17 +58,18 @@ void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, i
 			mlx_put_pixel(data->image, ray_count, i, color);
 		i++;
 	}
+	//printf("Tex_x:%f Tex_y:%f\n", ray->tex_x, tex_y);
 }
 
 /*
 	Draws the ceiling, walls and floor
 */
-void draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
+void	draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
 {
-	int i;
-	int start;
-	int end;
-	
+	int	i;
+	int	start;
+	int	end;
+
 	i = 0;
 	calculate_measurements(data, wall_height, &start, &end);
 	while (i < data->s_height)
@@ -92,14 +93,14 @@ void draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
 /*
 	Casts the rays and calls drawing functions
 */
-int cast_rays(t_data *data)
+int	cast_rays(t_data *data)
 {
-	int     nbr_of_rays;
-	double  ray_angle;
-	double  angle_step;
-	int     ray_count;
-	int     wall_height;
-	t_ray   ray;
+	int		nbr_of_rays;
+	double	ray_angle;
+	double	angle_step;
+	int		ray_count;
+	int		wall_height;
+	t_ray	ray;
 
 	nbr_of_rays = data->s_width; 
 	angle_step = PI / 3 / nbr_of_rays; 
