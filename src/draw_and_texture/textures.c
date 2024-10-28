@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/25 12:31:58 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/28 11:07:09 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	get_textures(t_data *data)
 	data->txtrs->so = mlx_load_png(data->scene.so);
 	data->txtrs->ea = mlx_load_png(data->scene.ea);
 	data->txtrs->we = mlx_load_png(data->scene.we);
-	data->txtrs->door =mlx_load_png("./textures/Door_Industrial_01_Brown.png");
+	data->txtrs->door = mlx_load_png("./textures/Door_Industrial_01_Brown.png");
 	get_images(data);
 }
 

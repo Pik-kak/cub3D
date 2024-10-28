@@ -83,7 +83,7 @@ void fill_square(t_data *data, mlx_image_t *img, int x, int y, int color)
 		while (j < BLOCK_SIZE / 6)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + igrey, darken_color(color, factor));
+				mlx_put_pixel(img, start_x + j, start_y + i, darken_color(color, factor));
 			j++;
 		}
 		i++;
@@ -101,12 +101,14 @@ void draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y)
 	{
 		fill_square(data, img, x, y, COL_LINE);
 	} //get_colour(scene->ceiling_rgb)
-	else if(scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
+	else if(scene->map[y][x] == 3)
+	{
+		fill_square(data, img, x, y, COL_GREY);
+	}
+	else if (scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
 	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
 	{
-		int grey = get_rgba(128, 128, 128, 255);  // Start with a fully opaque grey
-        int semi_transparent_grey = adjust_opacity(grey, 0.8);  // Adjust opacity to 50%
-		fill_square(data, img, x, y, semi_transparent_grey);
+		fill_square(data, img, x, y, COL_GREY);
 	}
 }
 

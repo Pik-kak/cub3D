@@ -6,25 +6,25 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 14:46:54 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/28 13:34:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-//sets player position and direction 
+//sets player position and dir 
 void set_player_position(t_player *player, int dir, int i, int ii)
 {
 	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
 	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
 	if (dir == 'N')
-		player->direction = 1.5 * PI;
+		player->dir = 1.5 * PI;
 	if (dir == 'E')
-		player->direction = 0;
+		player->dir = 0;
 	if (dir == 'S')
-		player->direction = PI / 2;
+		player->dir = PI / 2;
 	if (dir == 'W')
-		player->direction = PI;
+		player->dir = PI;
 }
 
 //checks number of players too be 1 

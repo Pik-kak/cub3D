@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/24 16:58:57 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/28 13:31:59 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,10 @@ int cast_rays(t_data *data)
 	ray_count = 0;
 	while (ray_count < data->s_width)
 	{
-		ray_angle = normalize_angle(data->scene.player.direction - (PI / 3 / 2) + (ray_count * angle_step)); 
+		ray_angle = normalize_angle(data->scene.player.dir - (PI / 3 / 2) + (ray_count * angle_step)); 
 		init_ray(data, &ray, ray_angle);
 		cast_one_ray(data, &ray);
-		ray.angle = normalize_angle((data->scene.player.direction - ray.angle));
+		ray.angle = normalize_angle((data->scene.player.dir - ray.angle));
 		ray.dist = ray.dist * cos(ray.angle);
 		wall_height = (BLOCK_SIZE * data->s_height) / ray.dist;
 		draw_walls(data, ray_count, &ray, wall_height);

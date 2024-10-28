@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/24 14:53:14 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:10:55 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32 && matrix[cur.y][cur.x] != -1)
 	{
 		ft_free_data_and_error(data, "invalid file");
-		return;
 	}
 	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
 		return;

@@ -53,7 +53,7 @@
 #define FIXED_POINT_SCALE 1000
 #define PI 3.14159265
 #define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-#define PLAYER_SPEED 1
+#define PLAYER_SPEED 2
 #define SENSITIVITY 0.0008
 #define BLOCK_SIZE 128
 #define GRID_GAP 1
@@ -73,13 +73,14 @@ typedef struct s_ray
 	float	angle;
 	int		**map;
 	double	pxpy[2];
-	double	rxry[2];   //point where ray finds wall
+	double	rxry[2];
 	double	xoyo[2];
 	int		dist_v;
 	int		dist_h;
 	int		dist;
 	int		cols;
 	int		rows;
+	int		hor_x;
 	mlx_image_t		*wall;
 	bool	is_door;
 	bool	open_door;
@@ -98,7 +99,7 @@ typedef struct s_check
 
 typedef struct s_player
 {
-	double		direction;
+	double		dir;
 	double		px;
 	double		py;
 	double		dposx;
@@ -194,7 +195,6 @@ void	init_z_factor(t_data *data);
 void	init_ray(t_data *data, t_ray *ray, double ray_angle);
 void	init_check(t_check *check);
 
-
 //raycasting
 double	normalize_angle(double angle);
 void	raycaster(t_data *data);
@@ -202,9 +202,21 @@ void	cast_one_ray(t_data *data, t_ray *ray);
 int		cast_rays(t_data *data);
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y);
 void	cast_door_ray(t_data *data, double ray_angle, double x, double y);
+void	vertical_cast(t_ray *ray);
+void	horizontal_cast(t_ray *ray);
+
+//raycaster utils
+int		ray_len(t_ray *ray);
+void 	set_door(t_data *data, int x, int y);
 
 //player handling
 void	collisions(t_data *data);
+void	move_player_forward(t_player *player);
+void	move_player_backward(t_player *player);
+void	move_player_left(t_player *player);
+void	move_player_right(t_player *player);
+void	move_right_wall(t_player *player);
+void	move_left_wall(t_player *player);
 
 //utils
 int		ft_atoi_hex(char *str);
