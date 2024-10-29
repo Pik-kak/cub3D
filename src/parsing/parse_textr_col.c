@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/25 20:43:58 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:01:12 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void check_file_lines(t_data *data, t_check *check)
 	line = NULL;
 	while (lines < 6)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
 			ft_free_data_and_error(data, "malloc error");

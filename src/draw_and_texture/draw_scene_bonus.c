@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 21:01:54 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:49:03 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	pixel_ok(t_data *data, int x, int y)
  * leaves last pixels empty to make grid
  * ==============================
  */
-void	fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo, int yo)
+void	fill_square(t_data *data, int color, int xo, int yo)
 {
 	int	start_x;
 	int	start_y;
@@ -78,7 +78,7 @@ void	fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo
 		while (j < BLOCK_SIZE / 6)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(img, start_x + j, start_y + i, darken_color(color, 0.4));
+				mlx_put_pixel(data->image, start_x + j, start_y + i, darken_color(color, 0.4));
 			j++;
 		}
 		i++;
@@ -89,21 +89,28 @@ void	fill_square(t_data *data, mlx_image_t *img, int x, int y, int color, int xo
  * Draws walls (1) or free space 
  * ==============================
  */
-void	draw_tile(t_data *data, t_scene *scene, mlx_image_t *img, int x, int y, int i, int j)
+void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
 {
-	if (scene->map[y][x] == 1)
+	int **map_c;
+	int x;
+	int y;
+
+	x = mmap->start_x;
+	y = mmap->start_y;
+	map_c = data->scene.map;
+	if (map_c[y][x] == 1)
 	{
-		fill_square(data, img, x, y, COL_LINE, i, j);
+		fill_square(data, COL_LINE, i, j);
 	} 
-	else if (scene->map[y][x] == 0 || scene->map[y][x] == 'N' || scene->map[y][x] == 'S' || \
-	scene->map[y][x] == 'E' || scene->map[y][x] == 'W')
+	else if (map_c[y][x] == 0 || map_c[y][x] == 'N' || map_c[y][x] == 'S' || \
+	map_c[y][x] == 'E' || map_c[y][x] == 'W')
 	{
-		fill_square(data, img, x, y, COL_GREEN, i, j);
+		fill_square(data, COL_GREEN, i, j);
 	}
-	else if (scene->map[y][x] == 2 || scene->map[y][x] == 3)
-		fill_square(data, img, x, y, COL_BLUE, i, j);
+	else if (map_c[y][x] == 2 || map_c[y][x] == 3)
+		fill_square(data, COL_BLUE, i, j);
 	else 
-		fill_square(data, img, x, y, COL_BRICK_RED, i, j);
+		fill_square(data, COL_BRICK_RED, i, j);
 }
 
 /* ==============================
@@ -199,43 +206,46 @@ void	draw_minimap_box(t_data *data)
  * Draws map tile by tile
  * ==============================
  */
+void set_minimap_bounds(t_data *data, t_minimap *mmap)
+{
+	mmap->start_y = (int)data->scene.player.py / BLOCK_SIZE - 5;
+	mmap->end_x = (int)data->scene.player.px / BLOCK_SIZE + 5;
+	mmap->end_y = (int)data->scene.player.py / BLOCK_SIZE + 5;
+	if (mmap->start_y < 0)
+		mmap->start_y = 0;
+	if (mmap->end_x > data->scene.cols)
+		mmap->end_x = data->scene.cols;
+	if (mmap->end_y > data->scene.rows)
+		mmap->end_y = data->scene.rows;
+}
+
 void	draw_minimap(t_data *data)
 {
-	int	start_x;
-	int	start_y;
-	int	end_x;
-	int	end_y;
-	int	i;
-	int	j;
+	t_minimap mmap;	 
+	int i;
+	int j;
 
-	start_y = (int)data->scene.player.py / BLOCK_SIZE - 5;
-	end_x = (int)data->scene.player.px / BLOCK_SIZE + 5;
-	end_y = (int)data->scene.player.py / BLOCK_SIZE + 5;
-	if (start_y < 0)
-		start_y = 0;
-	if (end_x > data->scene.cols)
-		end_x = data->scene.cols;
-	if (end_y > data->scene.rows)
-		end_y = data->scene.rows;
 	i = 1;
-	while (start_y < end_y)
+	set_minimap_bounds(data, &mmap);
+	while (mmap.start_y < mmap.end_y)
 	{
 		j = 1;
-		start_x = (int)data->scene.player.px / BLOCK_SIZE - 5;
-		if (start_x < 0)
-			start_x = 0;
-		while (start_x < end_x)
+		mmap.start_x = (int)data->scene.player.px / BLOCK_SIZE - 5;
+		if (mmap.start_x < 0)
+			mmap.start_x = 0;
+		while (mmap.start_x < mmap.end_x)
 		{
-			draw_tile(data, &data->scene, data->image, start_x, start_y, j, i);
-			start_x++;
+			draw_tile(data, &mmap, j, i);
+			mmap.start_x++;
 			j++;
 		}
-		start_y++;
+		mmap.start_y++;
 		i++;
 	}
 	draw_minimap_box(data);
 	draw_player(data);
 }
+
 
 void	draw_scene(t_data *data)
 {
@@ -255,25 +265,3 @@ void	draw_scene(t_data *data)
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }
 
-/*void draw_scene(t_data *data) 
-{	
-	data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
-	if (!data->m)
-		ft_free_data_and_error(data, "MLX error");
-	init_window(data);
-	data->image = mlx_new_image(data->m, data->s_width, data->s_height);
-	if (!data->image)
-		ft_free_data_and_error(data, "MLX error");
-	else if (data->scene.minimap_status == 1 && data->mimimap_image)
-	{
-		mlx_delete_image(data->m, data->mimimap_image);
-		data->mimimap_image = NULL;
-	}
-	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1)
-	{
-		mlx_delete_image(data->m, data->image);
-		ft_free_data_and_error(data, "MLX error");
-	}
-	//mlx_set_instance_depth(&data->image->instances[0], 2);
-}
-*/

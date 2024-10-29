@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 08:45:30 by tsaari            #+#    #+#             */
-/*   Updated: 2024/02/14 10:50:14 by tsaari           ###   ########.fr       */
+/*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
+/*   Updated: 2024/10/29 14:33:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../../includes/cub3d_bonus.h"
 
-char	*ft_free(char **ptr, char **ptr2)
+void	ft_free(char **ptr, char **ptr2)
 {
 	if (ptr != NULL && *ptr != NULL)
 	{
@@ -24,56 +24,61 @@ char	*ft_free(char **ptr, char **ptr2)
 		free(*ptr2);
 		*ptr2 = NULL;
 	}
-	return (NULL);
 }
 
-static char	*read_file_until_nl(int fd, char *buffer)
+static char	*read_file_until_nl(t_data *data, int fd, char *buffer, int br)
 {
 	char	readed[BUFFER_SIZE + 1];
-	int		bytes_read;
 	char	*temp;
 
-	bytes_read = 1;
 	if (!buffer)
 		buffer = ft_calloc(1, 1);
-	while (bytes_read > 0)
+	if (!buffer)
+		ft_free_data_and_error(data, "malloc error");
+	while (br > 0)
 	{
-		bytes_read = read(fd, readed, BUFFER_SIZE);
-		if (bytes_read == -1 || (!buffer) || \
-		(bytes_read == 0 && ft_strlen(buffer) == 0))
-			return (ft_free(&buffer, NULL));
-		readed[bytes_read] = '\0';
+		br = read(fd, readed, BUFFER_SIZE);
+		if (br == -1 || (!buffer) || (br == 0 && ft_strlen(buffer) == 0))
+			return (ft_free(&buffer, NULL), NULL);
+		readed[br] = '\0';
 		temp = buffer;
 		buffer = ft_strjoin (buffer, readed);
 		ft_free(&temp, NULL);
 		if (!buffer)
-			return (ft_free(&buffer, NULL));
+		{
+			ft_free(&buffer, NULL);
+			ft_free_data_and_error(data, "malloc error");
+		}
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	return (buffer);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_cub(t_data *data, int fd)
 {
 	char		*line;
 	static char	*buffer;
 	char		*temp;
 	size_t		newline;
+	int			br;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = read_file_until_nl(fd, buffer);
+	buffer = read_file_until_nl(data, fd, buffer, 1);
 	if (!buffer)
-		return (ft_free(&buffer, NULL));
+		return (ft_free(&buffer, NULL), NULL);
 	newline = (ft_strchr(buffer, '\n') - buffer);
 	line = ft_substr(buffer, 0, newline + 1);
 	if (!line)
-		return (ft_free(&buffer, &line));
+	{
+		ft_free(&buffer, &line);
+		ft_free_data_and_error(data, "malloc error");
+	}	
 	temp = buffer;
 	buffer = ft_substr(buffer, newline + 1, ft_strlen(buffer) - newline);
 	free(temp);
 	if (!buffer && !line)
-		return (ft_free(&buffer, &line));
+		return (ft_free(&buffer, &line), NULL);
 	return (line);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fille_checks.c                                     :+:      :+:    :+:   */
+/*   file_checks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 07:56:31 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/09 09:19:49 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/29 13:58:18 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int check_map_lines(t_data *data, t_check *check)
 	line = NULL;
 	while (1)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data->fd);
 		if (!line)
 		{
 			break;
@@ -159,7 +159,7 @@ void check_file_lines(t_data *data)
 	line = NULL;
 	while (lines < 7)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data->fd);
 		if (!line)
 		{
 			break;

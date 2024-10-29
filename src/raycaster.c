@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 15:24:23 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/29 11:07:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 	if (hor_or_ver == 1)
 	{
 		ray->dist = ray->dist_h;
-		if (ray->angle > 0 && ray->angle < PI)
+		if (ray->angle > 0 && ray->angle <= PI)
 			ray->wall = data->walls->so;
 		else
 			ray->wall = data->walls->no;
@@ -44,7 +44,7 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 	else
 	{
 		ray->dist = ray->dist_v;
-		if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
+		if (ray->angle < PI * 3 / 2 && ray->angle >= PI / 2)
 			ray->wall = data->walls->ea;
 		else
 			ray->wall = data->walls->we;
@@ -64,40 +64,15 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 	hor_door = ray->is_door;
 	ray->is_door = false;
 	vertical_cast(ray);
-	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h <= ray->dist_v))
+	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
 	{
 		set_wall(data, ray, 1, hor_door);
 	}
-	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v < ray->dist_h))
+	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
 	{
 		set_wall(data, ray, 0, ray->is_door);
 	}
 }
-
-/*else if (ray->dist_h == ray->dist_v)
-{
-	ray->dist = ray->dist_h;
-	if (ray->angle > 0.25 * PI && ray->angle <  0.75 * PI)
-	{
-		ray->wall = data->walls->ea;
-		ray->tex_x = count_texture_x(ray, hor_x);
-	}
-	if (ray->angle >= PI && ray->angle <= 2 * PI)
-	{
-		ray->wall = data->walls->no;
-		ray->tex_x = count_texture_x(ray, hor_x);
-	}
-	if (ray->angle > PI * 3 / 2 || ray->angle < PI / 2)
-	{
-		ray->wall = data->walls->ea;
-		ray->tex_x = count_texture_x(ray, ray->rxry[1]);
-	}
-	if (ray->angle >= PI / 2 && ray->angle <= 3 * PI / 2)
-	{
-		ray->wall = data->walls->we;
-		ray->tex_x = count_texture_x(ray, ray->rxry[1]);
-	}
-}*/
 
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 {
@@ -107,11 +82,11 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	init_ray(data, &ray, ray_angle);
 	horizontal_cast(&ray);
 	vertical_cast(&ray);
-	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
+	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h <= ray.dist_v))
 	{
 		ret_dist = ray.dist_h;
 	}
-	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
+	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v < ray.dist_h))
 	{
 		ret_dist = ray.dist_v;
 	}

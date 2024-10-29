@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/28 21:11:45 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:46:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,26 +76,3 @@ void allocate_map(t_data *data)
 		row++;
 	}
 }
-
-
-
-/*void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
-{
-	int **matrix = data->scene.map;
-
-	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x)
-		return;
-	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32 && matrix[cur.y][cur.x] != -1)
-	{
-		ft_free_data_and_error(data, "invalid file");
-	}
-	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
-		return;
-	matrix[cur.y][cur.x] = -1;
-	flood_fill(data, size, (t_point){cur.x - 1, cur.y}, to_fill);
-	flood_fill(data, size, (t_point){cur.x + 1, cur.y}, to_fill);
-	flood_fill(data, size, (t_point){cur.x, cur.y - 1}, to_fill);
-	flood_fill(data, size, (t_point){cur.x, cur.y + 1}, to_fill);
-}*/
-
-
