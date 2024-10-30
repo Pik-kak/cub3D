@@ -3,41 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/29 10:51:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:25:09 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-/*
-	Gets color from a certain xy-point of the texture
-	Assumes each pixel is 4 bytes (RGBA)
-	Combines the color channels into a single 32-bit value
-*/
-uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y)
-{
-	int		pixel_index;
-	uint8_t	r;
-	uint8_t	g;
-	uint8_t	b;
-	uint8_t	a;
-
-	pixel_index = (tex_y * image->width + tex_x) * 4;
-	r = image->pixels[pixel_index];
-	g = image->pixels[pixel_index + 1];
-	b = image->pixels[pixel_index + 2];
-	a = image->pixels[pixel_index + 3];
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-/*
-	Draws a slice of the wall
-	Step tells us how much to move along the texture for each pixel we draw.
-	Tex_start initializes the texture position, centering the wall on the screen.
-*/
-void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, int wall_height, mlx_image_t *image, int i)
+/* ================================
+ * Draws a slice of the wall
+ * Step tells us how much to move along the texture for each pixel we draw.
+ * Tex_start initializes the texture position, centering the wall on the screen.
+ * ================================
+ */
+void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, mlx_image_t *image, int i, double wall_height)
 {
 	double		step;
 	double		tex_start;
@@ -61,27 +42,30 @@ void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, i
 	//printf("Tex_x:%f Tex_y:%f\n", ray->tex_x, tex_y);
 }
 
-/*
-	Draws the ceiling, walls and floor
-*/
-void	draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
+/* ===================================
+ * Draws the ceiling, walls and floor
+ * ===================================
+ */
+void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 {
 	int	i;
 	int	start;
 	int	end;
 
 	i = 0;
-	calculate_measurements(data, wall_height, &start, &end);
+	calculate_msrmnts(data, wall_height, &start, &end);
 	while (i < data->s_height)
 	{
 		if (i < start)
 		{
 			if (pixel_ok(data, ray_count, i))
-				mlx_put_pixel(data->image, ray_count, i, data->scene.col_ceiling);
+				mlx_put_pixel(data->image, ray_count,
+					i, data->scene.col_ceiling);
 		}
 		else if (i >= start && i < end)
 		{
-			draw_texture(data, ray, ray_count, start, end, wall_height, ray->wall, i);
+			draw_texture(data, ray, ray_count, start, end,
+				ray->wall, i, wall_height);
 			i = end;
 		}
 		else
@@ -90,25 +74,26 @@ void	draw_walls(t_data *data, int ray_count, t_ray *ray, int wall_height)
 		i++;
 	}
 }
+
 /*
 	Casts the rays and calls drawing functions
 */
 int	cast_rays(t_data *data)
 {
 	int		nbr_of_rays;
-	double	ray_angle;
 	double	angle_step;
 	int		ray_count;
-	int		wall_height;
+	double	wall_height;
 	t_ray	ray;
 
-	nbr_of_rays = data->s_width; 
-	angle_step = PI / 3 / nbr_of_rays; 
+	nbr_of_rays = data->s_width;
+	angle_step = PI / 3 / nbr_of_rays;
 	ray_count = 0;
 	while (ray_count < data->s_width)
 	{
-		ray_angle = normalize_angle(data->scene.player.dir - (PI / 3 / 2) + (ray_count * angle_step)); 
-		init_ray(data, &ray, ray_angle);
+		ray.angle = normalize_angle(data->scene.player.dir
+				- (PI / 3 / 2) + (ray_count * angle_step));
+		init_ray(data, &ray, ray.angle);
 		cast_one_ray(data, &ray);
 		ray.angle = normalize_angle((data->scene.player.dir - ray.angle));
 		ray.dist = ray.dist * cos(ray.angle);

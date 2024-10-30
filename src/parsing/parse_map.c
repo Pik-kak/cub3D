@@ -6,15 +6,14 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-
-/*   Updated: 2024/10/28 13:34:00 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:50:20 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
 //sets player position and dir 
-void set_player_position(t_player *player, int dir, int i, int ii)
+void	set_player_position(t_player *player, int dir, int i, int ii)
 {
 	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
 	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
@@ -34,7 +33,7 @@ void	check_player(t_data *data)
 {
 	int	i;
 	int	ii;
-	int player_found;
+	int	player_found;
 
 	player_found = 0;
 	i = 0;
@@ -43,10 +42,12 @@ void	check_player(t_data *data)
 		ii = 0;
 		while (ii < data->scene.cols)
 		{
-			if (data->scene.map[i][ii] == 'N' || data->scene.map[i][ii] == 'S' 
-                 || data->scene.map[i][ii] == 'E' || data->scene.map[i][ii] == 'W')
+			if (data->scene.map[i][ii] == 'N' || data->scene.map[i][ii] == 'S'
+				|| data->scene.map[i][ii] == 'E'
+					|| data->scene.map[i][ii] == 'W')
 			{
-				set_player_position(&data->scene.player, data->scene.map[i][ii], i, ii);
+				set_player_position(&data->scene.player,
+					data->scene.map[i][ii], i, ii);
 				player_found++;
 			}
 			ii++;
@@ -58,10 +59,9 @@ void	check_player(t_data *data)
 }
 
 //helper function to check that there is no illegal char's in map
-
-int check_map_line(char *line, t_check *check)
+int	check_map_line(char *line, t_check *check)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (line[i] != ' ' && line[i] != '1')
@@ -76,14 +76,13 @@ int check_map_line(char *line, t_check *check)
 }
 
 //finds out a number of lines and checks the longest line for allocation
-
-void read_file_for_longest_and_lines(t_data *data, t_check *check)
+void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 {
 	char	*line;
 	char	*temp;
 	int		i;
 	int		map_found;
-	
+
 	i = 0;
 	map_found = 0;
 	line = NULL;
@@ -91,7 +90,7 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 	{
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
-			break;
+			break ;
 		free(line);
 		i++;
 	}
@@ -99,7 +98,7 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 	{
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
-			break;
+			break ;
 		if (*line == '\n')
 		{
 			if (map_found == 1)
@@ -112,13 +111,13 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 		else if (check_map_line(line, check) == 0)
 		{
 			map_found = 1;
-			check->map_lines++;	
-			if (ft_strlen(line) >= check->longest_line )
+			check->map_lines++;
+			if (ft_strlen(line) >= check->longest_line)
 			{
-				temp = ft_strtrim(line , "\n");
+				temp = ft_strtrim(line, "\n");
 				check->longest_line = ft_strlen(temp);
 				free (temp);
-			}	
+			}
 		}
 		free(line);
 	}
@@ -128,8 +127,7 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 }
 
 //after checking and etting texttures and colors in parse_textr_col.c this checks that there is no unallowed charachters after that
-
-void check_map_lines(t_data *data, t_check *check)
+void	check_map_lines(t_data *data, t_check *check)
 {
 	char	*line;
 
@@ -140,7 +138,7 @@ void check_map_lines(t_data *data, t_check *check)
 		if (!line)
 		{
 			close(data->fd);
-			break;
+			break ;
 		}
 		if (*line == '\n')
 		{

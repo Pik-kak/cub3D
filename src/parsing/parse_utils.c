@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/29 14:46:22 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:47:07 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,32 @@ int	check_filetype(char *filename, char *filetype)
 /*
 rgb to hexadecimal 
 */
-
-unsigned int rgb_to_hex(int r, int g, int b, int alpha)
+unsigned int	rgb_to_hex(int r, int g, int b, int alpha)
 {
-	return (alpha << 24) | (r << 16) | (g << 8) | b;
+	return ((alpha << 24) | (r << 16) | (g << 8) | b);
 }
-
 
 /*
 Skips spaces 
 */
-
-
-char *skip_spaces(char *line)
+char	*skip_spaces(char *line)
 {
 	int		i;
 	char	*pointer;
 
-	i  = 0;
+	i = 0;
 	while (line[i] == ' ')
 		i++;
 	pointer = &line[i];
 	return (pointer);
 }
 
-void allocate_map(t_data *data)
+void	allocate_map(t_data *data)
 {
-	int row;
+	int	row;
 
 	row = 0;
-	data->scene.map = malloc(data->scene.rows * sizeof(int*));
+	data->scene.map = malloc(data->scene.rows * sizeof(int *));
 	if (!data->scene.map)
 	{
 		ft_free_data_and_error(data, ERR_MALLOC);

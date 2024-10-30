@@ -89,6 +89,7 @@ typedef struct s_ray
 	int		rows;
 	int		hor_x;
 	mlx_image_t		*wall;
+	int		wall_height;
 	bool	is_door;
 	bool	open_door;
 	int		dir_hor;
@@ -103,6 +104,12 @@ typedef struct s_check
 	int map_lines;
 }				t_check;
 
+/*typedef struct s_texture
+{
+	int	start;
+	int	end;
+
+}		t_texture;*/
 
 typedef struct s_player
 {
@@ -168,6 +175,19 @@ typedef struct s_data
 	t_scene		scene;
 }	t_data;
 
+//src
+//parsing
+//draw_and texture
+
+//draw_walls
+
+
+//draw_utils.color
+uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y);
+int			adjust_opacity(int color, float opacity);
+//int			get_rgba(int r, int g, int b, int a);
+uint32_t	get_colour(int rgb[3]);
+uint32_t	darken_color(uint32_t color, double factor);
 
 //Map parsing
 int		check_filetype(char *filename, char *filetype);
@@ -248,7 +268,7 @@ void	ft_free_double_array(char **array);
 void	get_textures(t_data *data);
 
 //draw_utils
-void calculate_measurements(t_data *data, int wall_height, int *start, int *end);
+void calculate_msrmnts(t_data *data, int wall_height, int *start, int *end);
 float calculate_opacity(int ray, int nbr_of_rays, int start, int end);
 int squared_distance(int x1, int y1, int x2, int y2);
 uint32_t darken_color(uint32_t color, double factor);

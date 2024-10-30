@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 14:14:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:34:55 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_scene(t_data *data)
 }
 
 void	init_check(t_check *check)
-{	
+{
 	check->player_count = 0;
 	check->longest_line = 0;
 	check->cur_file_line = 0;
@@ -88,6 +88,7 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->cols = data->scene.cols;
 	ray->rows = data->scene.rows;
 	ray->wall = NULL;
+	ray->wall_height = 0;
 	ray->dir_hor = 0;
 	ray->dir_ver = 0;
 	ray->tex_x = 0;

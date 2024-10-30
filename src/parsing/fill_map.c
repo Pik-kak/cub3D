@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/29 14:01:56 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:42:37 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
 //raeds line and fills every row
-void fill_row(t_data *data, char *line, int row)
+void	fill_row(t_data *data, char *line, int row)
 {
-	int i;
-	int cols;
-	
+	int	i;
+	int	cols;
+
 	i = 0;
 	cols = -1;
-	if  (line[i] == '\n' || ft_strlen(line) < 2)
+	if (line[i] == '\n' || ft_strlen(line) < 2)
 		ft_free_data_and_error(data, "invalid file");
-	while(cols++ < SPACE_AROUND_MAP)
+	while (cols++ < SPACE_AROUND_MAP)
 		data->scene.map[row][cols] = ' ';
 	while (line[i] != '\n' && line[i] != '\0')
 	{
@@ -34,12 +34,12 @@ void fill_row(t_data *data, char *line, int row)
 			data->scene.map[row][cols] = 0;
 		else if (line[i] == '2')
 			data->scene.map[row][cols] = 2;
-		else 
+		else
 			data->scene.map[row][cols] = line[i];
 		i++;
 		cols++;
 	}
-	while(cols < data->scene.cols)
+	while (cols < data->scene.cols)
 	{
 		data->scene.map[row][cols] = ' ';
 		cols++;
@@ -47,21 +47,20 @@ void fill_row(t_data *data, char *line, int row)
 }
 
 //extra rows added with ' ' 
-void fill_extra_row(t_data *data, int row)
+void	fill_extra_row(t_data *data, int row)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < data->scene.cols)
-		{
-			data->scene.map[row][i] = ' ';
-			i++;
-		}
+	{
+		data->scene.map[row][i] = ' ';
+		i++;
+	}
 }
 
 //after checks this fills 2D arrow with map content and adds ' ' around everything
-
-void fill_map(t_data *data, t_check *check)
+void	fill_map(t_data *data, t_check *check)
 {
 	char	*line;
 	int		lines;
@@ -78,7 +77,7 @@ void fill_map(t_data *data, t_check *check)
 		row++;
 	}
 	//printf("%d\n", row);
-	while(lines <= check->cur_file_line)
+	while (lines <= check->cur_file_line)
 	{
 		line = get_next_line_cub(data, data->fd);
 		free(line);
@@ -88,7 +87,7 @@ void fill_map(t_data *data, t_check *check)
 	{
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
-			break;
+			break ;
 		fill_row(data, line, row);
 		free(line);
 		lines++;
@@ -103,20 +102,23 @@ void fill_map(t_data *data, t_check *check)
 	}
 	//printf("%d\n", row);
 }
+
 /**/
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 {
-	int **matrix = data->scene.map;
+	int	**matrix;
 
+	matrix = data->scene.map;
 	if (cur.y < 0 || cur.y >= size.y || cur.x < 0 || cur.x >= size.x)
-		return;
-	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32 && matrix[cur.y][cur.x] != -1)
+		return ;
+	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32
+		&& matrix[cur.y][cur.x] != -1)
 	{
 		ft_free_data_and_error(data, "invalid file");
-		return;
+		return ;
 	}
 	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
-		return;
+		return ;
 	matrix[cur.y][cur.x] = -1;
 	flood_fill(data, size, (t_point){cur.x - 1, cur.y}, to_fill);
 	flood_fill(data, size, (t_point){cur.x + 1, cur.y}, to_fill);
@@ -124,16 +126,16 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	flood_fill(data, size, (t_point){cur.x, cur.y + 1}, to_fill);
 }
 
-void fill_maze_if_spaces(t_data *data)
+void	fill_maze_if_spaces(t_data *data)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < data->scene.rows)
 	{
 		j = 0;
-		while(j < data->scene.cols)
+		while (j < data->scene.cols)
 		{
 			if (data->scene.map[i][j] == 32)
 				data->scene.map[i][j] = 1;

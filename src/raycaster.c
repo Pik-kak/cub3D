@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/29 11:07:22 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:32:30 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-/* 
-	casts One ray to given angle
-		first it casts ray to find wall in horizontal block sides, then vertical and 
-		draws ray to which ray is shorter and nearer player.
-*/
+/*========================================
+ * casts One ray to given angle
+ * first it casts ray to find wall in horizontal block sides,
+ * then vertical and 
+ * draws ray to which ray is shorter and nearer player.
+ * =======================================
+ */
 double	count_texture_x(t_ray *ray, int x)
 {
 	double	ret;
@@ -38,7 +40,7 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 		{
 			ray->wall = data->walls->door;
 			ray->is_door = true;
-		}	
+		}
 		ray->tex_x = count_texture_x(ray, ray->hor_x);
 	}
 	else
@@ -68,7 +70,8 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 	{
 		set_wall(data, ray, 1, hor_door);
 	}
-	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_v <= ray->dist_h))
+	else if (ray->dist_v > 0 && (ray->dist_h == 0
+			|| ray->dist_v <= ray->dist_h))
 	{
 		set_wall(data, ray, 0, ray->is_door);
 	}
