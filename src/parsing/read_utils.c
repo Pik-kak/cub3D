@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/29 14:33:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:44:43 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*get_next_line_cub(t_data *data, int fd)
 	{
 		ft_free(&buffer, &line);
 		ft_free_data_and_error(data, "malloc error");
-	}	
+	}
 	temp = buffer;
 	buffer = ft_substr(buffer, newline + 1, ft_strlen(buffer) - newline);
 	free(temp);

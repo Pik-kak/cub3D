@@ -6,7 +6,7 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 14:26:04 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:30:50 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parse(t_data *data)
 		ft_error(data, ERR_INFILE);
 	check_and_set_texttr_and_col_lines(data, check);
 	check_map_lines(data, check);
-	data->fd = open(data->file, O_RDONLY);//Open the file again from the beginning
+	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 		free_before_map(data);
 	read_file_for_longest_and_lines(data, check);

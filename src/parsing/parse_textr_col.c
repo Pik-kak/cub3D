@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/29 14:01:12 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:52:30 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
-
-
 
 /*
 Skips the spaces in the beginning.
@@ -20,11 +18,11 @@ If there is some content, checks if it corresponds with the element identifiers.
 Sets the variable value if it is valid.
 */
 
-void set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
+void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 {
-	char *str;
-	char **splitted;
-	
+	char	*str;
+	char	**splitted;
+
 	str = copy_str(data, pointer);
 	splitted = ft_split (str, ',');
 	if (!splitted)
@@ -36,14 +34,13 @@ void set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 	ft_free_double_array(splitted);
 }
 
-
 int	check_colour_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
 
 	pointer = skip_spaces(line);// pointer at the beginning of the text
-	if (*pointer == '\n' || *pointer == '\0')//if we are in the end of the line	
+	if (*pointer == '\n' || *pointer == '\0') //if we are in the end of the line	
 		return (1);
 	temp = pointer;
 	if (ft_strncmp(pointer, "F", 1) == 0 || ft_strncmp(pointer, "C", 1) == 0 && pointer[1] == ' ')
@@ -66,7 +63,7 @@ int	check_colour_line(t_data *data, char *line)
 	return (1);
 }
 
-int set_texture_line(t_data *data, char *temp, char *pointer)
+int	set_texture_line(t_data *data, char *temp, char *pointer)
 {
 	if (ft_strncmp(temp, "NO", 2) == 0)
 	{
@@ -101,11 +98,11 @@ int	check_texture_line(t_data *data, char *line)
 	char	*temp;
 
 	pointer = skip_spaces(line);// pointer at the beginning of the text
-	if (*pointer == '\n' || *pointer == '\0')//if we are in the end of the line	
+	if (*pointer == '\n' || *pointer == '\0') //if we are in the end of the line	
 		return (1);
 	temp = pointer;
-	if ((ft_strncmp(pointer, "NO", 2) == 0 || ft_strncmp(pointer, "SO", 2) == 0 
-		|| ft_strncmp(pointer, "EA", 2) == 0 || ft_strncmp(pointer, "WE", 2) == 0) 
+	if ((ft_strncmp(pointer, "NO", 2) == 0 || ft_strncmp(pointer, "SO", 2) == 0
+			|| ft_strncmp(pointer, "EA", 2) == 0 || ft_strncmp(pointer, "WE", 2) == 0) 
 		&& pointer[2] == ' ')
 	{
 		pointer = pointer + 2;//skip element identifier
@@ -116,9 +113,9 @@ int	check_texture_line(t_data *data, char *line)
 	return (1);
 }
 
-int check_valid_line(t_data *data, char *line)
+int	check_valid_line(t_data *data, char *line)
 {
-	if (check_texture_line(data, line)  == 0)
+	if (check_texture_line(data, line) == 0)
 		return (0);
 	else if (check_colour_line(data, line) == 0)
 		return (0);
@@ -129,15 +126,13 @@ int check_valid_line(t_data *data, char *line)
 	return (1);
 }
 
-
-
 /*
 Reads the file line by line and calls check line to check that the lines contain the elements needed. Doesn't yet check floor/ceiling or stop at map
 */
-void check_file_lines(t_data *data, t_check *check)
+void	check_file_lines(t_data *data, t_check *check)
 {
 	char	*line;
-	int lines;
+	int		lines;
 
 	lines = 0;
 	line = NULL;
@@ -172,4 +167,3 @@ void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
 	data->scene.col_ceiling = get_colour(data->scene.ceiling_rgb);
 	data->scene.col_floor = get_colour(data->scene.floor_rgb);
 }
-

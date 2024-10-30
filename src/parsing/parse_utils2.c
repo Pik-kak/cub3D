@@ -6,14 +6,15 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/25 20:44:33 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:44:11 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
 /*
-Mallocs a copy and copies the string until ' ', ' \n' or '\0' and returns the copy
+Mallocs a copy and copies the string until ' ', ' \n'
+or '\0' and returns the copy
 if there is content after the path returns error
 */
 char	*copy_str(t_data *data, char *line)
@@ -22,7 +23,7 @@ char	*copy_str(t_data *data, char *line)
 	char	*ret;
 
 	i = 0;
-	while(line[i] && line[i] != ' ' && line[i] != '\n')//while there is content other than ' ', ' \n' or '\0'
+	while (line[i] && line[i] != ' ' && line[i] != '\n')//while there is content other than ' ', ' \n' or '\0'
 		i++;
 	if (i == 0)
 		return (NULL);
@@ -30,7 +31,7 @@ char	*copy_str(t_data *data, char *line)
 	if (!ret)
 		ft_error(data, ERR_MALLOC);
 	i = 0;
-	while(line[i] != ' ' && line[i] != '\n' && line[i])//copies the path
+	while (line[i] != ' ' && line[i] != '\n' && line[i]) //copies the path
 	{
 		ret[i] = line[i];
 		i++;

@@ -3,59 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/29 15:49:03 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:28:50 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
-
-int	adjust_opacity(int color, float opacity)
-{
-	int	red;
-	int	green;
-	int	blue;
-	int	alpha;
-
-	if (opacity > 1.0)
-		opacity = 1.0;
-	else if (opacity < 0.0)
-		opacity = 0.0;
-	red = (color >> 24) & 0xFF;
-	green = (color >> 16) & 0xFF;
-	blue = (color >> 8) & 0xFF;
-	alpha = (int)((color & 0xFF) * opacity);
-	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
-}
-
-int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-uint32_t	get_colour(int rgb[3])
-{
-	uint32_t	colour;
-	uint32_t	a;
-
-	a = 255;
-	colour = (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | a);
-	return (colour);
-}
-
-/* ==============================
- * If pixel is out of screen does not draw it 
- * prevents segfault
- * ==============================
- */
-int	pixel_ok(t_data *data, int x, int y)
-{
-	if (x >= 0 && x < data->s_width && y >= 0 && y < data->s_height)
-		return (1);
-	return (0);
-}
 
 /* ==============================
  * Draws one block filled with same color 
@@ -69,8 +24,10 @@ void	fill_square(t_data *data, int color, int xo, int yo)
 	int	i;
 	int	j;
 
-	start_x = xo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12 - (int)data->scene.player.px % BLOCK_SIZE / 6;
-	start_y = yo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12 - (int)data->scene.player.py % BLOCK_SIZE / 6;
+	start_x = xo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12
+		- (int)data->scene.player.px % BLOCK_SIZE / 6;
+	start_y = yo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12
+		- (int)data->scene.player.py % BLOCK_SIZE / 6;
 	i = 0;
 	while (i < BLOCK_SIZE / 6)
 	{
@@ -78,7 +35,8 @@ void	fill_square(t_data *data, int color, int xo, int yo)
 		while (j < BLOCK_SIZE / 6)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(data->image, start_x + j, start_y + i, darken_color(color, 0.4));
+				mlx_put_pixel(data->image, start_x + j,
+					start_y + i, darken_color(color, 0.4));
 			j++;
 		}
 		i++;
@@ -91,9 +49,9 @@ void	fill_square(t_data *data, int color, int xo, int yo)
  */
 void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
 {
-	int **map_c;
-	int x;
-	int y;
+	int	**map_c;
+	int	x;
+	int	y;
 
 	x = mmap->start_x;
 	y = mmap->start_y;
@@ -101,7 +59,7 @@ void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
 	if (map_c[y][x] == 1)
 	{
 		fill_square(data, COL_LINE, i, j);
-	} 
+	}
 	else if (map_c[y][x] == 0 || map_c[y][x] == 'N' || map_c[y][x] == 'S' || \
 	map_c[y][x] == 'E' || map_c[y][x] == 'W')
 	{
@@ -109,7 +67,7 @@ void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
 	}
 	else if (map_c[y][x] == 2 || map_c[y][x] == 3)
 		fill_square(data, COL_BLUE, i, j);
-	else 
+	else
 		fill_square(data, COL_BRICK_RED, i, j);
 }
 
@@ -155,7 +113,7 @@ void	draw_circle(t_data *data, int radius, int color)
 
 void	draw_nose(t_data *data, int length, int color)
 {
-	double	dir; 
+	double	dir;
 	int		c_x;
 	int		c_y;
 	int		i;
@@ -167,9 +125,11 @@ void	draw_nose(t_data *data, int length, int color)
 		c_x = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12 + (i * cos(dir));
 		c_y = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12 + (i * sin(dir));
 		if (pixel_ok(data, c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
-			mlx_put_pixel(data->image, c_x + 1 * sin(dir), c_y - 1 * cos(dir), color);
+			mlx_put_pixel(data->image, c_x + 1 * sin(dir),
+				c_y - 1 * cos(dir), color);
 		if (pixel_ok(data, c_x - 1 * sin(dir), c_y + 1 * cos(dir)))
-			mlx_put_pixel(data->image, c_x - 1 * sin(dir), c_y + 1 * cos(dir), color);
+			mlx_put_pixel(data->image, c_x - 1 * sin(dir),
+				c_y + 1 * cos(dir), color);
 		i++;
 	}
 }
@@ -191,7 +151,8 @@ void	draw_minimap_box(t_data *data)
 		x = 0;
 		while (x < 2 * BLOCK_SIZE)
 		{
-			if (x < 38 || y < 38 || x > 2 * BLOCK_SIZE - 38 || y > 2 * BLOCK_SIZE - 38)
+			if (x < 38 || y < 38 || x > 2 * BLOCK_SIZE - 38
+				|| y > 2 * BLOCK_SIZE - 38)
 			{
 				if (pixel_ok(data, x, y))
 					mlx_put_pixel(data->image, x, y, data->scene.col_ceiling);
@@ -206,7 +167,7 @@ void	draw_minimap_box(t_data *data)
  * Draws map tile by tile
  * ==============================
  */
-void set_minimap_bounds(t_data *data, t_minimap *mmap)
+void	set_minimap_bounds(t_data *data, t_minimap *mmap)
 {
 	mmap->start_y = (int)data->scene.player.py / BLOCK_SIZE - 5;
 	mmap->end_x = (int)data->scene.player.px / BLOCK_SIZE + 5;
@@ -221,9 +182,9 @@ void set_minimap_bounds(t_data *data, t_minimap *mmap)
 
 void	draw_minimap(t_data *data)
 {
-	t_minimap mmap;	 
-	int i;
-	int j;
+	t_minimap	mmap;
+	int			i;
+	int			j;
 
 	i = 1;
 	set_minimap_bounds(data, &mmap);
@@ -246,7 +207,6 @@ void	draw_minimap(t_data *data)
 	draw_player(data);
 }
 
-
 void	draw_scene(t_data *data)
 {
 	mlx_delete_image(data->m, data->image);
@@ -264,4 +224,3 @@ void	draw_scene(t_data *data)
 	}
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }
-
