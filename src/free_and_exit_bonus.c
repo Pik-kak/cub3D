@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/25 20:57:06 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:07:40 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ void	ft_free_data_and_error(t_data *data, char *error)
 	write(2, error, ft_strlen(error));
 	write(2, "\n", 1);
 	i = 0;
-	while (i < data->scene.rows)
+	/*	while (i < data->scene.rows)
 	{
 		free(data->scene.map[i]);
 		i++;
 	}
+
 	free(data->scene.map);
 	if (data->scene.no != NULL)
 		free(data->scene.no);
@@ -62,7 +63,7 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		free(data->txtrs);
 	if (data->m)
 		mlx_terminate(data->m);
-	free(data);
+	free(data);*/
 	data = NULL;
 	exit(1);
 }

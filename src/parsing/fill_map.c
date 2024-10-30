@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/25 21:59:27 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:01:56 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ void fill_map(t_data *data, t_check *check)
 	//printf("%d\n", row);
 	while(lines <= check->cur_file_line)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data, data->fd);
 		free(line);
 		lines++;
 	}
 	while (lines <= check->cur_file_line + check->map_lines)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data, data->fd);
 		if (!line)
 			break;
 		fill_row(data, line, row);
@@ -103,7 +103,7 @@ void fill_map(t_data *data, t_check *check)
 	}
 	//printf("%d\n", row);
 }
-
+/**/
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 {
 	int **matrix = data->scene.map;

@@ -89,7 +89,7 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 	line = NULL;
 	while (i < check->cur_file_line)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data, data->fd);
 		if (!line)
 			break;
 		free(line);
@@ -97,7 +97,7 @@ void read_file_for_longest_and_lines(t_data *data, t_check *check)
 	}
 	while (1)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data, data->fd);
 		if (!line)
 			break;
 		if (*line == '\n')
@@ -136,7 +136,7 @@ void check_map_lines(t_data *data, t_check *check)
 	line = NULL;
 	while (1)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
 			close(data->fd);

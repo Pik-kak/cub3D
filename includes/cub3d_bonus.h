@@ -18,7 +18,6 @@
 # include <math.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
-# include "../libft/get_next_line.h"
 
 #define SUCCESS 0
 #define ERROR 1
@@ -50,15 +49,16 @@
 # define ERR_MALLOC "Malloc error"
 # define ERR_MLX "MLX error"
 
-#define FIXED_POINT_SCALE 1000
-#define PI 3.14159265
-#define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-#define PLAYER_SPEED 2
-#define SENSITIVITY 0.0008
-#define BLOCK_SIZE 128
-#define GRID_GAP 1
-#define FOV PI / 3;
-#define SPACE_AROUND_MAP 5
+# define FIXED_POINT_SCALE 1000
+# define PI 3.14159265
+# define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
+# define PLAYER_SPEED 2
+# define SENSITIVITY 0.0008
+# define BLOCK_SIZE 128
+# define GRID_GAP 1
+# define FOV PI / 3;
+# define SPACE_AROUND_MAP 5
+# define BUFFER_SIZE 1024
 
 
 typedef struct	s_point
@@ -67,6 +67,13 @@ typedef struct	s_point
 	int y;
 } t_point;
 
+typedef struct s_minimap
+{
+	int start_x;
+	int start_y;
+	int end_x;
+	int end_y;
+} t_minimap;
 
 typedef struct s_ray
 {
@@ -179,6 +186,7 @@ void	check_player(t_data *data);
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
 void 	fill_maze_if_spaces(t_data *data);
 char	*copy_str(t_data *data, char *line);
+char	*get_next_line_cub(t_data *data, int fd);
 
 //Map drawing
 void	draw_scene(t_data *data);
@@ -188,7 +196,7 @@ int		pixel_ok(t_data *data, int x, int y);
 void	draw_ceiling_and_floor(t_data *data);
 int		adjust_opacity(int color, float opacity);
 uint32_t	get_colour(int rgb[3]);
-void draw_minimap(t_data *data);
+//void draw_minimap(t_data *data);
 
 //initialize
 void	init_data(t_data *data, char **argv);

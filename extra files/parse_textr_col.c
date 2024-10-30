@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/25 20:38:22 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/10/29 13:57:29 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void parse_file_for_walls_and_colours(t_data *data, t_check *check)
 	line = NULL;
 	while (1)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data->fd);
 		if (!line)
 		{
 			break;

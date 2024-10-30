@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/14 15:37:15 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/10/29 13:57:52 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,13 @@ void fill_map(t_data *data, t_check *check)
 	row++;
 	while(lines < check->cur_file_line)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data->fd);
 		free(line);
 		lines++;
 	}
 	while (check->map_lines > 0)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data->fd);
 		if (!line)
 			break;
 		if (*line == '\n' && check->map_lines > 0)
@@ -118,7 +118,7 @@ void read_file_for_longest_map_line(t_data *data, t_check *check)
 	line = NULL;
 	while (1)
 	{
-		line = get_next_line(data->fd);
+		line = get_next_line_cub(data->fd);
 		if (!line)
 		{
 			break;
