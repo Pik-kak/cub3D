@@ -6,7 +6,7 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/30 16:25:09 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:45:31 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,28 @@
  * Tex_start initializes the texture position, centering the wall on the screen.
  * ================================
  */
-void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, mlx_image_t *image, int i, double wall_height)
+void	draw_texture(t_data *data, t_ray *ray, t_texture *txtr, int i)
 {
 	double		step;
 	double		tex_start;
 	double		tex_y;
 	uint32_t	color;
 
-	step = 1.0 * image->height / wall_height;
-	tex_start = (start - data->s_height / 2 + wall_height / 2) * step;
-	while (i <= end)
+	step = 1.0 * ray->wall->height / txtr->wall_height;
+	tex_start = (txtr->start - data->s_height / 2 + txtr->wall_height / 2)
+		* step;
+	while (i <= txtr->end)
 	{
-		if (tex_start >= image->height)
-			tex_y = (tex_start - image->height);
+		if (tex_start >= ray->wall->height)
+			tex_y = (tex_start - ray->wall->height);
 		else
 			tex_y = tex_start;
 		tex_start += step;
-		color = get_image_color(image, (int)ray->tex_x, tex_y);
-		if (pixel_ok(data, ray_count, i))
-			mlx_put_pixel(data->image, ray_count, i, color);
+		color = get_image_color(ray->wall, (int)ray->tex_x, tex_y);
+		if (pixel_ok(data, txtr->raycount, i))
+			mlx_put_pixel(data->image, txtr->raycount, i, color);
 		i++;
 	}
-	//printf("Tex_x:%f Tex_y:%f\n", ray->tex_x, tex_y);
 }
 
 /* ===================================
@@ -48,25 +48,25 @@ void	draw_texture(t_data *data, t_ray *ray, int ray_count, int start, int end, m
  */
 void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 {
-	int	i;
-	int	start;
-	int	end;
+	int			i;
+	t_texture	txtr;
 
 	i = 0;
-	calculate_msrmnts(data, wall_height, &start, &end);
+	calculate_msrmnts(data, &txtr, wall_height);
 	while (i < data->s_height)
 	{
-		if (i < start)
+		if (i < txtr.start)
 		{
 			if (pixel_ok(data, ray_count, i))
 				mlx_put_pixel(data->image, ray_count,
 					i, data->scene.col_ceiling);
 		}
-		else if (i >= start && i < end)
+		else if (i >= txtr.start && i < txtr.end)
 		{
-			draw_texture(data, ray, ray_count, start, end,
-				ray->wall, i, wall_height);
-			i = end;
+			txtr.raycount = ray_count;
+			txtr.wall_height = wall_height;
+			draw_texture(data, ray, &txtr, i);
+			i = txtr.end;
 		}
 		else
 			if (pixel_ok(data, ray_count, i))

@@ -6,7 +6,7 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:47:29 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/30 16:24:22 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/01 18:46:14 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	pixel_ok(t_data *data, int x, int y)
  * Calculates the starting and ending points of the wall slice
  * ===============================
  */
-void	calculate_msrmnts(t_data *data, int wall_height, int *start, int *end)
+void	calculate_msrmnts(t_data *data, t_texture *txtr, double wall_height)
 {
-	*start = -(wall_height / 2) + (data->s_height / 2);
-	if (*start < 0)
-		*start = 0;
-	*end = (wall_height / 2) + (data->s_height / 2);
-	if (*end >= data->s_height)
-		*end = data->s_height - 1;
+	txtr->start = -(wall_height / 2) + (data->s_height / 2);
+	if (txtr->start < 0)
+		txtr->start = 0;
+	txtr->end = (wall_height / 2) + (data->s_height / 2);
+	if (txtr->end >= data->s_height)
+		txtr->end = data->s_height - 1;
 }
 
 float	calculate_opacity(int ray, int nbr_of_rays, int start, int end)
