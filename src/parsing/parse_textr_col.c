@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/10/30 16:52:30 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 15:58:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,55 @@ If there is some content, checks if it corresponds with the element identifiers.
 Sets the variable value if it is valid.
 */
 
+void check_valid_color_value(t_data *data, char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != 0)
+	{
+		if(ft_isdigit(str[i++]) != 1)
+			ft_free_data_and_error(data, "invalid file, invalid colour setting");
+	}
+}
+
+void check_amount_of_commas(t_data *data, char *str)
+{
+	int commas;
+
+	commas = 0;
+	while(*str)
+	{
+		if(*str == ',')
+			commas++;
+		str++;
+	}
+	if (commas != 2)
+		ft_free_data_and_error(data, "invalid file, invalid colour line");
+}
+
 void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 {
 	char	*str;
 	char	**splitted;
+	int		i;
 
 	str = copy_str(data, pointer);
+	check_amount_of_commas(data, str);
 	splitted = ft_split (str, ',');
 	if (!splitted)
 		ft_free_data_and_error(data, "malloc error");
 	free(str);
+	i = 0;
+	while(splitted[i] != 0)
+		check_valid_color_value(data, splitted[i++]);
+	if (i != 3)
+		ft_free_data_and_error(data, "invalid file, invalid amount color parameters");
 	rgb[0] = ft_atoi(splitted[0]);
 	rgb[1] = ft_atoi(splitted[1]);
 	rgb[2] = ft_atoi(splitted[2]);
+	if (rgb[0] < 0 || rgb[0] > 255 || rgb[1] < 0 || rgb[1] > 255 || rgb[2] < 0 || rgb[2] > 255)
+		ft_free_data_and_error(data, "invalid file, colour value out of range");
 	ft_free_double_array(splitted);
 }
 
@@ -121,7 +157,7 @@ int	check_valid_line(t_data *data, char *line)
 		return (0);
 	else
 	{
-		return (ft_free_data_and_error(data, "invalid file"), 1);
+		return (ft_free_data_and_error(data, "invalid file, invalid color or texture line"), 1);
 	}
 	return (1);
 }
