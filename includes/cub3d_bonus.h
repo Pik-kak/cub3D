@@ -75,6 +75,14 @@ typedef struct s_minimap
 	int end_y;
 } t_minimap;
 
+typedef struct s_texture
+{
+	int	start;
+	int	end;
+	int	raycount;
+	int	wall_height;
+}		t_texture;
+
 typedef struct s_ray
 {
 	float	angle;
@@ -94,6 +102,7 @@ typedef struct s_ray
 	bool	open_door;
 	double	tex_x;
 }	t_ray;
+
 typedef struct s_check
 {
 	int	player_count;
@@ -101,13 +110,6 @@ typedef struct s_check
 	int	cur_file_line;
 	int map_lines;
 }				t_check;
-
-/*typedef struct s_texture
-{
-	int	start;
-	int	end;
-
-}		t_texture;*/
 
 typedef struct s_player
 {
@@ -185,12 +187,23 @@ typedef struct s_data
 //draw_walls
 
 
-//draw_utils.color
+//draw_utils_color
 uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y);
 int			adjust_opacity(int color, float opacity);
 //int			get_rgba(int r, int g, int b, int a);
 uint32_t	get_colour(int rgb[3]);
 uint32_t	darken_color(uint32_t color, double factor);
+
+//draw_utils
+void	calculate_msrmnts(t_data *data, t_texture *txtr, double wall_height);
+
+//draw_scene
+void	draw_circle(t_data *data, int radius, int color);
+void	draw_nose(t_data *data, int length, int color);
+void	draw_tile(t_data *data, t_minimap *mmap, int i, int j);
+//draw_minimap
+void	draw_minimap(t_data *data);
+
 
 //Map parsing
 int		check_filetype(char *filename, char *filetype);
@@ -272,7 +285,6 @@ void	ft_free_double_array(char **array);
 void	get_textures(t_data *data);
 
 //draw_utils
-void calculate_msrmnts(t_data *data, int wall_height, int *start, int *end);
 float calculate_opacity(int ray, int nbr_of_rays, int start, int end);
 int squared_distance(int x1, int y1, int x2, int y2);
 uint32_t darken_color(uint32_t color, double factor);

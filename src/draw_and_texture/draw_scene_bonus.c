@@ -228,7 +228,6 @@ void update_wand (t_data *data)
 	mlx_set_instance_depth(&data->wand->instances[0], 3);
 }	
 
-
 void	draw_scene(t_data *data)
 {
 	mlx_delete_image(data->m, data->image);
