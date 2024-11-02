@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/30 16:34:55 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 13:58:18 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	init_scene(t_data *data)
 	data->scene.floor_rgb[1] = -1;
 	data->scene.floor_rgb[2] = -1;
 	data->scene.minimap_status = 1;
+	data->scene.wand_pos = 1;
+	data->scene.wand_timer = 0;
+	data->scene.door_x = 0;
+	data->scene.door_y = 0;
 }
 
 void	init_check(t_check *check)
@@ -89,7 +93,5 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->rows = data->scene.rows;
 	ray->wall = NULL;
 	ray->wall_height = 0;
-	ray->dir_hor = 0;
-	ray->dir_ver = 0;
 	ray->tex_x = 0;
 }

@@ -52,7 +52,7 @@
 # define FIXED_POINT_SCALE 1000
 # define PI 3.14159265
 # define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-# define PLAYER_SPEED 2
+# define PLAYER_SPEED 3
 # define SENSITIVITY 0.0008
 # define BLOCK_SIZE 128
 # define GRID_GAP 1
@@ -100,8 +100,6 @@ typedef struct s_ray
 	int		wall_height;
 	bool	is_door;
 	bool	open_door;
-	int		dir_hor;
-	int		dir_ver;
 	double	tex_x;
 }	t_ray;
 
@@ -161,12 +159,17 @@ typedef struct s_scene
 	int			cols;
 	int			rows;
 	int			minimap_status;
+	int			wand_pos;
+	int			wand_timer;
+	int			door_x;
+	int			door_y;
 }	t_scene;
 
 typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
+	mlx_image_t *wand;
 	mlx_image_t	*txtr;
 	t_textures	*txtrs;
 	t_walls		*walls;
@@ -229,6 +232,7 @@ int		pixel_ok(t_data *data, int x, int y);
 void	draw_ceiling_and_floor(t_data *data);
 int		adjust_opacity(int color, float opacity);
 uint32_t	get_colour(int rgb[3]);
+void update_wand (t_data *data);
 //void draw_minimap(t_data *data);
 
 //initialize

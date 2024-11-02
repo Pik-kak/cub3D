@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/30 16:44:11 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 15:53:26 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*copy_str(t_data *data, char *line)
 		return (NULL);
 	ret = (char *)malloc((i + 1) * sizeof(char));//mallocs the path string
 	if (!ret)
-		ft_error(data, ERR_MALLOC);
+		ft_free_data_and_error(data, ERR_MALLOC);
 	i = 0;
 	while (line[i] != ' ' && line[i] != '\n' && line[i]) //copies the path
 	{
@@ -41,7 +41,7 @@ char	*copy_str(t_data *data, char *line)
 	if (*line != '\n' && *line!= '\0')// if there is something else in the end returns 
 	{
 		free(ret);
-		ft_error(data, "element not valid, extra characters");
+		ft_free_data_and_error(data, "element not valid, extra characters");
 	}
 	return (ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/30 16:32:30 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 14:10:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,14 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	return (ret_dist);
 }
 
+void set_door_open(t_data *data, int x, int y)
+{
+	data->scene.wand_pos = 2;
+	data->scene.wand_timer = 30;
+	data->scene.door_x = x;
+	data->scene.door_y = y;
+}
+
 void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
 {
 	t_ray	ray;
@@ -111,14 +119,16 @@ void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
 	hor_grid_x = (int)(ray.rxry[0] / BLOCK_SIZE);
 	hor_grid_y = (int)(ray.rxry[1] / BLOCK_SIZE);
 	vertical_cast(&ray);
+	
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
-		if (hor_door && ray.dist_h < 150)
-			set_door(data, hor_grid_x, hor_grid_y);
+		if (hor_door && ray.dist_h < 500)
+			set_door_open(data, hor_grid_x, hor_grid_y);
 	}
-	else if (ray.dist_v > 0 && (ray.dist_h == 0 || ray.dist_v <= ray.dist_h))
+	else
 	{
-		if (ray.is_door && ray.dist_v < 150)
-			set_door(data, ray.rxry[0] / BLOCK_SIZE, ray.rxry[1] / BLOCK_SIZE);
+		if (ray.is_door && ray.dist_v < 500)
+			set_door_open(data, ray.rxry[0] / BLOCK_SIZE, \
+			ray.rxry[1] / BLOCK_SIZE);
 	}
 }

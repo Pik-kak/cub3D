@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/01 18:53:14 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 14:07:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,100 @@ void	draw_nose(t_data *data, int length, int color)
 		i++;
 	}
 }
+
+void	draw_player(t_data *data)
+{
+	draw_circle(data, 4, COL_WHITE);
+	draw_nose(data, 8, COL_WHITE);
+}
+
+void	draw_minimap_box(t_data *data)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < 2 * BLOCK_SIZE)
+	{
+		x = 0;
+		while (x < 2 * BLOCK_SIZE)
+		{
+			if (x < 38 || y < 38 || x > 2 * BLOCK_SIZE - 38
+				|| y > 2 * BLOCK_SIZE - 38)
+			{
+				if (pixel_ok(data, x, y))
+					mlx_put_pixel(data->image, x, y, data->scene.col_ceiling);
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+/* ==============================
+ * Draws map tile by tile
+ * ==============================
+ */
+void	set_minimap_bounds(t_data *data, t_minimap *mmap)
+{
+	mmap->start_y = (int)data->scene.player.py / BLOCK_SIZE - 5;
+	mmap->end_x = (int)data->scene.player.px / BLOCK_SIZE + 5;
+	mmap->end_y = (int)data->scene.player.py / BLOCK_SIZE + 5;
+	if (mmap->start_y < 0)
+		mmap->start_y = 0;
+	if (mmap->end_x > data->scene.cols)
+		mmap->end_x = data->scene.cols;
+	if (mmap->end_y > data->scene.rows)
+		mmap->end_y = data->scene.rows;
+}
+
+void	draw_minimap(t_data *data)
+{
+	t_minimap	mmap;
+	int			i;
+	int			j;
+
+	i = 1;
+	set_minimap_bounds(data, &mmap);
+	while (mmap.start_y < mmap.end_y)
+	{
+		j = 1;
+		mmap.start_x = (int)data->scene.player.px / BLOCK_SIZE - 5;
+		if (mmap.start_x < 0)
+			mmap.start_x = 0;
+		while (mmap.start_x < mmap.end_x)
+		{
+			draw_tile(data, &mmap, j, i);
+			mmap.start_x++;
+			j++;
+		}
+		mmap.start_y++;
+		i++;
+	}
+	draw_minimap_box(data);
+	draw_player(data);
+}
+
+
+void update_wand (t_data *data)
+{
+	mlx_texture_t *wand_text;
+
+	mlx_delete_image(data->m, data->wand);
+	if (data->scene.wand_pos == 1)
+		wand_text = mlx_load_png("./textures/wand_2.png");
+	else if (data->scene.wand_pos == 2)
+		wand_text = mlx_load_png("./textures/wand_3.png");
+	if (!wand_text)
+		ft_free_data_and_error(data, "error loading wand texture");
+	data->wand = mlx_texture_to_image(data->m, wand_text);
+	mlx_delete_texture(wand_text);
+	if (data->scene.wand_pos == 1)
+		mlx_image_to_window(data->m, data->wand, WIDTH / 2, HEIGHT - 200);
+	else if (data->scene.wand_pos == 2)
+		mlx_image_to_window(data->m, data->wand, WIDTH / 2, HEIGHT - 200);
+	mlx_set_instance_depth(&data->wand->instances[0], 3);
+}	
 
 void	draw_scene(t_data *data)
 {

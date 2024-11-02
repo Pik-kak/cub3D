@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:10:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/02/12 14:05:01 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/02 15:32:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	converttoint(const char *str, int i, int neg)
 	{
 		ret = ret * 10 + str[i] - 48;
 		if (ret < 0 && neg == 1)
-			return ((int)LONG_MAX);
+			return (INT_MAX);
 		else if (ret < 0 && neg == -1)
-			return ((int)LONG_MIN);
+			return (INT_MIN);
 		i++;
 	}
 	return (ret);
