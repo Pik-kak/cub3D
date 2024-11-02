@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by pikkak            #+#    #+#             */
-/*   Updated: 2024/11/02 15:53:26 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/02 18:08:44 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*copy_str(t_data *data, char *line)
 	char	*ret;
 
 	i = 0;
-	while (line[i] && line[i] != ' ' && line[i] != '\n')//while there is content other than ' ', ' \n' or '\0'
+	while (line[i] && line[i] != ' ' && line[i] != '\n') //while there is content other than ' ', ' \n' or '\0'
 		i++;
 	if (i == 0)
 		return (NULL);

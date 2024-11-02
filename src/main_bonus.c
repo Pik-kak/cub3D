@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/02 14:06:00 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/02 18:00:03 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,6 @@ void	init_map(t_data *data)
 		}
 		rows++;
 	}
-}
-
-void	free_before_map(t_data *data)
-{
-	free(data->scene.ea);
-	free(data->scene.so);
-	free(data->scene.no);
-	free(data->scene.we);
-	ft_error(data, ERR_OPEN);
 }
 
 void	set_map(t_data *data, t_check *check)
@@ -81,14 +72,14 @@ void	parse(t_data *data)
 	free(check);
 }
 
-void render_loop(void *param)
+void	render_loop(void *param)
 {
-	t_data *data;
-	
+	t_data	*data;
+	int		door;
+
 	data = param;
 	if (data->scene.wand_timer > 0)
 	{
-		int door;
 		if (data->scene.wand_timer % 5 && data->scene.wand_timer > 0)
 		{
 			set_door(data, data->scene.door_x, data->scene.door_y);

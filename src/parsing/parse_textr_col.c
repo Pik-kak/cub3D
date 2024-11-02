@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/02 15:58:17 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/02 17:54:31 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,27 @@ If there is some content, checks if it corresponds with the element identifiers.
 Sets the variable value if it is valid.
 */
 
-void check_valid_color_value(t_data *data, char *str)
+void	check_valid_color_value(t_data *data, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != 0)
 	{
-		if(ft_isdigit(str[i++]) != 1)
-			ft_free_data_and_error(data, "invalid file, invalid colour setting");
+		if (ft_isdigit(str[i++]) != 1)
+			ft_free_data_and_error(data,
+				"invalid file, invalid colour setting");
 	}
 }
 
-void check_amount_of_commas(t_data *data, char *str)
+void	check_amount_of_commas(t_data *data, char *str)
 {
-	int commas;
+	int	commas;
 
 	commas = 0;
-	while(*str)
+	while (*str)
 	{
-		if(*str == ',')
+		if (*str == ',')
 			commas++;
 		str++;
 	}
@@ -58,7 +59,7 @@ void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 		ft_free_data_and_error(data, "malloc error");
 	free(str);
 	i = 0;
-	while(splitted[i] != 0)
+	while (splitted[i] != 0)
 		check_valid_color_value(data, splitted[i++]);
 	if (i != 3)
 		ft_free_data_and_error(data, "invalid file, invalid amount color parameters");

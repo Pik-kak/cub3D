@@ -180,12 +180,6 @@ typedef struct s_data
 	t_scene		scene;
 }	t_data;
 
-//src
-//parsing
-//draw_and texture
-
-//draw_walls
-
 
 //draw_utils_color
 uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y);
@@ -203,6 +197,8 @@ void	draw_nose(t_data *data, int length, int color);
 void	draw_tile(t_data *data, t_minimap *mmap, int i, int j);
 //draw_minimap
 void	draw_minimap(t_data *data);
+//wand
+void	update_wand(t_data *data);
 
 
 //Map parsing
@@ -246,7 +242,7 @@ double	normalize_angle(double angle);
 void	raycaster(t_data *data);
 void	cast_one_ray(t_data *data, t_ray *ray);
 int		cast_rays(t_data *data);
-int	cast_collission_ray(t_data *data, double ray_angle, double x, double y);
+int		cast_collission_ray(t_data *data, double ray_angle, double x, double y);
 void	cast_door_ray(t_data *data, double ray_angle, double x, double y);
 void	vertical_cast(t_ray *ray);
 void	horizontal_cast(t_ray *ray);
@@ -254,6 +250,7 @@ void	horizontal_cast(t_ray *ray);
 //raycaster utils
 int		ray_len(t_ray *ray);
 void 	set_door(t_data *data, int x, int y);
+void	set_door_open(t_data *data, int x, int y);
 
 //player handling
 void	collisions(t_data *data);
@@ -280,6 +277,7 @@ void	ft_free_data_and_exit(t_data *data);
 void	ft_error(t_data *data, char *error);
 void	ft_free_data_and_error(t_data *data, char *error);
 void	ft_free_double_array(char **array);
+void	free_before_map(t_data *data);
 
 //textures
 void	get_textures(t_data *data);
