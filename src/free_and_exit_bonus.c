@@ -6,11 +6,20 @@
 /*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/01 18:54:55 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 18:01:09 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
+
+void	free_before_map(t_data *data)
+{
+	free(data->scene.ea);
+	free(data->scene.so);
+	free(data->scene.no);
+	free(data->scene.we);
+	ft_error(data, ERR_OPEN);
+}
 
 void	ft_error(t_data *data, char *error)
 {

@@ -6,7 +6,7 @@
 #    By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/01 18:49:40 by pikkak           ###   ########.fr        #
+#    Updated: 2024/11/02 17:49:26 by pikkak           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ DRAW_SRCS	= draw_scene_bonus.c \
 				textures.c \
 				draw_utils.c \
 				draw_utils_color.c \
-				draw_minimap.c
+				draw_minimap.c \
+				wand.c
 
 BONUS_DIR	= bonus/
 BSRCS		= fdf_bonus.c \

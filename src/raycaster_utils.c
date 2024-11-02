@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:49:29 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 15:21:49 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/02 18:04:11 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,12 @@ void	set_door(t_data *data, int x, int y)
 		data->scene.map[y][x] = 3;
 	else if (data->scene.map[y][x] == 3)
 		data->scene.map[y][x] = 2;
+}
+
+void	set_door_open(t_data *data, int x, int y)
+{
+	data->scene.wand_pos = 2;
+	data->scene.wand_timer = 30;
+	data->scene.door_x = x;
+	data->scene.door_y = y;
 }

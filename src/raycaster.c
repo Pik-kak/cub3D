@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/02 14:10:01 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/02 18:02:45 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,6 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	return (ret_dist);
 }
 
-void set_door_open(t_data *data, int x, int y)
-{
-	data->scene.wand_pos = 2;
-	data->scene.wand_timer = 30;
-	data->scene.door_x = x;
-	data->scene.door_y = y;
-}
-
 void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
 {
 	t_ray	ray;
@@ -119,7 +111,6 @@ void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
 	hor_grid_x = (int)(ray.rxry[0] / BLOCK_SIZE);
 	hor_grid_y = (int)(ray.rxry[1] / BLOCK_SIZE);
 	vertical_cast(&ray);
-	
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
 		if (hor_door && ray.dist_h < 500)
