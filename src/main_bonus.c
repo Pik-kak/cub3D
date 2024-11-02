@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/30 16:30:50 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 14:06:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,29 @@ void	parse(t_data *data)
 	free(check);
 }
 
+void render_loop(void *param)
+{
+	t_data *data;
+	
+	data = param;
+	if (data->scene.wand_timer > 0)
+	{
+		int door;
+		if (data->scene.wand_timer % 5 && data->scene.wand_timer > 0)
+		{
+			set_door(data, data->scene.door_x, data->scene.door_y);
+		}
+		data->scene.wand_timer--;
+		if (data->scene.wand_timer == 0)
+		{
+			data->scene.wand_pos = 1;
+			set_door(data, data->scene.door_x, data->scene.door_y);
+		}
+	}
+	update_wand(data);
+	draw_scene(data);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	*data;
@@ -101,6 +124,7 @@ int	main(int argc, char **argv)
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 		get_textures(data);
+		mlx_loop_hook(data->m, render_loop, data);
 		mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_key_hook(data->m, &my_keyhook2, data);
 		mlx_loop(data->m);

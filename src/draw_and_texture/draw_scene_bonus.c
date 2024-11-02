@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/30 16:28:50 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 14:07:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,28 @@ void	draw_minimap(t_data *data)
 	draw_minimap_box(data);
 	draw_player(data);
 }
+
+
+void update_wand (t_data *data)
+{
+	mlx_texture_t *wand_text;
+
+	mlx_delete_image(data->m, data->wand);
+	if (data->scene.wand_pos == 1)
+		wand_text = mlx_load_png("./textures/wand_2.png");
+	else if (data->scene.wand_pos == 2)
+		wand_text = mlx_load_png("./textures/wand_3.png");
+	if (!wand_text)
+		ft_free_data_and_error(data, "error loading wand texture");
+	data->wand = mlx_texture_to_image(data->m, wand_text);
+	mlx_delete_texture(wand_text);
+	if (data->scene.wand_pos == 1)
+		mlx_image_to_window(data->m, data->wand, WIDTH / 2, HEIGHT - 200);
+	else if (data->scene.wand_pos == 2)
+		mlx_image_to_window(data->m, data->wand, WIDTH / 2, HEIGHT - 200);
+	mlx_set_instance_depth(&data->wand->instances[0], 3);
+}	
+
 
 void	draw_scene(t_data *data)
 {

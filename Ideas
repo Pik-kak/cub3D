@@ -12,4 +12,4 @@ TODO
 - Animated sprite
 - Make separate bonus file/program
 - check collissions for floating point exeption error
-- if maze is not surrounded by wals, gives invalid file error, but segfaults (freeing??)
+- empty file and  file with only newlines gives malloc error

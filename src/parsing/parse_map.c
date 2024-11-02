@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/30 16:50:20 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/02 16:00:44 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	close(data->fd);
 	data->scene.rows = check->map_lines + 10;
 	data->scene.cols = check->longest_line + 10;
+	if (data->scene.cols > 1000 || data->scene.rows > 1000)
+		ft_free_data_and_error(data, "invalid file, map is too big");
 }
 
 //after checking and etting texttures and colors in parse_textr_col.c this checks that there is no unallowed charachters after that
@@ -148,7 +150,7 @@ void	check_map_lines(t_data *data, t_check *check)
 		else if (check_map_line(line, check) != 0)
 		{
 			close(data->fd);
-			ft_free_data_and_error(data, "invalid file");
+			ft_free_data_and_error(data, "invalid file, map not correct or extra lines before map");
 		}
 		free(line);
 		close(data->fd);
