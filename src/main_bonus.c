@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/02 18:00:03 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/03 12:37:16 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	render_loop(void *param)
 	data = param;
 	if (data->scene.wand_timer > 0)
 	{
-		if (data->scene.wand_timer % 5 && data->scene.wand_timer > 0)
+		if (data->scene.wand_timer % 5 == 0 && data->scene.wand_timer > 0)
 		{
 			set_door(data, data->scene.door_x, data->scene.door_y);
 		}

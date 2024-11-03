@@ -163,6 +163,7 @@ typedef struct s_scene
 	int			wand_timer;
 	int			door_x;
 	int			door_y;
+	int			prev_ray_dir;
 }	t_scene;
 
 typedef struct s_data
