@@ -6,18 +6,19 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/03 13:15:06 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:32:17 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-/*
-Skips the spaces in the beginning.
-If there is some content, checks if it corresponds with the element identifiers.
-Sets the variable value if it is valid.
-*/
-
+/* ==============================
+ * Skips the spaces in the beginning.
+ * If there is some content, checks if it corresponds
+ * with the element identifiers.
+ * Sets the variable value if it is valid.
+ * ==============================
+ */
 void	check_valid_color_value(t_data *data, char *str)
 {
 	int	i;
@@ -62,11 +63,13 @@ void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 	while (splitted[i] != 0)
 		check_valid_color_value(data, splitted[i++]);
 	if (i != 3)
-		ft_free_data_and_error(data, "invalid file, invalid amount color parameters");
+		ft_free_data_and_error(data,
+			"invalid file, invalid amount color parameters");
 	rgb[0] = ft_atoi(splitted[0]);
 	rgb[1] = ft_atoi(splitted[1]);
 	rgb[2] = ft_atoi(splitted[2]);
-	if (rgb[0] < 0 || rgb[0] > 255 || rgb[1] < 0 || rgb[1] > 255 || rgb[2] < 0 || rgb[2] > 255)
+	if (rgb[0] < 0 || rgb[0] > 255 || rgb[1] < 0
+		|| rgb[1] > 255 || rgb[2] < 0 || rgb[2] > 255)
 		ft_free_data_and_error(data, "invalid file, colour value out of range");
 	ft_free_double_array(splitted);
 }
@@ -76,24 +79,27 @@ int	check_colour_line(t_data *data, char *line)
 	char	*pointer;
 	char	*temp;
 
-	pointer = skip_spaces(line);// pointer at the beginning of the text
-	if (*pointer == '\n' || *pointer == '\0') //if we are in the end of the line	
+	pointer = skip_spaces(line);
+	if (*pointer == '\n' || *pointer == '\0')
 		return (1);
 	temp = pointer;
-	if (ft_strncmp(pointer, "F", 1) == 0 || ft_strncmp(pointer, "C", 1) == 0 && pointer[1] == ' ')
+	if (ft_strncmp(pointer, "F", 1) == 0
+		|| ft_strncmp(pointer, "C", 1) == 0 && pointer[1] == ' ')
 	{
-		pointer = pointer + 1;//skip element identifier
-		pointer = skip_spaces(pointer);// skip spaces to the beginning of the path name
+		pointer = pointer + 1;
+		pointer = skip_spaces(pointer);
 	}
 	if (ft_strncmp(temp, "F", 1) == 0)
 	{
-		if (data->scene.floor_rgb[0] != -1 && data->scene.floor_rgb[1] != -1 && data->scene.floor_rgb[2] != -1)
+		if (data->scene.floor_rgb[0] != -1
+			&& data->scene.floor_rgb[1] != -1 && data->scene.floor_rgb[2] != -1)
 			ft_free_data_and_error(data, "invalid file, floor color allready set");
 		return (set_colour_line(data, temp, pointer, data->scene.floor_rgb), 0);
 	}
 	else if (ft_strncmp(temp, "C", 1) == 0)
 	{
-		if (data->scene.ceiling_rgb[0] != -1 && data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
+		if (data->scene.ceiling_rgb[0] != -1
+			&& data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
 			ft_free_data_and_error(data, "invalid file, ceiling color allready set");
 		return (set_colour_line(data, temp, pointer, data->scene.ceiling_rgb), 0);
 	}
@@ -134,16 +140,17 @@ int	check_texture_line(t_data *data, char *line)
 	char	*pointer;
 	char	*temp;
 
-	pointer = skip_spaces(line);// pointer at the beginning of the text
-	if (*pointer == '\n' || *pointer == '\0') //if we are in the end of the line	
+	pointer = skip_spaces(line);
+	if (*pointer == '\n' || *pointer == '\0')
 		return (1);
 	temp = pointer;
 	if ((ft_strncmp(pointer, "NO", 2) == 0 || ft_strncmp(pointer, "SO", 2) == 0
-			|| ft_strncmp(pointer, "EA", 2) == 0 || ft_strncmp(pointer, "WE", 2) == 0) 
+			|| ft_strncmp(pointer, "EA", 2) == 0
+			|| ft_strncmp(pointer, "WE", 2) == 0)
 		&& pointer[2] == ' ')
 	{
-		pointer = pointer + 2;//skip element identifier
-		pointer = skip_spaces(pointer);// skip spaces to the beginning of the path name
+		pointer = pointer + 2;
+		pointer = skip_spaces(pointer);
 	}
 	if (set_texture_line(data, temp, pointer) == 0)
 		return (0);
@@ -158,14 +165,18 @@ int	check_valid_line(t_data *data, char *line)
 		return (0);
 	else
 	{
-		return (ft_free_data_and_error(data, "invalid file, invalid color or texture line"), 1);
+		return (ft_free_data_and_error(data,
+				"invalid file, invalid color or texture line"), 1);
 	}
 	return (1);
 }
 
-/*
-Reads the file line by line and calls check line to check that the lines contain the elements needed. Doesn't yet check floor/ceiling or stop at map
-*/
+/* ==============================
+ * Reads the file line by line and calls check line to check
+ * that the lines contain the elements needed.
+ * Doesn't yet check floor/ceiling or stop at map
+ * ==============================
+ */
 void	check_file_lines(t_data *data, t_check *check)
 {
 	char	*line;

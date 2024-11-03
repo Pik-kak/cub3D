@@ -54,7 +54,7 @@
 # define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 # define PLAYER_SPEED 3
 # define SENSITIVITY 0.0008
-# define BLOCK_SIZE 128
+# define BLOCK_SIZE 512
 # define GRID_GAP 1
 # define FOV PI / 3;
 # define SPACE_AROUND_MAP 5

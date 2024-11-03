@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_math.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:52:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/30 16:33:32 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:22:40 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	check_direction_horizontal(t_ray *ray, double ray_angle)
  * if looking east or west calculates rxry to next
  * ==============================
  */
-
 void	check_direction_vertical(t_ray *ray, double ray_angle)
 {
 	double	n_tan;
@@ -62,19 +61,17 @@ void	check_direction_vertical(t_ray *ray, double ray_angle)
 		ray->rxry[0] = ray->pxpy[0];
 		ray->rxry[1] = ray->pxpy[1];
 	}
-	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI) // looking east
+	else if (ray_angle < 0.5 * PI || ray_angle > 1.5 * PI)
 	{
-		ray->rxry[0] = floored + BLOCK_SIZE; //next point x is original point/BLOCk SIZE rounded down + BLOCK SIZE so we get to next grid line to right   
-		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1]; //next point y is calculated from from distance from starting point x to next gridline x  starting point y and 
-		//xoyo is calculation of how our point x abd y changes when we continue to next grid line 
+		ray->rxry[0] = floored + BLOCK_SIZE;
+		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
 		ray->xoyo[0] = BLOCK_SIZE;
 		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
 	}
-	else //looking west
+	else
 	{
-		ray->rxry[0] = floored - 0.0001; //next x point to left is rounded doun to next grid line and added small amount to avoid dividing by zero 
-		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1]; // next y calculation
-		//xoyo calculationa as before, but moving left on grid
+		ray->rxry[0] = floored - 0.0001;
+		ray->rxry[1] = (ray->pxpy[0] - ray->rxry[0]) * n_tan + ray->pxpy[1];
 		ray->xoyo[0] = -BLOCK_SIZE;
 		ray->xoyo[1] = -ray->xoyo[0] * n_tan;
 	}
@@ -115,7 +112,6 @@ bool	check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
 	by calling check_if_wall_found function, which sets total 
 	length of ray to struct 
  */
-
 void	horizontal_cast(t_ray *ray)
 {
 	int	size;

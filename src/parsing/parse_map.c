@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/02 16:00:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:26:50 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ int	check_map_line(char *line, t_check *check)
 		return (1);
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '1' && line[i] != '2' && line[i] != '0' && line[i] != 2 && line[i] != 'N' && line[i] != 'E' && line[i] != 'S' && line[i] != 'W' && line[i] != '\n')
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '2'
+			&& line[i] != '0' && line[i] != 2 && line[i] != 'N'
+			&& line[i] != 'E' && line[i] != 'S'
+			&& line[i] != 'W' && line[i] != '\n')
 			return (1);
 		i++;
 	}
@@ -128,7 +131,11 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 		ft_free_data_and_error(data, "invalid file, map is too big");
 }
 
-//after checking and etting texttures and colors in parse_textr_col.c this checks that there is no unallowed charachters after that
+/* ==============================
+ *	after checking and etting texttures and colors in parse_textr_col.c
+ * this checks that there is no unallowed charachters after that
+ * ==============================
+ */
 void	check_map_lines(t_data *data, t_check *check)
 {
 	char	*line;
@@ -150,7 +157,8 @@ void	check_map_lines(t_data *data, t_check *check)
 		else if (check_map_line(line, check) != 0)
 		{
 			close(data->fd);
-			ft_free_data_and_error(data, "invalid file, map not correct or extra lines before map");
+			ft_free_data_and_error(data,
+				"invalid file, map not correct or extra lines before map");
 		}
 		free(line);
 		close(data->fd);
