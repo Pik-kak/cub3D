@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/02 13:57:17 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:30:21 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_texture(t_data *data, t_ray *ray, t_texture *txtr, int i)
 		else
 			tex_y = tex_start;
 		tex_start += step;
-		color = get_image_color(ray->wall, (int)ray->tex_x, tex_y);
+		color = get_image_color(data, ray->wall, (int)ray->tex_x, tex_y);
 		if (pixel_ok(data, txtr->raycount, i))
 			mlx_put_pixel(data->image, txtr->raycount, i, color);
 		i++;

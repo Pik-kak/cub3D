@@ -183,7 +183,7 @@ typedef struct s_data
 
 
 //draw_utils_color
-uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y);
+uint32_t	get_image_color(t_data *data, mlx_image_t *image, int tex_x, int tex_y);
 int			adjust_opacity(int color, float opacity);
 //int			get_rgba(int r, int g, int b, int a);
 uint32_t	get_colour(int rgb[3]);

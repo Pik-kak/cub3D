@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 12:37:16 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 14:01:20 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int argc, char **argv)
 		write(2, ERR_ARG, 27);
 		return (0);
 	}
-	data = (t_data *)malloc(sizeof(t_data));
+	data = (t_data *)ft_calloc(sizeof(t_data), sizeof(t_data));
 	if (!data)
 		ft_error(data, ERR_MALLOC);
 	else
