@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/02 13:58:18 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 12:57:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	init_scene(t_data *data)
 	data->scene.wand_timer = 0;
 	data->scene.door_x = 0;
 	data->scene.door_y = 0;
+	data->scene.last_ray_dir = 0;
 }
 
 void	init_check(t_check *check)
