@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/02 17:54:31 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/03 13:15:06 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,9 @@ void	check_file_lines(t_data *data, t_check *check)
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
-			ft_free_data_and_error(data, "malloc error");
+			if (lines == 6)
+				return ;
+			ft_free_data_and_error(data, "Map not valid");
 		}
 		if (*line == '\n')
 		{

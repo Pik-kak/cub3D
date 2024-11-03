@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:47:10 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/30 13:15:41 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/03 14:05:19 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	Assumes each pixel is 4 bytes (RGBA)
 	Combines the color channels into a single 32-bit value
 */
-uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y)
+uint32_t	get_image_color(t_data *data, mlx_image_t *image, int tex_x, int tex_y)
 {
 	int		pixel_index;
 	uint8_t	r;
@@ -25,6 +25,8 @@ uint32_t	get_image_color(mlx_image_t *image, int tex_x, int tex_y)
 	uint8_t	b;
 	uint8_t	a;
 
+	tex_x = tex_x % image->width;
+	tex_y = tex_y % image->height;
 	pixel_index = (tex_y * image->width + tex_x) * 4;
 	r = image->pixels[pixel_index];
 	g = image->pixels[pixel_index + 1];
