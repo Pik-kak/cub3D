@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 12:57:17 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:38:34 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	init_player(t_player *player)
+static void	init_player(t_player *player)
 {
 	player->dir = 0.0f;
 	player->px = 100.0;
@@ -25,7 +25,7 @@ void	init_player(t_player *player)
 	player->col_left = false;
 }
 
-void	init_scene(t_data *data)
+static void	init_scene(t_data *data)
 {
 	int	row;
 

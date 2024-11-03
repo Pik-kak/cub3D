@@ -6,48 +6,13 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/03 16:32:17 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:43:47 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-/* ==============================
- * Skips the spaces in the beginning.
- * If there is some content, checks if it corresponds
- * with the element identifiers.
- * Sets the variable value if it is valid.
- * ==============================
- */
-void	check_valid_color_value(t_data *data, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != 0)
-	{
-		if (ft_isdigit(str[i++]) != 1)
-			ft_free_data_and_error(data,
-				"invalid file, invalid colour setting");
-	}
-}
-
-void	check_amount_of_commas(t_data *data, char *str)
-{
-	int	commas;
-
-	commas = 0;
-	while (*str)
-	{
-		if (*str == ',')
-			commas++;
-		str++;
-	}
-	if (commas != 2)
-		ft_free_data_and_error(data, "invalid file, invalid colour line");
-}
-
-void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
+static void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 {
 	char	*str;
 	char	**splitted;
@@ -74,7 +39,7 @@ void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 	ft_free_double_array(splitted);
 }
 
-int	check_colour_line(t_data *data, char *line)
+static int	check_colour_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
@@ -106,7 +71,7 @@ int	check_colour_line(t_data *data, char *line)
 	return (1);
 }
 
-int	set_texture_line(t_data *data, char *temp, char *pointer)
+static int	set_texture_line(t_data *data, char *temp, char *pointer)
 {
 	if (ft_strncmp(temp, "NO", 2) == 0)
 	{
@@ -135,7 +100,7 @@ int	set_texture_line(t_data *data, char *temp, char *pointer)
 	return (1);
 }
 
-int	check_texture_line(t_data *data, char *line)
+static int	check_texture_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
@@ -157,7 +122,7 @@ int	check_texture_line(t_data *data, char *line)
 	return (1);
 }
 
-int	check_valid_line(t_data *data, char *line)
+static int	check_valid_line(t_data *data, char *line)
 {
 	if (check_texture_line(data, line) == 0)
 		return (0);
@@ -177,7 +142,7 @@ int	check_valid_line(t_data *data, char *line)
  * Doesn't yet check floor/ceiling or stop at map
  * ==============================
  */
-void	check_file_lines(t_data *data, t_check *check)
+static void	check_file_lines(t_data *data, t_check *check)
 {
 	char	*line;
 	int		lines;

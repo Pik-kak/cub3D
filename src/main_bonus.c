@@ -6,13 +6,13 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 14:01:20 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:37:17 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	init_map(t_data *data)
+static void	init_map(t_data *data)
 {
 	int	rows;
 	int	cols;
@@ -30,7 +30,7 @@ void	init_map(t_data *data)
 	}
 }
 
-void	set_map(t_data *data, t_check *check)
+static void	set_map(t_data *data, t_check *check)
 {
 	t_point	start;
 	t_point	end;
@@ -52,7 +52,7 @@ void	set_map(t_data *data, t_check *check)
 	check_player(data);
 }
 
-void	parse(t_data *data)
+static void	parse(t_data *data)
 {
 	t_check	*check;
 
@@ -72,7 +72,7 @@ void	parse(t_data *data)
 	free(check);
 }
 
-void	render_loop(void *param)
+static void	render_loop(void *param)
 {
 	t_data	*data;
 	int		door;

@@ -1,7 +1,7 @@
-NO ./textures/wood_N.png
-SO ./textures/wood_S.png
-WE ./textures/wood_W.png
-EA ./textures/wood_E.png
+NO ./textures/2.png
+SO ./textures/3.png
+WE ./textures/4.png
+EA ./textures/5.png
 
 C 40,40,40
 F 120,50,60
