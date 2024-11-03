@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 20:43:28 by pikkak            #+#    #+#             */
-/*   Updated: 2024/11/03 16:28:22 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/10/25 20:43:28 by kkauhane            #+#    #+#             */
+/*   Updated: 2024/11/03 16:43:42 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,39 @@ char	*copy_str(t_data *data, char *line)
 		ft_free_data_and_error(data, "element not valid, extra characters");
 	}
 	return (ret);
+}
+
+/* ==============================
+ * Skips the spaces in the beginning.
+ * If there is some content, checks if it corresponds
+ * with the element identifiers.
+ * Sets the variable value if it is valid.
+ * ==============================
+ */
+void	check_valid_color_value(t_data *data, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != 0)
+	{
+		if (ft_isdigit(str[i++]) != 1)
+			ft_free_data_and_error(data,
+				"invalid file, invalid colour setting");
+	}
+}
+
+void	check_amount_of_commas(t_data *data, char *str)
+{
+	int	commas;
+
+	commas = 0;
+	while (*str)
+	{
+		if (*str == ',')
+			commas++;
+		str++;
+	}
+	if (commas != 2)
+		ft_free_data_and_error(data, "invalid file, invalid colour line");
 }

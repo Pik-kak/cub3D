@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:45:41 by pikkak            #+#    #+#             */
-/*   Updated: 2024/11/03 16:25:24 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/10/25 21:45:41 by kkauhane            #+#    #+#             */
+/*   Updated: 2024/11/03 16:59:53 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
 //raeds line and fills every row
-void	fill_row(t_data *data, char *line, int row)
+static void	fill_row(t_data *data, char *line, int row)
 {
 	int	i;
 	int	cols;
@@ -47,7 +47,7 @@ void	fill_row(t_data *data, char *line, int row)
 }
 
 //extra rows added with ' ' 
-void	fill_extra_row(t_data *data, int row)
+static void	fill_extra_row(t_data *data, int row)
 {
 	int	i;
 

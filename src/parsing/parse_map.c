@@ -6,14 +6,14 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:26:50 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:51:21 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
 //sets player position and dir 
-void	set_player_position(t_player *player, int dir, int i, int ii)
+static void	set_player_position(t_player *player, int dir, int i, int ii)
 {
 	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
 	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
@@ -28,7 +28,6 @@ void	set_player_position(t_player *player, int dir, int i, int ii)
 }
 
 //checks number of players too be 1 
-
 void	check_player(t_data *data)
 {
 	int	i;
@@ -59,7 +58,7 @@ void	check_player(t_data *data)
 }
 
 //helper function to check that there is no illegal char's in map
-int	check_map_line(char *line, t_check *check)
+static int	check_map_line(char *line, t_check *check)
 {
 	int	i;
 
