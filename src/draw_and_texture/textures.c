@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/02 14:34:15 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 15:50:09 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	get_textures(t_data *data)
 	data->txtrs->so = mlx_load_png(data->scene.so);
 	data->txtrs->ea = mlx_load_png(data->scene.ea);
 	data->txtrs->we = mlx_load_png(data->scene.we);
-	data->txtrs->door = mlx_load_png("./textures/Door_Industrial_01_Brown.png");
+	data->txtrs->door = mlx_load_png("./textures/bookshelf5.png");
 	get_images(data);
 }

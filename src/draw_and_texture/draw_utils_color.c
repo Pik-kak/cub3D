@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:47:10 by pikkak            #+#    #+#             */
-/*   Updated: 2024/11/03 14:05:19 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/03 16:34:05 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 	Assumes each pixel is 4 bytes (RGBA)
 	Combines the color channels into a single 32-bit value
 */
-uint32_t	get_image_color(t_data *data, mlx_image_t *image, int tex_x, int tex_y)
+uint32_t	get_image_color(t_data *data, mlx_image_t *image,
+							int tex_x, int tex_y)
 {
 	int		pixel_index;
 	uint8_t	r;
@@ -52,11 +53,6 @@ int	adjust_opacity(int color, float opacity)
 	alpha = (int)((color & 0xFF) * opacity);
 	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
 }
-//DO WE NEED THIS?
-/*int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}*/
 
 /* ==============================
  * Gets the colours from the map element 

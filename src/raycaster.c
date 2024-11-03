@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 12:57:56 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/03 14:19:13 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,41 +53,37 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 		else
 			ray->wall = data->walls->ea;
 		if (ray->is_door)
-		{
 			ray->wall = data->walls->door;
-		}
 		ray->tex_x = count_texture_x(ray, ray->rxry[1]);
 	}
 }
 
-void cast_one_ray(t_data *data, t_ray *ray)
+void	cast_one_ray(t_data *data, t_ray *ray)
 {
-    double dist_h;
-    bool hor_door;
-    
-    horizontal_cast(ray);
-    ray->hor_x = ray->rxry[0];
-    hor_door = ray->is_door;
-    ray->is_door = false;
-    dist_h = ray->dist_h;
-    vertical_cast(ray);
-	
-    if (dist_h > 0 && (ray->dist_v == 0 || dist_h < ray->dist_v))
-    {
-        set_wall(data, ray, 1, hor_door);
-    }
-    else if (ray->dist_v > 0 && (dist_h == 0 || dist_h > ray->dist_v))
-    {
-        set_wall(data, ray, 0, ray->is_door);
-    }
+	double	dist_h;
+	bool	hor_door;
+
+	horizontal_cast(ray);
+	ray->hor_x = ray->rxry[0];
+	hor_door = ray->is_door;
+	ray->is_door = false;
+	dist_h = ray->dist_h;
+	vertical_cast(ray);
+	if (dist_h > 0 && (ray->dist_v == 0 || dist_h < ray->dist_v))
+	{
+		set_wall(data, ray, 1, hor_door);
+	}
+	else if (ray->dist_v > 0 && (dist_h == 0 || dist_h > ray->dist_v))
+	{
+		set_wall(data, ray, 0, ray->is_door);
+	}
 	else
 	{
-		if(data->scene.last_ray_dir == 0)
+		if (data->scene.last_ray_dir == 0)
 			set_wall(data, ray, 1, hor_door);
-		else 
+		else
 			set_wall(data, ray, 0, ray->is_door);
 	}
-	
 }
 
 int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by pikkak            #+#    #+#             */
-/*   Updated: 2024/10/30 16:42:37 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:25:24 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ void	fill_extra_row(t_data *data, int row)
 	}
 }
 
-//after checks this fills 2D arrow with map content and adds ' ' around everything
+/* ==============================
+ *	after checks this fills 2D arrow with map content and adds
+ * ' ' around everything
+ * ==============================
+ */
 void	fill_map(t_data *data, t_check *check)
 {
 	char	*line;
@@ -69,14 +73,11 @@ void	fill_map(t_data *data, t_check *check)
 	row = 0;
 	lines = 1;
 	line = NULL;
-	//printf("%d\n", row);
-	//fill_extra_row(data, &row, SPACE_AROUND_MAP);
 	while (row < SPACE_AROUND_MAP)
 	{
 		fill_extra_row(data, row);
 		row++;
 	}
-	//printf("%d\n", row);
 	while (lines <= check->cur_file_line)
 	{
 		line = get_next_line_cub(data, data->fd);
@@ -93,17 +94,13 @@ void	fill_map(t_data *data, t_check *check)
 		lines++;
 		row++;
 	}
-	//printf("%d\n", row);
-	//fill_extra_row(data, &row, (check->map_lines + 2 * SPACE_AROUND_MAP));
 	while (row < check->map_lines + 2 * SPACE_AROUND_MAP)
 	{
 		fill_extra_row(data, row);
 		row++;
 	}
-	//printf("%d\n", row);
 }
 
-/**/
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 {
 	int	**matrix;
