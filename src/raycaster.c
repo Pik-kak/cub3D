@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 14:19:13 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 08:19:50 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 {
 	if (hor_or_ver == 1)
 	{
-		data->scene.last_ray_dir = 0;
 		ray->dist = ray->dist_h;
 		if (ray->angle > PI)
 			ray->wall = data->walls->no;
@@ -46,7 +45,6 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 	}
 	else
 	{
-		data->scene.last_ray_dir = 1;
 		ray->dist = ray->dist_v;
 		if (ray->angle > 0.5 * PI && ray->angle <= PI * 1.5)
 			ray->wall = data->walls->we;
@@ -60,22 +58,22 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 
 void	cast_one_ray(t_data *data, t_ray *ray)
 {
-	double	dist_h;
 	bool	hor_door;
 
 	horizontal_cast(ray);
 	ray->hor_x = ray->rxry[0];
 	hor_door = ray->is_door;
 	ray->is_door = false;
-	dist_h = ray->dist_h;
 	vertical_cast(ray);
-	if (dist_h > 0 && (ray->dist_v == 0 || dist_h < ray->dist_v))
+	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
 	{
 		set_wall(data, ray, 1, hor_door);
+		data->scene.last_ray_dir = 0;
 	}
-	else if (ray->dist_v > 0 && (dist_h == 0 || dist_h > ray->dist_v))
+	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_h > ray->dist_v))
 	{
 		set_wall(data, ray, 0, ray->is_door);
+		data->scene.last_ray_dir = 1;
 	}
 	else
 	{

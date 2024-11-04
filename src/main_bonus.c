@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:37:17 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 08:05:52 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,18 @@ static void	parse(t_data *data)
 	check = (t_check *)malloc(sizeof (t_check));
 	init_check(check);
 	if (check_filetype(data->file, ".cub") != 0)
+	{
+		free(check);
 		ft_error(data, ERR_INFILE);
+	}
 	check_and_set_texttr_and_col_lines(data, check);
 	check_map_lines(data, check);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		free_before_map(data);
+	{
+		free_before_map(data, check);
+		ft_error(data, ERR_INFILE);
+	}
 	read_file_for_longest_and_lines(data, check);
 	data->scene.rows = check->map_lines + 10;
 	data->scene.cols = check->longest_line + 10;
