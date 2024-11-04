@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 21:45:41 by kkauhane            #+#    #+#             */
-/*   Updated: 2024/11/03 16:59:53 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
+/*   Updated: 2024/11/04 17:26:22 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	fill_map(t_data *data, t_check *check)
 		lines++;
 		row++;
 	}
-	while (row < check->map_lines + 2 * SPACE_AROUND_MAP)
+	while (++row < check->map_lines + 2 * SPACE_AROUND_MAP)
 	{
 		fill_extra_row(data, row);
 		row++;

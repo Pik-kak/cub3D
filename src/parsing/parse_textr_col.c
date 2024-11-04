@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/04 07:32:53 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:25:39 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,29 @@ static void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 
 static int	check_colour_line(t_data *data, char *line)
 {
-	char	*pointer;
+	char	*pntr;
 	char	*temp;
 
-	pointer = skip_spaces(line);
-	if (*pointer == '\n' || *pointer == '\0')
+	pntr = skip_spaces(line);
+	if (*pntr == '\n' || *pntr == '\0')
 		return (1);
-	temp = pointer;
-	if (ft_strncmp(pointer, "F", 1) == 0 \
-		|| ft_strncmp(pointer, "C", 1) == 0 && pointer[1] == ' ')
-		pointer = skip_spaces(pointer + 1);
+	temp = pntr;
+	if (ft_strncmp(pntr, "F", 1) == 0 \
+		|| ft_strncmp(pntr, "C", 1) == 0 && pntr[1] == ' ')
+		pntr = skip_spaces(pntr + 1);
 	if (ft_strncmp(temp, "F", 1) == 0)
 	{
 		if (data->scene.floor_rgb[0] != -1
 			&& data->scene.floor_rgb[1] != -1 && data->scene.floor_rgb[2] != -1)
-			ft_free_data_and_error(data, "invalid file, floor color allready set");
-		return (set_colour_line(data, temp, pointer, data->scene.floor_rgb), 0);
+			ft_free_data_and_error(data, "invalid file, F-color already set");
+		return (set_colour_line(data, temp, pntr, data->scene.floor_rgb), 0);
 	}
 	else if (ft_strncmp(temp, "C", 1) == 0)
 	{
 		if (data->scene.ceiling_rgb[0] != -1 \
 		&& data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
-			ft_free_data_and_error(data, "invalid file, ceiling color allready set");
-		return (set_colour_line(data, temp, pointer, data->scene.ceiling_rgb), 0);
+			ft_free_data_and_error(data, "invalid file, C-color already set");
+		return (set_colour_line(data, temp, pntr, data->scene.ceiling_rgb), 0);
 	}
 	return (1);
 }
@@ -73,25 +73,25 @@ static int	set_texture_line(t_data *data, char *temp, char *pointer)
 	if (ft_strncmp(temp, "NO", 2) == 0)
 	{
 		if (data->scene.no)
-			ft_free_data_and_error(data, "invalid file, double north texture path");
+			ft_free_data_and_error(data, "invalid file, double NO path");
 		return (data->scene.no = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "SO", 2) == 0)
 	{
 		if (data->scene.so)
-			ft_free_data_and_error(data, "invalid file, double south texture path");
+			ft_free_data_and_error(data, "invalid file, double SO path");
 		return (data->scene.so = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "EA", 2) == 0)
 	{
 		if (data->scene.ea)
-			ft_free_data_and_error(data, "invalid file, double east texture path");
+			ft_free_data_and_error(data, "invalid file, double EA path");
 		return (data->scene.ea = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "WE", 2) == 0)
 	{
 		if (data->scene.we)
-			ft_free_data_and_error(data, "invalid file, double west texture path");
+			ft_free_data_and_error(data, "invalid file, double WE path");
 		return (data->scene.we = copy_str(data, pointer), 0);
 	}
 	return (1);

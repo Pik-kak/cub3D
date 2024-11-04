@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:38:34 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:55:23 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->wall = NULL;
 	ray->wall_height = 0;
 	ray->tex_x = 0;
+	ray->floor = data->walls->floor;
 }
