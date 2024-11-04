@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/03 17:18:25 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 08:17:40 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 # define PLAYER_SPEED 3
 # define SENSITIVITY 0.0008
-# define BLOCK_SIZE 512
+# define BLOCK_SIZE 128
 # define GRID_GAP 1
 # define FOV PI / 3;
 # define SPACE_AROUND_MAP 5
@@ -180,7 +180,7 @@ typedef struct s_data
 }	t_data;
 
 //free_and_exit
-void			free_before_map(t_data *data);
+void			free_before_map(t_data *data, t_check *check);
 void			ft_error(t_data *data, char *error);
 void			ft_free_double_array(char **array);
 void			ft_free_data_and_error(t_data *data, char *error);

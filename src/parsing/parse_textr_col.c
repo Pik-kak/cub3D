@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/03 16:43:47 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 07:32:53 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,9 @@ static int	check_colour_line(t_data *data, char *line)
 	if (*pointer == '\n' || *pointer == '\0')
 		return (1);
 	temp = pointer;
-	if (ft_strncmp(pointer, "F", 1) == 0
+	if (ft_strncmp(pointer, "F", 1) == 0 \
 		|| ft_strncmp(pointer, "C", 1) == 0 && pointer[1] == ' ')
-	{
-		pointer = pointer + 1;
-		pointer = skip_spaces(pointer);
-	}
+		pointer = skip_spaces(pointer + 1);
 	if (ft_strncmp(temp, "F", 1) == 0)
 	{
 		if (data->scene.floor_rgb[0] != -1
@@ -63,8 +60,8 @@ static int	check_colour_line(t_data *data, char *line)
 	}
 	else if (ft_strncmp(temp, "C", 1) == 0)
 	{
-		if (data->scene.ceiling_rgb[0] != -1
-			&& data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
+		if (data->scene.ceiling_rgb[0] != -1 \
+		&& data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
 			ft_free_data_and_error(data, "invalid file, ceiling color allready set");
 		return (set_colour_line(data, temp, pointer, data->scene.ceiling_rgb), 0);
 	}
@@ -152,12 +149,6 @@ static void	check_file_lines(t_data *data, t_check *check)
 	while (lines < 6)
 	{
 		line = get_next_line_cub(data, data->fd);
-		if (!line)
-		{
-			if (lines == 6)
-				return ;
-			ft_free_data_and_error(data, "Map not valid");
-		}
 		if (*line == '\n')
 		{
 			check->cur_file_line++;

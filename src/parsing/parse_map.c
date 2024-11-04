@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:51:21 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 07:47:41 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,42 @@ static int	check_map_line(char *line, t_check *check)
 	return (0);
 }
 
+
+int read_next_line(t_data *data, int map_found, char *line, t_check *check)
+{
+	char	*temp;
+	
+	line = get_next_line_cub(data, data->fd);
+	if (!line)
+		return (1);
+	if (*line == '\n')
+	{
+		if (map_found == 1)
+		{
+			free(line);
+			return(1);
+		}
+		check->cur_file_line++;
+	}
+	else if (check_map_line(line, check) == 0)
+	{
+		map_found = 1;
+		check->map_lines++;
+		if (ft_strlen(line) >= check->longest_line)
+		{
+			temp = ft_strtrim(line, "\n");
+			check->longest_line = ft_strlen(temp);
+			free (temp);
+		}
+	}
+	free(line);
+	return (0);
+}
+
 //finds out a number of lines and checks the longest line for allocation
 void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 {
 	char	*line;
-	char	*temp;
 	int		i;
 	int		map_found;
 
@@ -98,30 +129,8 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	}
 	while (1)
 	{
-		line = get_next_line_cub(data, data->fd);
-		if (!line)
+		if (read_next_line(data, map_found, line, check) == 1)
 			break ;
-		if (*line == '\n')
-		{
-			if (map_found == 1)
-			{
-				free(line);
-				break ;
-			}
-			check->cur_file_line++;
-		}
-		else if (check_map_line(line, check) == 0)
-		{
-			map_found = 1;
-			check->map_lines++;
-			if (ft_strlen(line) >= check->longest_line)
-			{
-				temp = ft_strtrim(line, "\n");
-				check->longest_line = ft_strlen(temp);
-				free (temp);
-			}
-		}
-		free(line);
 	}
 	close(data->fd);
 	data->scene.rows = check->map_lines + 10;

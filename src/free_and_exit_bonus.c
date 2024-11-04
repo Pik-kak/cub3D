@@ -3,29 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 13:41:07 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/04 08:04:14 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	free_before_map(t_data *data)
+void	free_before_map(t_data *data, t_check *check)
 {
 	free(data->scene.ea);
 	free(data->scene.so);
 	free(data->scene.no);
 	free(data->scene.we);
-	ft_error(data, ERR_OPEN);
+	free(check);
 }
 
 void	ft_error(t_data *data, char *error)
 {
-	perror(error);
+	
 	if (data)
 		free(data);
+	write(2, "Error\n", 6);
+	write(2, error, ft_strlen(error));
+	write(2, "\n", 1);
 	exit(1);
 }
 
