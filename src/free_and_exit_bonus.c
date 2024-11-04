@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 08:04:14 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/04 16:47:01 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	free_before_map(t_data *data, t_check *check)
+void	free_elements(t_data *data)
 {
-	free(data->scene.ea);
-	free(data->scene.so);
-	free(data->scene.no);
-	free(data->scene.we);
-	free(check);
+	if (data->scene.no != NULL)
+		free(data->scene.no);
+	if (data->scene.so != NULL)
+		free(data->scene.so);
+	if (data->scene.ea != NULL)
+		free(data->scene.ea);
+	if (data->scene.we != NULL)
+		free(data->scene.we);
 }
 
 void	ft_error(t_data *data, char *error)
 {
-	
 	if (data)
 		free(data);
 	write(2, "Error\n", 6);
@@ -59,16 +61,7 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		free(data->scene.map[i]);
 		i++;
 	}
-
 	free(data->scene.map);
-	if (data->scene.no != NULL)
-		free(data->scene.no);
-	if (data->scene.so != NULL)
-		free(data->scene.so);
-	if (data->scene.ea != NULL)
-		free(data->scene.ea);
-	if (data->scene.we != NULL)
-		free(data->scene.we);
 	if (data->walls)
 		free(data->walls);
 	if (data->txtrs)
@@ -91,14 +84,7 @@ void	ft_free_data_and_exit(t_data *data)
 		i++;
 	}
 	free(data->scene.map);
-	if (data->scene.no != NULL)
-		free(data->scene.no);
-	if (data->scene.so != NULL)
-		free(data->scene.so);
-	if (data->scene.ea != NULL)
-		free(data->scene.ea);
-	if (data->scene.we != NULL)
-		free(data->scene.we);
+	free_elements(data);
 	if (data->walls)
 		free(data->walls);
 	if (data->txtrs)

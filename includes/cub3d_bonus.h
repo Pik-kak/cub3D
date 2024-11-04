@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/04 08:17:40 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:29:55 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@
 # define FIXED_POINT_SCALE 1000
 # define PI 3.14159265
 # define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-# define PLAYER_SPEED 3
+# define PLAYER_SPEED 8
 # define SENSITIVITY 0.0008
-# define BLOCK_SIZE 128
+# define BLOCK_SIZE 512
 # define GRID_GAP 1
 # define FOV PI / 3;
 # define SPACE_AROUND_MAP 5
@@ -95,6 +95,7 @@ typedef struct s_ray
 	int			rows;
 	int			hor_x;
 	mlx_image_t	*wall;
+	mlx_image_t	*floor;
 	int			wall_height;
 	bool		is_door;
 	bool		open_door;
@@ -129,6 +130,7 @@ typedef struct s_textures
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
 	mlx_texture_t	*door;
+	mlx_texture_t	*floor;
 }	t_textures;
 
 typedef struct s_walls
@@ -138,6 +140,7 @@ typedef struct s_walls
 	mlx_image_t	*ea;
 	mlx_image_t	*we;
 	mlx_image_t	*door;
+	mlx_image_t	*floor;
 }	t_walls;
 
 typedef struct s_scene
@@ -172,7 +175,7 @@ typedef struct s_data
 	mlx_image_t	*txtr;
 	t_textures	*txtrs;
 	t_walls		*walls;
-	int			s_width;
+	int			s_width;//do we need these now that we do not scale the window according to screen? just use WIDTH?
 	int			s_height;
 	char		*file;
 	int			fd;
@@ -180,7 +183,7 @@ typedef struct s_data
 }	t_data;
 
 //free_and_exit
-void			free_before_map(t_data *data, t_check *check);
+void			free_elements(t_data *data);
 void			ft_error(t_data *data, char *error);
 void			ft_free_double_array(char **array);
 void			ft_free_data_and_error(t_data *data, char *error);
@@ -231,7 +234,7 @@ void			draw_nose(t_data *data, int length, int color);
 void			draw_scene(t_data *data);
 
 //draw_utils
-void			calculate_msrmnts(t_data *data, t_texture *txtr, double wall_height);
+void			calculate_msrmnts(t_data *data, t_texture *txtr, double wall_height, int raycount);
 int				pixel_ok(t_data *data, int x, int y);
 float			calculate_opacity(int ray, int nbr_of_rays, int start, int end);
 int				squared_distance(int x1, int y1, int x2, int y2);
@@ -279,5 +282,7 @@ void			cast_one_ray(t_data *data, t_ray *ray);
 
 //draw_walls
 int				cast_rays(t_data *data);
+//draw_floor
+void			draw_floor_texture(t_data *data, t_ray *ray, t_texture *txtr, int i);
 
 #endif
