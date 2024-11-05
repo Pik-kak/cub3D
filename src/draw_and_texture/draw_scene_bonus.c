@@ -3,73 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 17:21:21 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:04:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-/* ==============================
- * Draws one block filled with same color 
- * leaves last pixels empty to make grid
- * ==============================
- */
-void	fill_square(t_data *data, int color, int xo, int yo)
-{
-	int	start_x;
-	int	start_y;
-	int	i;
-	int	j;
-
-	start_x = xo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12
-		- (int)data->scene.player.px % BLOCK_SIZE / 6;
-	start_y = yo * (BLOCK_SIZE / 6) + BLOCK_SIZE / 12
-		- (int)data->scene.player.py % BLOCK_SIZE / 6;
-	i = 0;
-	while (i < BLOCK_SIZE / 6)
-	{
-		j = 0;
-		while (j < BLOCK_SIZE / 6)
-		{
-			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(data->image, start_x + j,
-					start_y + i, darken_color(color, 0.4));
-			j++;
-		}
-		i++;
-	}
-}
-
-/* ==============================
- * Draws walls (1) or free space 
- * ==============================
- */
-void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
-{
-	int	**map_c;
-	int	x;
-	int	y;
-
-	x = mmap->start_x;
-	y = mmap->start_y;
-	map_c = data->scene.map;
-	if (map_c[y][x] == 1)
-	{
-		fill_square(data, COL_LINE, i, j);
-	}
-	else if (map_c[y][x] == 0 || map_c[y][x] == 'N' || map_c[y][x] == 'S' || \
-	map_c[y][x] == 'E' || map_c[y][x] == 'W')
-	{
-		fill_square(data, COL_GREEN, i, j);
-	}
-	else if (map_c[y][x] == 2 || map_c[y][x] == 3)
-		fill_square(data, COL_BLUE, i, j);
-	else
-		fill_square(data, COL_BRICK_RED, i, j);
-}
 
 /* ==============================
  * Draws player "body" as circle
@@ -122,8 +64,8 @@ void	draw_nose(t_data *data, int length, int color)
 	i = 0;
 	while (i < length)
 	{
-		c_x = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12 + (i * cos(dir));
-		c_y = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12 + (i * sin(dir));
+		c_x = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12 + (i * cos(dir)));
+		c_y = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12 + (i * sin(dir)));
 		if (pixel_ok(data, c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
 			mlx_put_pixel(data->image, c_x + 1 * sin(dir),
 				c_y - 1 * cos(dir), color);

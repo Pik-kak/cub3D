@@ -3,14 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 18:48:07 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/04 16:53:40 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:03:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
+
+void	fill_square(t_data *data, int color, int xo, int yo)
+{
+	int	start_x;
+	int	start_y;
+	int	i;
+	int	j;
+	int block_size;
+
+	block_size = BLOCK_SIZE / MINIMAP_DIV;
+
+	start_x = xo * (block_size / 6) + block_size / 12 - (int)data->scene.player.px % BLOCK_SIZE / 6 / MINIMAP_DIV;
+	start_y = yo * (block_size / 6) + block_size / 12 - (int)data->scene.player.py % BLOCK_SIZE / 6 / MINIMAP_DIV;
+	i = 0;
+	while (i < block_size/ 6)
+	{
+		j = 0;
+		while (j < block_size / 6)
+		{
+			if (pixel_ok(data, start_x + j, start_y + i))
+				mlx_put_pixel(data->image, start_x + j, start_y + i, darken_color(color, 0.4));
+			j++;
+		}
+		i++;
+	}
+}
+
+
+/* ==============================
+ * Draws walls (1) or free space 
+ * ==============================
+ */
+void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
+{
+	int	**map_c;
+	int	x;
+	int	y;
+
+	x = mmap->start_x;
+	y = mmap->start_y;
+	map_c = data->scene.map;
+	if (map_c[y][x] == 1)
+	{
+		fill_square(data, COL_LINE, i, j);
+	}
+	else if (map_c[y][x] == 0 || map_c[y][x] == 'N' || map_c[y][x] == 'S' || \
+	map_c[y][x] == 'E' || map_c[y][x] == 'W')
+	{
+		fill_square(data, COL_GREEN, i, j);
+	}
+	else if (map_c[y][x] == 2 || map_c[y][x] == 3)
+		fill_square(data, COL_BLUE, i, j);
+	else
+		fill_square(data, COL_BRICK_RED, i, j);
+}
+
 
 void	draw_minimap_box(t_data *data)
 {
@@ -18,13 +74,13 @@ void	draw_minimap_box(t_data *data)
 	int	y;
 
 	y = 0;
-	while (y < 2 * BLOCK_SIZE)
+	while (y < 2 * BLOCK_SIZE / MINIMAP_DIV)
 	{
 		x = 0;
-		while (x < 2 * BLOCK_SIZE)
+		while (x < 2 * BLOCK_SIZE / MINIMAP_DIV)
 		{
-			if (x < 38 || y < 38 || x > 2 * BLOCK_SIZE - 38
-				|| y > 2 * BLOCK_SIZE - 38)
+			if (x < 38 || y < 38 || x > 2 * BLOCK_SIZE / MINIMAP_DIV - 38
+				|| y > 2 * BLOCK_SIZE / MINIMAP_DIV - 38)
 			{
 				if (pixel_ok(data, x, y))
 					mlx_put_pixel(data->image, x, y, data->scene.col_ceiling);
@@ -41,7 +97,7 @@ void	draw_minimap_box(t_data *data)
  */
 void	set_minimap_bounds(t_data *data, t_minimap *mmap)
 {
-	mmap->start_y = (int)data->scene.player.py / BLOCK_SIZE - 5;
+	mmap->start_y = (int)data->scene.player.py / BLOCK_SIZE - 5 ;
 	mmap->end_x = (int)data->scene.player.px / BLOCK_SIZE + 5;
 	mmap->end_y = (int)data->scene.player.py / BLOCK_SIZE + 5;
 	if (mmap->start_y < 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 12:17:19 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/05 16:38:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@
 # define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 # define PLAYER_SPEED 8
 # define SENSITIVITY 0.0008
-# define BLOCK_SIZE 128 //512
+# define BLOCK_SIZE 512
+# define MINIMAP_DIV BLOCK_SIZE / 128
 # define GRID_GAP 1
 # define FOV PI / 3;
 # define SPACE_AROUND_MAP 5
@@ -161,6 +162,8 @@ typedef struct s_scene
 	int			rows;
 	int			minimap_status;
 	int			wand_pos;
+	bool		wand_visible;
+	int			door_timer;
 	int			wand_timer;
 	int			door_x;
 	int			door_y;
@@ -181,6 +184,7 @@ typedef struct s_data
 	int			fd;
 	t_scene		scene;
 }	t_data;
+
 
 //free_and_exit
 void			free_elements(t_data *data);
@@ -247,8 +251,8 @@ void			get_textures(t_data *data);
 
 //raycaster_utils
 int				ray_len(t_ray *ray);
-void			set_door(t_data *data, int x, int y);
 void			set_door_open(t_data *data, int x, int y);
+void			cast_door_spell(t_data *data, int x, int y);
 
 //key_hooks
 void			my_keyhook(void *param);
