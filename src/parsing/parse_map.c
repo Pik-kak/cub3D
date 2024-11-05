@@ -3,59 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 17:20:10 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:59:58 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
-
-//sets player position and dir 
-static void	set_player_position(t_player *player, int dir, int i, int ii)
-{
-	player->px = ii * BLOCK_SIZE + BLOCK_SIZE / 2;
-	player->py = i * BLOCK_SIZE + BLOCK_SIZE / 2;
-	if (dir == 'N')
-		player->dir = 1.5 * PI;
-	if (dir == 'E')
-		player->dir = 0;
-	if (dir == 'S')
-		player->dir = PI / 2;
-	if (dir == 'W')
-		player->dir = PI;
-}
-
-//checks number of players too be 1 
-void	check_player(t_data *data)
-{
-	int	i;
-	int	ii;
-	int	player_found;
-
-	player_found = 0;
-	i = 0;
-	while (i < data->scene.rows)
-	{
-		ii = 0;
-		while (ii < data->scene.cols)
-		{
-			if (data->scene.map[i][ii] == 'N' || data->scene.map[i][ii] == 'S'
-				|| data->scene.map[i][ii] == 'E'
-					|| data->scene.map[i][ii] == 'W')
-			{
-				set_player_position(&data->scene.player,
-					data->scene.map[i][ii], i, ii);
-				player_found++;
-			}
-			ii++;
-		}
-		i++;
-	}
-	if (player_found != 1)
-		ft_free_data_and_error(data, "invalid file, wrong amount of players");
-}
 
 //helper function to check that there is no illegal char's in map
 static int	check_map_line(char *line, t_check *check)
@@ -63,7 +18,7 @@ static int	check_map_line(char *line, t_check *check)
 	int	i;
 
 	i = 0;
-	if (line[i] != ' ' && line[i] != '1')
+	if ((line[i] != ' ' && line[i] != '1') || line[i] == '\n')
 		return (1);
 	while (line[i])
 	{
@@ -77,10 +32,21 @@ static int	check_map_line(char *line, t_check *check)
 	return (0);
 }
 
-int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
+void	set_check(t_check *check, char *line)
 {
 	char	*temp;
 
+	check->map_lines++;
+	if (ft_strlen(line) >= check->longest_line)
+	{
+		temp = ft_strtrim(line, "\n");
+		check->longest_line = ft_strlen(temp);
+		free (temp);
+	}
+}
+
+int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
+{
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 		return (1);
@@ -96,13 +62,7 @@ int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
 	else if (check_map_line(line, check) == 0)
 	{
 		map_found = 1;
-		check->map_lines++;
-		if (ft_strlen(line) >= check->longest_line)
-		{
-			temp = ft_strtrim(line, "\n");
-			check->longest_line = ft_strlen(temp);
-			free (temp);
-		}
+		set_check(check, line);
 	}
 	free(line);
 	return (0);

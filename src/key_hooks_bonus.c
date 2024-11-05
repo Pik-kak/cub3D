@@ -6,28 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 16:49:29 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:33:31 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
-
-/* ==============================
- * Turnsplayer by changing it's dir
- * full round is 2 * PI 
- * sets dposx and dpos y to be next step for player
- * ==============================
- */
-void	turn_player(t_player *player, double angle)
-{
-	player->dir += angle;
-	if (player->dir < 0)
-		player->dir += 2 * PI;
-	else if (player->dir > 2 * PI)
-		player->dir -= 2 * PI;
-	player->dposx = cos(player->dir) * 5;
-	player->dposy = sin(player->dir) * 5;
-}
 
 void	move_right_wall(t_player *player)
 {
@@ -87,6 +70,17 @@ void	my_keyhook(void *param)
 	my_mouse_hook(data);
 }
 
+void	wand_visibility(t_data *data)
+{
+	if (!data->scene.wand_visible)
+		data->scene.wand_visible = true;
+	else if (data->scene.wand_visible)
+	{
+		data->scene.wand_visible = false;
+		mlx_delete_image(data->m, data->wand);
+	}
+}
+
 void	my_keyhook2(mlx_key_data_t keydata, void *param)
 {
 	t_data	*data;
@@ -99,20 +93,14 @@ void	my_keyhook2(mlx_key_data_t keydata, void *param)
 		else
 			data->scene.minimap_status = 3;
 	}
-	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS && data->scene.wand_visible)
+	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS \
+	&& data->scene.wand_visible)
 	{
 		cast_door_ray(data, normalize_angle(data->scene.player.dir), \
 		data->scene.player.px, data->scene.player.py);
 	}
 	if (keydata.key == MLX_KEY_E && keydata.action == MLX_PRESS)
 	{
-		if (!data->scene.wand_visible)
-			data->scene.wand_visible = true;
-		else if (data->scene.wand_visible)
-		{
-			data->scene.wand_visible = false;
-			mlx_delete_image(data->m, data->wand);
-		}
-			
+		wand_visibility(data);
 	}
 }

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
 /*   Updated: 2024/11/05 18:00:01 by kkauhane         ###   ########.fr       */
@@ -12,7 +12,9 @@
 
 #include "../../includes/cub3d_bonus.h"
 
+
 //reads line and fills every row
+
 static void	fill_row(t_data *data, char *line, int row)
 {
 	int	i;

@@ -24,8 +24,8 @@ void	draw_circle(t_data *data, int radius, int color)
 	int	cxy[2];
 	int	pxy[2];
 
-	cxy[0] = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12;
-	cxy[1] = 6 * BLOCK_SIZE / 6 + BLOCK_SIZE / 12;
+	cxy[0] = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12);
+	cxy[1] = (6 * BLOCK_SIZE /MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12);
 	y = -radius;
 	while (y <= radius)
 	{
@@ -76,6 +76,7 @@ void	draw_nose(t_data *data, int length, int color)
 		i++;
 	}
 }
+
 
 void	draw_scene(t_data *data)
 {

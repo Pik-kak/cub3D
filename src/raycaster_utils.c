@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:49:29 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 16:18:42 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:28:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,30 @@ void	cast_door_spell(t_data *data, int x, int y)
 	data->scene.door_y = y;
 	data->scene.wand_pos = 2;
 	data->scene.door_timer = 31;
+}
+
+void	spell_door(t_data *data)
+{
+	if (data->scene.door_timer > 0)
+	{
+		if (data->scene.door_timer < 15 && data->scene.door_timer % 3 == 0 \
+		&& data->scene.door_timer > 0)
+		{
+			set_door_open(data, data->scene.door_x, data->scene.door_y);
+		}
+		if (data->scene.door_timer % 3 == 0)
+		{
+			data->scene.wand_pos = 2;
+		}
+		else
+		{
+			data->scene.wand_pos = 3;
+		}
+		data->scene.door_timer--;
+		if (data->scene.door_timer == 0)
+		{
+			data->scene.wand_pos = 1;
+			set_door_open(data, data->scene.door_x, data->scene.door_y);
+		}
+	}
 }
