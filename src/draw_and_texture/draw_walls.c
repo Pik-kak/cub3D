@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 12:37:46 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/05 16:32:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 		}
 		else
 		{
-			draw_floor_texture(data, ray, &txtr, i);
-			//if (pixel_ok(data, ray_count, i))
-			//	mlx_put_pixel(data->image, ray_count, i, data->scene.col_floor);
+			//draw_floor_texture(data, ray, &txtr, i);
+			if (pixel_ok(data, ray_count, i))
+				mlx_put_pixel(data->image, ray_count, i, data->scene.col_floor);
 		}
 		i++;
 	}

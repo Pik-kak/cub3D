@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 16:44:22 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:50:44 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,27 +79,50 @@ static void	parse(t_data *data)
 	free(check);
 }
 
+void spell_door(t_data *data) 
+{
+	if (data->scene.door_timer > 0)
+	{
+		
+		if (data->scene.door_timer < 15 && data->scene.door_timer % 3 == 0 && data->scene.door_timer > 0)
+		{
+			set_door_open(data, data->scene.door_x, data->scene.door_y);
+		}
+		if (data->scene.door_timer % 3 == 0)
+		{
+			data->scene.wand_pos = 2;
+		}
+		else 
+		{
+			data->scene.wand_pos = 3;
+		}
+		data->scene.door_timer--;
+		if (data->scene.door_timer == 0)
+		{
+			data->scene.wand_pos = 1;
+			set_door_open(data, data->scene.door_x, data->scene.door_y);
+		}
+	}
+}
+//#include "time.h"
+
 static void	render_loop(void *param)
 {
 	t_data	*data;
-	int		door;
-
+	//clock_t start, end;
+    //double cpu_time_used;
+	
 	data = param;
-	if (data->scene.wand_timer > 0)
-	{
-		if (data->scene.wand_timer % 5 == 0 && data->scene.wand_timer > 0)
-		{
-			set_door(data, data->scene.door_x, data->scene.door_y);
-		}
-		data->scene.wand_timer--;
-		if (data->scene.wand_timer == 0)
-		{
-			data->scene.wand_pos = 1;
-			set_door(data, data->scene.door_x, data->scene.door_y);
-		}
-	}
-	update_wand(data);
+	
+	//start = clock();
+	if (data->scene.wand_visible)
+		update_wand(data);
 	draw_scene(data);
+	if (data->scene.door_timer > 0)
+		spell_door(data);
+	//end = clock();
+	//cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+	//printf("FPS = %d \n", (int)round(1 / cpu_time_used));
 }
 
 int	main(int argc, char **argv)
@@ -122,6 +145,7 @@ int	main(int argc, char **argv)
 		if (!data->m)
 			ft_free_data_and_error(data, ERR_MLX);
 		get_textures(data);
+		mlx_set_mouse_pos(data->m, WIDTH / 2, HEIGHT / 2);
 		mlx_loop_hook(data->m, render_loop, data);
 		mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_key_hook(data->m, &my_keyhook2, data);

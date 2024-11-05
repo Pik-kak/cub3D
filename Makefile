@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/04 15:23:51 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/11/05 16:51:57 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ endif
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS += -Wall -Wextra -Werror -lm -g #-fsanitize=address
+CFLAGS += -Wall -Wextra -Werror -lm -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
@@ -113,25 +113,25 @@ $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
 			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
-			@echo "\033[1;32mFdF compile success!\n\033[0m"
+			@echo "\033[1;32mCub3D compile success!\n\033[0m"
 
 .bonus:		$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
 			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
 			@touch .bonus
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
-			@echo "\033[1;32mFdF Bonus objects compiled!\n\033[0m"
+			@echo "\033[1;32mCub3D Bonus objects compiled!\n\033[0m"
 
 bonus:		$(BOBJ_DIR) .bonus
 
 clean:
 			@$(RM) $(OBJ_DIR) $(BOBJ_DIR) .bonus
 			@make clean -C "libft"
-			@echo "\033[0;36mClean FdF [\033[0;32mDONE\033[0;36m]\033[0m"
+			@echo "\033[0;36mClean Cub3D [\033[0;32mDONE\033[0;36m]\033[0m"
 
 fclean:		clean
 			@$(RM) $(NAME) $(OBJ_DIR) $(BOBJ_DIR)
-			@echo "\033[0;36mFClean FdF [\033[0;32mDONE\033[0;36m]\033[0m"
+			@echo "\033[0;36mFClean Cub3D [\033[0;32mDONE\033[0;36m]\033[0m"
 
 re:			fclean all
 
