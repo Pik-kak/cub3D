@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   collissions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:52:25 by tsaari            #+#    #+#             */
 /*   Updated: 2024/11/04 17:03:33 by tsaari           ###   ########.fr       */

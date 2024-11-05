@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 07:47:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/04 17:20:10 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,10 @@ static int	check_map_line(char *line, t_check *check)
 	return (0);
 }
 
-
-int read_next_line(t_data *data, int map_found, char *line, t_check *check)
+int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
 {
 	char	*temp;
-	
+
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 		return (1);
@@ -90,7 +89,7 @@ int read_next_line(t_data *data, int map_found, char *line, t_check *check)
 		if (map_found == 1)
 		{
 			free(line);
-			return(1);
+			return (1);
 		}
 		check->cur_file_line++;
 	}

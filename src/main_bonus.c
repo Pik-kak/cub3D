@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
 /*   Updated: 2024/11/05 13:40:49 by tsaari           ###   ########.fr       */
@@ -68,7 +68,8 @@ static void	parse(t_data *data)
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 	{
-		free_before_map(data, check);
+		free_elements(data);
+		free(check);
 		ft_error(data, ERR_INFILE);
 	}
 	read_file_for_longest_and_lines(data, check);

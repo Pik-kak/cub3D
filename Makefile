@@ -6,7 +6,7 @@
 #    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/05 12:33:46 by tsaari           ###   ########.fr        #
+#    Updated: 2024/11/04 15:23:51 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,8 @@ DRAW_SRCS	= draw_scene_bonus.c \
 				draw_utils.c \
 				draw_utils_color.c \
 				draw_minimap.c \
-				wand.c
+				wand.c \
+				draw_floor.c
 
 BONUS_DIR	= bonus/
 BSRCS		= fdf_bonus.c \

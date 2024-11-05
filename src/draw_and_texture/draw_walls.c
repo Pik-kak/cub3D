@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_walls.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/03 13:30:21 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:37:46 by pikkak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 	t_texture	txtr;
 
 	i = 0;
-	calculate_msrmnts(data, &txtr, wall_height);
+	calculate_msrmnts(data, &txtr, wall_height, ray_count);
 	while (i < data->s_height)
 	{
 		if (i < txtr.start)
@@ -63,14 +63,15 @@ void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 		}
 		else if (i >= txtr.start && i < txtr.end)
 		{
-			txtr.raycount = ray_count;
-			txtr.wall_height = wall_height;
 			draw_texture(data, ray, &txtr, i);
 			i = txtr.end;
 		}
 		else
-			if (pixel_ok(data, ray_count, i))
-				mlx_put_pixel(data->image, ray_count, i, data->scene.col_floor);
+		{
+			draw_floor_texture(data, ray, &txtr, i);
+			//if (pixel_ok(data, ray_count, i))
+			//	mlx_put_pixel(data->image, ray_count, i, data->scene.col_floor);
+		}
 		i++;
 	}
 }
