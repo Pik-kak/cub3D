@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 16:50:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:41:54 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,50 +79,16 @@ static void	parse(t_data *data)
 	free(check);
 }
 
-void spell_door(t_data *data) 
-{
-	if (data->scene.door_timer > 0)
-	{
-		
-		if (data->scene.door_timer < 15 && data->scene.door_timer % 3 == 0 && data->scene.door_timer > 0)
-		{
-			set_door_open(data, data->scene.door_x, data->scene.door_y);
-		}
-		if (data->scene.door_timer % 3 == 0)
-		{
-			data->scene.wand_pos = 2;
-		}
-		else 
-		{
-			data->scene.wand_pos = 3;
-		}
-		data->scene.door_timer--;
-		if (data->scene.door_timer == 0)
-		{
-			data->scene.wand_pos = 1;
-			set_door_open(data, data->scene.door_x, data->scene.door_y);
-		}
-	}
-}
-//#include "time.h"
-
 static void	render_loop(void *param)
 {
 	t_data	*data;
-	//clock_t start, end;
-    //double cpu_time_used;
-	
+
 	data = param;
-	
-	//start = clock();
 	if (data->scene.wand_visible)
 		update_wand(data);
 	draw_scene(data);
 	if (data->scene.door_timer > 0)
 		spell_door(data);
-	//end = clock();
-	//cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-	//printf("FPS = %d \n", (int)round(1 / cpu_time_used));
 }
 
 int	main(int argc, char **argv)

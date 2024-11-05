@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:41:21 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/28 14:29:38 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:33:47 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,21 @@ void	move_player_right(t_player *player)
 		player->px += delta_x;
 		player->py += delta_y;
 	}
+}
+
+/* ==============================
+ * Turnsplayer by changing it's dir
+ * full round is 2 * PI 
+ * sets dposx and dpos y to be next step for player
+ * ==============================
+ */
+void	turn_player(t_player *player, double angle)
+{
+	player->dir += angle;
+	if (player->dir < 0)
+		player->dir += 2 * PI;
+	else if (player->dir > 2 * PI)
+		player->dir -= 2 * PI;
+	player->dposx = cos(player->dir) * 5;
+	player->dposy = sin(player->dir) * 5;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/03 17:22:03 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:04:52 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_filetype(char *filename, char *filetype)
 	i = 0;
 	file_end = ft_strrchr(filename, '.');
 	if (!file_end)
-		return (ERROR);
+		return (1);
 	while (file_end[i] != '\0' && filetype[i] == file_end[i])
 		i++;
 	return (file_end[i] - filetype[i]);

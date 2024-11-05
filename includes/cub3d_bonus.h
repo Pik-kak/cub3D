@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 16:38:08 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 18:06:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,43 +19,23 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
-# define SUCCESS 0
-# define ERROR 1
-
 # define WIDTH 1920
 # define HEIGHT 1080
-
-# define COL_RED		0xFF0000FF
 # define COL_GREEN		0x00FF00FF
 # define COL_BLUE		0x0000FFFF
-# define COL_WHITE		0xFFFFFFFF
-# define COL_BLACK		0x000000FF
-# define COL_DISCO		0x9A1F6AFF
 # define COL_BRICK_RED	0xC2294EFF
-# define COL_FLAMINGO	0xEC4B27FF
-# define COL_JAFFA		0xEF8633FF
-# define COL_SAFFRON	0xF3AF3DFF
-# define COL_BG 		0x050203FF
 # define COL_LINE		0xF8F7edFF
-# define COL_LINE2		0x8B0000C8
-# define COL_PINK		0xFFC0CBFF
-# define COL_RAY		0xADD8E6FF
-# define COL_GREY		0x40808080
-
+# define COL_WHITE		0xFFFFFFFF
 # define ERR_INFILE "Wrong file type"
 # define ERR_ARG "Invalid amount of arguments"
 # define ERR_OPEN "File cannot be opened"
 # define ERR_MALLOC "Malloc error"
 # define ERR_MLX "MLX error"
-
-# define FIXED_POINT_SCALE 1000
 # define PI 3.14159265
-# define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
 # define PLAYER_SPEED 8
 # define SENSITIVITY 0.0008
 # define BLOCK_SIZE 512
-# define MINIMAP_DIV BLOCK_SIZE / 128
-# define GRID_GAP 1
+# define MINIMAP_DIV 4
 # define FOV PI / 3;
 # define SPACE_AROUND_MAP 5
 # define BUFFER_SIZE 1024
@@ -178,13 +158,12 @@ typedef struct s_data
 	mlx_image_t	*txtr;
 	t_textures	*txtrs;
 	t_walls		*walls;
-	int			s_width;//do we need these now that we do not scale the window according to screen? just use WIDTH?
+	int			s_width;
 	int			s_height;
 	char		*file;
 	int			fd;
 	t_scene		scene;
 }	t_data;
-
 
 //free_and_exit
 void			free_elements(t_data *data);
@@ -261,7 +240,7 @@ void			my_mouse_hook(t_data *data);
 void			turn_player(t_player *player, double angle);
 void			move_right_wall(t_player *player);
 void			move_left_wall(t_player *player);
-
+void	spell_door(t_data *data);
 //player_movement
 void			move_player_forward(t_player *player);
 void			move_player_backward(t_player *player);

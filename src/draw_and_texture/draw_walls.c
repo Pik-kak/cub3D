@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 16:32:00 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 18:04:29 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,5 @@ int	cast_rays(t_data *data)
 		draw_walls(data, ray_count, &ray, wall_height);
 		ray_count++;
 	}
-	return (SUCCESS);
+	return (0);
 }
