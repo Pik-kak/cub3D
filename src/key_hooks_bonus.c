@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/02 14:11:39 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 13:31:15 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,16 @@ void	my_keyhook2(mlx_key_data_t keydata, void *param)
 	{
 		cast_door_ray(data, normalize_angle(data->scene.player.dir), \
 		data->scene.player.px, data->scene.player.py);
+	}
+	if (keydata.key == MLX_KEY_E && keydata.action == MLX_PRESS)
+	{
+		if (!data->scene.wand_visible)
+			data->scene.wand_visible = true;
+		else if (data->scene.wand_visible)
+		{
+			data->scene.wand_visible = false;
+			mlx_delete_image(data->m, data->wand);
+		}
+			
 	}
 }

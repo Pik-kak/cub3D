@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:38:34 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:22:16 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	init_scene(t_data *data)
 	data->scene.floor_rgb[2] = -1;
 	data->scene.minimap_status = 1;
 	data->scene.wand_pos = 1;
-	data->scene.wand_timer = 0;
+	data->scene.wand_visible = false;
+	data->scene.door_timer = 0;
 	data->scene.door_x = 0;
 	data->scene.door_y = 0;
 	data->scene.last_ray_dir = 0;

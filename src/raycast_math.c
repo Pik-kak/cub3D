@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_math.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:52:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:22:40 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:53:06 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool	check_if_wall_found(t_ray *ray, int grid_y, int grid_x, int hor_or_ver)
 {
 	if (ray->map[grid_y][grid_x] == 1 || ray->map[grid_y][grid_x] == 2)
 	{
-		if (ray->map[grid_y][grid_x] == 2)
+		if (ray->map[grid_y][grid_x] == 2 )
 			ray->is_door = true;
 		if (hor_or_ver == 1)
 			ray->dist_h = ray_len(ray);

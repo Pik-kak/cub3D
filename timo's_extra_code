@@ -1,0 +1,58 @@
+
+
+typedef struct s_layer2
+{
+	int			**map;
+}	t_layer2;
+
+data->layer2 = NULL;	
+t_layer2	layer2;
+
+	set_layer_two(data);
+data->scene.layer2.map[data->scene.door_y][data->scene.door_x] = 2;
+	draw_layer2(data);
+
+void set_layer_two(t_data *data)
+{
+	int	row;
+	int i;
+
+	row = 0;
+	data->scene.layer2.map = malloc(data->scene.rows * sizeof(int *));
+	if (!data->scene.layer2.map)
+	{
+		ft_free_data_and_error(data, ERR_MALLOC);
+	}
+	while (row < data->scene.rows)
+	{
+		i = 0;
+		data->scene.layer2.map[row] = malloc(data->scene.cols * sizeof(int));
+		if (!data->scene.layer2.map[row])
+		{
+			ft_free_data_and_error(data, ERR_MALLOC);
+		}
+		while(i < data->scene.cols)
+		{
+			data->scene.layer2.map[row][i] = data->scene.map[row][i];
+			i++;
+		}
+		row++;
+	}
+	
+}
+
+void	draw_layer2(t_data *data)
+{
+	mlx_delete_image(data->m, data->layer2);
+	
+	data->layer2 = mlx_new_image(data->m, data->s_width, data->s_height);
+	if (!data->layer2)
+		ft_free_data_and_error(data, "MLX error");
+	cast_rays(data);
+	if (mlx_image_to_window(data->m, data->layer2, 0, 0) == -1)
+	{
+		mlx_delete_image(data->m, data->layer2);
+		ft_free_data_and_error(data, "MLX error");
+	}
+	mlx_set_instance_depth(&data->layer2->instances[0], 3);
+}

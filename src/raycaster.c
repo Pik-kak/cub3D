@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 08:19:50 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 13:35:57 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,12 @@ void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
 	vertical_cast(&ray);
 	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
 	{
-		if (hor_door && ray.dist_h < 500)
-			set_door_open(data, hor_grid_x, hor_grid_y);
+		if (hor_door && ray.dist_h < 1500)
+			cast_door_spell(data, hor_grid_x, hor_grid_y);
 	}
 	else
 	{
-		if (ray.is_door && ray.dist_v < 500)
-			set_door_open(data, ray.rxry[0] / BLOCK_SIZE, \
-			ray.rxry[1] / BLOCK_SIZE);
+		if (ray.is_door && ray.dist_v < 1500)
+			cast_door_spell(data, ray.rxry[0] / BLOCK_SIZE, ray.rxry[1] / BLOCK_SIZE);
 	}
 }

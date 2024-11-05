@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/04 08:17:40 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 13:32:56 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@
 # define FIXED_POINT_SCALE 1000
 # define PI 3.14159265
 # define DEGREE 0.0174532925 //one degree in radians (1° × π / 180°)
-# define PLAYER_SPEED 3
+# define PLAYER_SPEED 12
 # define SENSITIVITY 0.0008
-# define BLOCK_SIZE 128
+# define BLOCK_SIZE 512
+# define MINIMAP_DIV 4
 # define GRID_GAP 1
 # define FOV PI / 3;
 # define SPACE_AROUND_MAP 5
@@ -140,6 +141,9 @@ typedef struct s_walls
 	mlx_image_t	*door;
 }	t_walls;
 
+
+
+
 typedef struct s_scene
 {
 	t_player	player;
@@ -158,6 +162,8 @@ typedef struct s_scene
 	int			rows;
 	int			minimap_status;
 	int			wand_pos;
+	bool		wand_visible;
+	int			door_timer;
 	int			wand_timer;
 	int			door_x;
 	int			door_y;
@@ -168,6 +174,7 @@ typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
+	mlx_image_t *layer2;
 	mlx_image_t	*wand;
 	mlx_image_t	*txtr;
 	t_textures	*txtrs;
@@ -244,8 +251,8 @@ void			get_textures(t_data *data);
 
 //raycaster_utils
 int				ray_len(t_ray *ray);
-void			set_door(t_data *data, int x, int y);
 void			set_door_open(t_data *data, int x, int y);
+void			cast_door_spell(t_data *data, int x, int y);
 
 //key_hooks
 void			my_keyhook(void *param);

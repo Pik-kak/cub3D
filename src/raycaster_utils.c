@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:49:29 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 17:20:57 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:37:42 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ray_len(t_ray *ray)
 	return ((int)round(hyp));
 }
 
-void	set_door(t_data *data, int x, int y)
+void	set_door_open(t_data *data, int x, int y)
 {
 	if (data->scene.map[y][x] == 2)
 		data->scene.map[y][x] = 3;
@@ -28,10 +28,10 @@ void	set_door(t_data *data, int x, int y)
 		data->scene.map[y][x] = 2;
 }
 
-void	set_door_open(t_data *data, int x, int y)
+void	cast_door_spell(t_data *data, int x, int y)
 {
-	data->scene.wand_pos = 2;
-	data->scene.wand_timer = 30;
 	data->scene.door_x = x;
 	data->scene.door_y = y;
+	data->scene.wand_pos = 2;
+	data->scene.door_timer = 31;
 }
