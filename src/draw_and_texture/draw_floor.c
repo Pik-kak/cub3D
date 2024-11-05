@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   draw_floor.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pikkak <pikkak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:23:50 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 12:43:22 by pikkak           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:16:21 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-void	draw_floor_texture(t_data *data, t_ray *ray, t_texture *txtr, int start)
+/*void	draw_floor_texture(t_data *data, t_ray *ray, t_texture *txtr, int start)
 {
 	int			i;
 	double		floor_dist;
@@ -35,4 +35,4 @@ void	draw_floor_texture(t_data *data, t_ray *ray, t_texture *txtr, int start)
 			mlx_put_pixel(data->image, txtr->raycount, i, color);
 		i++;
 	}
-}
+}*/

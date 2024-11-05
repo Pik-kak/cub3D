@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 17:14:13 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:14:16 by tsaari           ###   ########.fr       */
+/*   Created: 2024/11/01 18:48:07 by kkauhane          #+#    #+#             */
+/*   Updated: 2024/11/05 17:18:31 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,27 @@ void	fill_square(t_data *data, int color, int xo, int yo)
 	int	start_y;
 	int	i;
 	int	j;
-	int block_size;
+	int	block_size;
 
 	block_size = BLOCK_SIZE / MINIMAP_DIV;
-
-	start_x = xo * (block_size / 6) + block_size / 12 - (int)data->scene.player.px % BLOCK_SIZE / 6 / MINIMAP_DIV;
-	start_y = yo * (block_size / 6) + block_size / 12 - (int)data->scene.player.py % BLOCK_SIZE / 6 / MINIMAP_DIV;
+	start_x = xo * (block_size / 6) + block_size / 12
+		- (int)data->scene.player.px % BLOCK_SIZE / 6 / MINIMAP_DIV;
+	start_y = yo * (block_size / 6) + block_size / 12
+		- (int)data->scene.player.py % BLOCK_SIZE / 6 / MINIMAP_DIV;
 	i = 0;
-	while (i < block_size/ 6)
+	while (i < block_size / 6)
 	{
 		j = 0;
 		while (j < block_size / 6)
 		{
 			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(data->image, start_x + j, start_y + i, darken_color(color, 0.4));
+				mlx_put_pixel(data->image, start_x + j,
+					start_y + i, darken_color(color, 0.4));
 			j++;
 		}
 		i++;
 	}
 }
-
 
 /* ==============================
  * Draws walls (1) or free space 
@@ -72,7 +73,6 @@ void	draw_tile(t_data *data, t_minimap *mmap, int i, int j)
 	else
 		fill_square(data, COL_BRICK_RED, i, j);
 }
-
 
 void	draw_minimap_box(t_data *data)
 {
