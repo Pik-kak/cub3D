@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 16:36:25 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:38:30 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-
-static void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
+static void	set_col_line(t_data *data, char *temp, char *pointer, int *rgb)
 {
 	char	*str;
 	char	**splitted;
@@ -40,7 +39,7 @@ static void	set_colour_line(t_data *data, char *temp, char *pointer, int *rgb)
 	ft_free_double_array(splitted);
 }
 
-static int	check_colour_line(t_data *data, char *line)
+int	check_colour_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
@@ -56,15 +55,15 @@ static int	check_colour_line(t_data *data, char *line)
 	{
 		if (data->scene.floor_rgb[0] != -1
 			&& data->scene.floor_rgb[1] != -1 && data->scene.floor_rgb[2] != -1)
-			ft_free_data_and_error(data, "invalid file, floor color allready set");
-		return (set_colour_line(data, temp, pointer, data->scene.floor_rgb), 0);
+			ft_free_data_and_error(data, "invalid file, F-color allready set");
+		return (set_col_line(data, temp, pointer, data->scene.floor_rgb), 0);
 	}
 	else if (ft_strncmp(temp, "C", 1) == 0)
 	{
 		if (data->scene.ceiling_rgb[0] != -1 \
 		&& data->scene.ceiling_rgb[1] != -1 && data->scene.ceiling_rgb[2] != -1)
-			ft_free_data_and_error(data, "invalid file, ceiling color allready set");
-		return (set_colour_line(data, temp, pointer, data->scene.ceiling_rgb), 0);
+			ft_free_data_and_error(data, "invalid file, C-color allready set");
+		return (set_col_line(data, temp, pointer, data->scene.ceiling_rgb), 0);
 	}
 	return (1);
 }
@@ -74,31 +73,31 @@ static int	set_texture_line(t_data *data, char *temp, char *pointer)
 	if (ft_strncmp(temp, "NO", 2) == 0)
 	{
 		if (data->scene.no)
-			ft_free_data_and_error(data, "invalid file, double north texture path");
+			ft_free_data_and_error(data, "invalid file, double NO path");
 		return (data->scene.no = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "SO", 2) == 0)
 	{
 		if (data->scene.so)
-			ft_free_data_and_error(data, "invalid file, double south texture path");
+			ft_free_data_and_error(data, "invalid file, double SO path");
 		return (data->scene.so = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "EA", 2) == 0)
 	{
 		if (data->scene.ea)
-			ft_free_data_and_error(data, "invalid file, double east texture path");
+			ft_free_data_and_error(data, "invalid file, double EA path");
 		return (data->scene.ea = copy_str(data, pointer), 0);
 	}
 	else if (ft_strncmp(temp, "WE", 2) == 0)
 	{
 		if (data->scene.we)
-			ft_free_data_and_error(data, "invalid file, double west texture path");
+			ft_free_data_and_error(data, "invalid file, double WE path");
 		return (data->scene.we = copy_str(data, pointer), 0);
 	}
 	return (1);
 }
 
-static int	check_texture_line(t_data *data, char *line)
+int	check_texture_line(t_data *data, char *line)
 {
 	char	*pointer;
 	char	*temp;
@@ -118,59 +117,4 @@ static int	check_texture_line(t_data *data, char *line)
 	if (set_texture_line(data, temp, pointer) == 0)
 		return (0);
 	return (1);
-}
-
-static int	check_valid_line(t_data *data, char *line)
-{
-	if (check_texture_line(data, line) == 0)
-		return (0);
-	else if (check_colour_line(data, line) == 0)
-		return (0);
-	else
-	{
-		return (ft_free_data_and_error(data,
-				"invalid file, invalid color or texture line"), 1);
-	}
-	return (1);
-}
-
-/* ==============================
- * Reads the file line by line and calls check line to check
- * that the lines contain the elements needed.
- * Doesn't yet check floor/ceiling or stop at map
- * ==============================
- */
-static void	check_file_lines(t_data *data, t_check *check)
-{
-	char	*line;
-	int		lines;
-
-	lines = 0;
-	line = NULL;
-	while (lines < 6)
-	{
-		line = get_next_line_cub(data, data->fd);
-		if (*line == '\n')
-		{
-			check->cur_file_line++;
-			free(line);
-			continue ;
-		}
-		else if (check_valid_line(data, line) == 0)
-		{
-			check->cur_file_line++;
-			lines++;
-		}
-		free(line);
-	}
-}
-
-void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
-{
-	data->fd = open(data->file, O_RDONLY);
-	if (data->fd < 0)
-		ft_error(data, ERR_OPEN);
-	check_file_lines(data, check);
-	data->scene.col_ceiling = get_colour(data->scene.ceiling_rgb);
-	data->scene.col_floor = get_colour(data->scene.floor_rgb);
 }

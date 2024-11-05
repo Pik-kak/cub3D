@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
+#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/05 16:51:57 by tsaari           ###   ########.fr        #
+#    Updated: 2024/11/05 17:31:50 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ MAIN_SRCS	= main_bonus.c \
 				player_movement.c
 
 PARS_DIR	= $(SRC_DIR)parsing/
-PARS_SRCS	= parse_textr_col.c \
+PARS_SRCS	= read_textr_col.c \
+				parse_textr_col.c \
 				parse_utils.c \
 				parse_utils2.c \
 				parse_map.c \

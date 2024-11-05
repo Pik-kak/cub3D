@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 16:38:08 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:33:42 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,8 +208,12 @@ char			*copy_str(t_data *data, char *line);
 void			check_valid_color_value(t_data *data, char *str);
 void			check_amount_of_commas(t_data *data, char *str);
 
-//parse_textr_col
+//read_textr_col
 void			check_and_set_texttr_and_col_lines(t_data *data, t_check *check);
+
+//parse_textr_col
+int	check_texture_line(t_data *data, char *line);
+int	check_colour_line(t_data *data, char *line);
 
 //draw_utils_color
 uint32_t		get_image_color(t_data *data, mlx_image_t *image, int tex_x, int tex_y);

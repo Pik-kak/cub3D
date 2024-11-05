@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 16:04:35 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 17:19:22 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
-
 
 /* ==============================
  * Draws player "body" as circle
@@ -64,8 +63,10 @@ void	draw_nose(t_data *data, int length, int color)
 	i = 0;
 	while (i < length)
 	{
-		c_x = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12 + (i * cos(dir)));
-		c_y = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12 + (i * sin(dir)));
+		c_x = (6 * BLOCK_SIZE / MINIMAP_DIV / 6
+				+ BLOCK_SIZE / MINIMAP_DIV / 12 + (i * cos(dir)));
+		c_y = (6 * BLOCK_SIZE / MINIMAP_DIV / 6
+				+ BLOCK_SIZE / MINIMAP_DIV / 12 + (i * sin(dir)));
 		if (pixel_ok(data, c_x + 1 * sin(dir), c_y - 1 * cos(dir)))
 			mlx_put_pixel(data->image, c_x + 1 * sin(dir),
 				c_y - 1 * cos(dir), color);
