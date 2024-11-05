@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:19:22 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:13:10 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_circle(t_data *data, int radius, int color)
 	int	pxy[2];
 
 	cxy[0] = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12);
-	cxy[1] = (6 * BLOCK_SIZE /MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12);
+	cxy[1] = (6 * BLOCK_SIZE / MINIMAP_DIV / 6 + BLOCK_SIZE / MINIMAP_DIV / 12);
 	y = -radius;
 	while (y <= radius)
 	{
@@ -51,7 +51,6 @@ void	draw_circle(t_data *data, int radius, int color)
  * Draw two pixels in line side by side
  * ==============================
  */
-
 void	draw_nose(t_data *data, int length, int color)
 {
 	double	dir;
@@ -76,7 +75,6 @@ void	draw_nose(t_data *data, int length, int color)
 		i++;
 	}
 }
-
 
 void	draw_scene(t_data *data)
 {
