@@ -1,49 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_minimap.c                                     :+:      :+:    :+:   */
+/*   draw_minimap_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 18:48:07 by kkauhane            #+#    #+#             */
-/*   Updated: 2024/11/03 17:21:08 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/11/05 14:38:12 by tsaari            #+#    #+#             */
+/*   Updated: 2024/11/05 14:38:15 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 /* ==============================
  * Draws one block filled with same color 
  * leaves last pixels empty to make grid
  * ==============================
  */
-
-/*void	fill_square(t_data *data, int color, int xo, int yo)
-{
-	int	start_x;
-	int	start_y;
-	int	i;
-	int	j;
-
-	start_x = xo * (BLOCK_SIZE / MINIMAP_DIV / 6) + (BLOCK_SIZE / MINIMAP_DIV / 12)
-		- ((int)data->scene.player.px % BLOCK_SIZE / MINIMAP_DIV / 6);
-	start_y = yo * (BLOCK_SIZE / MINIMAP_DIV / 6) + (BLOCK_SIZE / MINIMAP_DIV / 12)
-		- ((int)data->scene.player.py % BLOCK_SIZE / MINIMAP_DIV / 6);
-	i = 0;
-	while (i < BLOCK_SIZE / MINIMAP_DIV / 6)
-	{
-		j = 0;
-		while (j < BLOCK_SIZE / MINIMAP_DIV / 6)
-		{
-			if (pixel_ok(data, start_x + j, start_y + i))
-				mlx_put_pixel(data->image, start_x + j,
-					start_y + i, darken_color(color, 0.4));
-			j++;
-		}
-		i++;
-	}
-}*/
-
 
 void	fill_square(t_data *data, int color, int xo, int yo)
 {

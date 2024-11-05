@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_bonus.c                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 15:55:23 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:35:13 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 static void	init_player(t_player *player)
 {
@@ -96,5 +96,4 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->wall = NULL;
 	ray->wall_height = 0;
 	ray->tex_x = 0;
-	ray->floor = data->walls->floor;
 }

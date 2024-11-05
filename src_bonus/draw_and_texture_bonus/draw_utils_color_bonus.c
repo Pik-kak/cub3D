@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils_color.c                                 :+:      :+:    :+:   */
+/*   draw_utils_color_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 12:47:10 by kkauhane            #+#    #+#             */
-/*   Updated: 2024/11/03 16:34:05 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/11/05 14:38:44 by tsaari            #+#    #+#             */
+/*   Updated: 2024/11/05 14:38:50 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 /*
 	Gets color from a certain xy-point of the texture

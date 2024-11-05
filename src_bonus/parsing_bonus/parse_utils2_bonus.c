@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils2.c                                     :+:      :+:    :+:   */
+/*   parse_utils2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 20:43:28 by kkauhane            #+#    #+#             */
-/*   Updated: 2024/11/03 16:43:42 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/11/05 14:41:22 by tsaari            #+#    #+#             */
+/*   Updated: 2024/11/05 14:41:25 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 /* ==============================
  *	Mallocs a copy and copies the string until ' ', ' \n'

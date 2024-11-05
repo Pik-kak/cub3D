@@ -6,10 +6,9 @@
 #    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/04 15:23:51 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/11/05 14:32:01 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = cub3D
 
@@ -33,10 +32,10 @@ LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
 LIBFT =	libft/libft.a
 
 SRC_DIR		= src/
-MAIN_SRCS	= main_bonus.c \
-				init_bonus.c \
-				free_and_exit_bonus.c \
-				key_hooks_bonus.c \
+MAIN_SRCS	= main.c \
+				init.c \
+				free_and_exit.c \
+				key_hooks.c \
 				raycaster.c \
 				raycaster_utils.c \
 				raycast_math.c \
@@ -53,39 +52,55 @@ PARS_SRCS	= parse_textr_col.c \
 				read_utils.c
 			
 DRAW_DIR	= $(SRC_DIR)draw_and_texture/
-DRAW_SRCS	= draw_scene_bonus.c \
+DRAW_SRCS	= draw_scene.c \
 				draw_walls.c \
 				textures.c \
 				draw_utils.c \
 				draw_utils_color.c \
 				draw_minimap.c \
-				wand.c \
-				draw_floor.c
+				wand.c
 
-BONUS_DIR	= bonus/
-BSRCS		= fdf_bonus.c \
-				parse_map_bonus.c \
-				draw_map_bonus.c \
-				utils1_bonus.c \
+SRC_BONUS_DIR	= src_bonus/
+BSRCS		= main_bonus.c \
+				init_bonus.c \
 				free_and_exit_bonus.c \
-				rotate_and_center_bonus.c \
-				draw_utils_bonus.c \
 				key_hooks_bonus.c \
-				hook_utils_bonus.c \
-				utils2_bonus.c
+				raycaster_bonus.c \
+				raycaster_utils_bonus.c \
+				raycast_math_bonus.c \
+				collissions_bonus.c \
+				mouse_hook_bonus.c \
+				player_movement_bonus.c
+				
+PARS_BONUS_DIR	= $(SRC_BONUS_DIR)parsing_bonus/
+PARS_BONUS_SRCS	= parse_textr_col_bonus.c \
+				parse_utils_bonus.c \
+				parse_utils2_bonus.c \
+				parse_map_bonus.c \
+				fill_map_bonus.c \
+				read_utils_bonus.c
+			
+DRAW_BONUS_DIR	= $(SRC_BONUS_DIR)draw_and_texture_bonus/
+DRAW_BONUS_SRCS	= draw_scene_bonus.c \
+				draw_walls_bonus.c \
+				textures_bonus.c \
+				draw_utils_bonus.c \
+				draw_utils_color_bonus.c \
+				draw_minimap_bonus.c \
+				wand_bonus.c
 
-VPATH		+= $(SRC_DIR):$(PARS_DIR):$(DRAW_DIR)
+VPATH += $(SRC_DIR):$(PARS_DIR):$(DRAW_DIR):$(SRC_BONUS_DIR):$(PARS_BONUS_DIR):$(DRAW_BONUS_DIR)
 
 
-OBJS = $(MAIN_SRCS:%.c=$(OBJ_DIR)/%.o) $(PARS_SRCS:%.c=$(OBJ_DIR)/%.o) $(DRAW_SRCS:%.c=$(OBJ_DIR)/%.o)
-BOBJS		= $(BSRCS:%.c=$(BOBJ_DIR)/%.o)
+OBJS	= $(MAIN_SRCS:%.c=$(OBJ_DIR)/%.o) $(PARS_SRCS:%.c=$(OBJ_DIR)/%.o) $(DRAW_SRCS:%.c=$(OBJ_DIR)/%.o)
+BOBJS	= $(BSRCS:%.c=$(BOBJ_DIR)/%.o) $(PARS_BONUS_SRCS:%.c=$(BOBJ_DIR)/%.o) $(DRAW_BONUS_SRCS:%.c=$(BOBJ_DIR)/%.o)
 
-OBJ_DIR			= obj
-BOBJ_DIR		= bobj
+OBJ_DIR		= obj
+BOBJ_DIR	= bobj
 
 all:	$(NAME)
 
-bonus: $(BONUS)
+bonus: bonus_target
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
@@ -97,7 +112,7 @@ $(OBJ_DIR)/%.o: %.c
 	@$(CC) -c $< -o $@
 	@echo "\033[0;36mObject $@ [\033[0;32mOK\033[0;36m]\033[0m"
 
-$(BOBJ_DIR)/%.o: $(BONUS_DIR)%.c
+$(BOBJ_DIR)/%.o: %.c
 	@$(CC) -c $< -o $@
 	@echo "\033[0;36mBonus Object $@ [\033[0;32mOK\033[0;36m]\033[0m"
 
@@ -107,34 +122,31 @@ $(MLX_TARGET):
 	@cmake --build $(MLX_BUILD_DIR) -j4
 
 $(LIBFT):
-			@make -C "libft" CFLAGS="$(CFLAGS)"
+	@make -C "libft" CFLAGS="$(CFLAGS)"
 
-$(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
-			@echo "\033[1;32mLibft library ready!\n\033[0m"
-			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
-			@echo "\033[1;32mFdF compile success!\n\033[0m"
+$(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
+	@echo "\033[1;32mLibft library ready!\n\033[0m"
+	@echo "\033[1;32mMLX42 library ready!\n\033[0m"
+	@echo "\033[1;32mCub3D compile success!\n\033[0m"
 
-.bonus:		$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET) libft/*.c
-			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
-			@touch .bonus
-			@echo "\033[1;32mLibft library ready!\n\033[0m"
-			@echo "\033[1;32mMLX42 library ready!\n\033[0m"
-			@echo "\033[1;32mFdF Bonus objects compiled!\n\033[0m"
-
-bonus:		$(BOBJ_DIR) .bonus
+bonus_target:	$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET)
+	@$(CC) $(CFLAGS) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
+	@touch .bonus
+	@echo "\033[1;32mLibft library ready!\n\033[0m"
+	@echo "\033[1;32mMLX42 library ready!\n\033[0m"
+	@echo "\033[1;32mCub3D Bonus objects compiled!\n\033[0m"
 
 clean:
-			@$(RM) $(OBJ_DIR) $(BOBJ_DIR) .bonus
-			@make clean -C "libft"
-			@echo "\033[0;36mClean FdF [\033[0;32mDONE\033[0;36m]\033[0m"
+	@$(RM) $(OBJ_DIR) $(BOBJ_DIR) .bonus
+	@make clean -C "libft"
+	@echo "\033[0;36mClean Cub3D [\033[0;32mDONE\033[0;36m]\033[0m"
 
 fclean:		clean
-			@$(RM) $(NAME) $(OBJ_DIR) $(BOBJ_DIR)
-			@echo "\033[0;36mFClean FdF [\033[0;32mDONE\033[0;36m]\033[0m"
+	@$(RM) $(NAME) $(OBJ_DIR) $(BOBJ_DIR)
+	@echo "\033[0;36mFClean Cub3D [\033[0;32mDONE\033[0;36m]\033[0m"
 
-re:			fclean all
+re: fclean all
+rebonus: fclean bonus_target
 
-rebonus:	fclean bonus
-
-.PHONY:		all clean fclean re bonus
+.PHONY: all clean fclean re bonus

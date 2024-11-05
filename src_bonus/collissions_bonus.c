@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collissions.c                                      :+:      :+:    :+:   */
+/*   collissions_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:52:25 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 14:35:03 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/05 14:41:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 double	normalize_angle(double angle)
 {

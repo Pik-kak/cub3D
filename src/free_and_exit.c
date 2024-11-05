@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_and_exit_bonus.c                              :+:      :+:    :+:   */
+/*   free_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 16:47:01 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:35:09 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
-void	free_elements(t_data *data)
+void	free_before_map(t_data *data, t_check *check)
 {
-	if (data->scene.no != NULL)
-		free(data->scene.no);
-	if (data->scene.so != NULL)
-		free(data->scene.so);
-	if (data->scene.ea != NULL)
-		free(data->scene.ea);
-	if (data->scene.we != NULL)
-		free(data->scene.we);
+	free(data->scene.ea);
+	free(data->scene.so);
+	free(data->scene.no);
+	free(data->scene.we);
+	free(check);
 }
 
 void	ft_error(t_data *data, char *error)
 {
+	
 	if (data)
 		free(data);
 	write(2, "Error\n", 6);
@@ -62,6 +60,14 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		i++;
 	}
 	free(data->scene.map);
+	if (data->scene.no != NULL)
+		free(data->scene.no);
+	if (data->scene.so != NULL)
+		free(data->scene.so);
+	if (data->scene.ea != NULL)
+		free(data->scene.ea);
+	if (data->scene.we != NULL)
+		free(data->scene.we);
 	if (data->walls)
 		free(data->walls);
 	if (data->txtrs)
@@ -84,7 +90,14 @@ void	ft_free_data_and_exit(t_data *data)
 		i++;
 	}
 	free(data->scene.map);
-	free_elements(data);
+	if (data->scene.no != NULL)
+		free(data->scene.no);
+	if (data->scene.so != NULL)
+		free(data->scene.so);
+	if (data->scene.ea != NULL)
+		free(data->scene.ea);
+	if (data->scene.we != NULL)
+		free(data->scene.we);
 	if (data->walls)
 		free(data->walls);
 	if (data->txtrs)

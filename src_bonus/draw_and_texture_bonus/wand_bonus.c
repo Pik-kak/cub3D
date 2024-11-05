@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wand.c                                             :+:      :+:    :+:   */
+/*   wand_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 17:47:48 by kkauhane            #+#    #+#             */
-/*   Updated: 2024/11/03 17:21:44 by kkauhane         ###   ########.fr       */
+/*   Created: 2024/11/05 14:39:55 by tsaari            #+#    #+#             */
+/*   Updated: 2024/11/05 14:40:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/cub3d_bonus.h"
 
 void	update_wand(t_data *data)
 {
