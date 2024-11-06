@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 15:46:38 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:33:45 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,8 @@
 
 
 //helper function to check that there is no illegal char's in map
-static int	check_map_line(char *line)
-{
-	int	i;
 
-	i = 0;
-	if ((line[i] != ' ' && line[i] != '1') || line[i] == '\n')
-		return (1);
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '1' && line[i] != '2'
-			&& line[i] != '0' && line[i] != 'N'
-			&& line[i] != 'E' && line[i] != 'S'
-			&& line[i] != 'W' && line[i] != '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	set_check(t_check *check, char *line)
-{
-	char	*temp;
-
-	check->map_lines++;
-	if (ft_strlen(line) >= check->longest_line)
-	{
-		temp = ft_strtrim(line, "\n");
-		check->longest_line = ft_strlen(temp);
-		free (temp);
-	}
-}
-
-int	read_next_line(t_data *data, int map_found, t_check *check)
+int	read_next_line(t_data *data, int *map_found, t_check *check)
 {
 	char *line;
 	
@@ -90,7 +59,7 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	}
 	while (1)
 	{
-		if (read_next_line(data, map_found, check) == 1)
+		if (read_next_line(data, &map_found, check) == 1)
 			break ;
 	}
 	close(data->fd);
@@ -108,6 +77,7 @@ static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 	{
+		free(data->buffer);
 		close(data->fd);
 		ft_free_data_and_error(data, "invalid file, no map");
 	}
@@ -117,6 +87,7 @@ static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
+			free(data->buffer);
 			close(data->fd);
 			ft_free_data_and_error(data, "invalid file, no map");
 		}
@@ -136,7 +107,7 @@ void	check_map_lines(t_data *data, t_check *check)
 	line = skip_empty_lines_at_beginning(data, check);
 	while (1)
 	{
-		if (check_map_line(line, check) != 0)
+		if (check_map_line(line) != 0)
 		{
 			free(data->buffer);
 			close(data->fd);
@@ -148,6 +119,7 @@ void	check_map_lines(t_data *data, t_check *check)
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
+			free(data->buffer);
 			close(data->fd);
 			break ;
 		}
