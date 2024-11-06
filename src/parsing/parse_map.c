@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 10:21:47 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:22:37 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	check_map_line(char *line, t_check *check)
 	while (line[i])
 	{
 		if (line[i] != ' ' && line[i] != '1' && line[i] != '2'
-			&& line[i] != '0' && line[i] != 2 && line[i] != 'N'
+			&& line[i] != '0' && line[i] != 'N'
 			&& line[i] != 'E' && line[i] != 'S'
 			&& line[i] != 'W' && line[i] != '\n')
 			return (1);
@@ -123,7 +123,6 @@ void	check_map_lines(t_data *data, t_check *check)
 		}
 		else if (check_map_line(line, check) != 0)
 		{
-			printf("%s\n", line);
 			close(data->fd);
 			ft_free_data_and_error(data,
 				"invalid file, map not correct or extra lines before map");
