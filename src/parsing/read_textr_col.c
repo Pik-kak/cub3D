@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   read_textr_col.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
 /*   Updated: 2024/11/06 15:34:14 by tsaari           ###   ########.fr       */
@@ -21,7 +21,7 @@ static int	check_valid_line(t_data *data, char *line, t_check *check)
 	else
 	{
 		return (ft_free_data_and_error(data,
-				"invalid file, invalid color or texture line"), 1);
+				"invalid file, missing or invalid color or texture line"), 1);
 	}
 	return (1);
 }

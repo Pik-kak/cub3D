@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 15:21:10 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:21:10 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
+
 
 //helper function to check that there is no illegal char's in map
 static int	check_map_line(char *line)
@@ -55,7 +56,7 @@ int	read_next_line(t_data *data, int map_found, t_check *check)
 		return (1);
 	if (*line == '\n')
 	{
-		if (map_found == 1)
+		if (*map_found == 1)
 		{
 			free(line);
 			return (1);
@@ -64,7 +65,7 @@ int	read_next_line(t_data *data, int map_found, t_check *check)
 	}
 	else if (check_map_line(line) == 0)
 	{
-		map_found = 1;
+		*map_found = 1;
 		set_check(check, line);
 	}
 	free(line);
@@ -84,8 +85,6 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	while (i < check->cur_file_line)
 	{
 		line = get_next_line_cub(data, data->fd);
-		if (!line)
-			break ;
 		free(line);
 		i++;
 	}
@@ -102,39 +101,54 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	data->scene.cols = check->longest_line + 10;
 }
 
+static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
+{
+	char	*line;
+
+	line = get_next_line_cub(data, data->fd);
+	if (!line)
+	{
+		close(data->fd);
+		ft_free_data_and_error(data, "invalid file, no map");
+	}
+	while (*line == '\n')
+	{
+		line = get_next_line_cub(data, data->fd);
+		if (!line)
+		{
+			close(data->fd);
+			ft_free_data_and_error(data, "invalid file, no map");
+		}
+	}
+	return (line);
+}
+
 /* ==============================
- *	after checking and etting texttures and colors in parse_textr_col.c
- * this checks that there is no unallowed charachters after that
+ *	after checking and getting textures and colors in parse_textr_col.c
+ * this checks that there is no unallowed characters after that
  * ==============================
  */
 void	check_map_lines(t_data *data, t_check *check)
 {
 	char	*line;
 
-	line = NULL;
+	line = skip_empty_lines_at_beginning(data, check);
 	while (1)
 	{
-		line = get_next_line_cub(data, data->fd);
-		if (!line)
+		if (check_map_line(line, check) != 0)
 		{
 			free(data->buffer);
 			close(data->fd);
-			break ;
-		}
-		if (*line == '\n')
-		{
 			free(line);
-			continue ;
-		}
-		else if (check_map_line(line) != 0)
-		{
-			free(data->buffer);
-			close(data->fd);
 			ft_free_data_and_error(data,
 				"invalid file, map not correct or extra lines before map");
 		}
 		free(line);
-		free(data->buffer);
-		close(data->fd);
+		line = get_next_line_cub(data, data->fd);
+		if (!line)
+		{
+			close(data->fd);
+			break ;
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 13:43:34 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:29:58 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32
 		&& matrix[cur.y][cur.x] != -1)
 	{
-		ft_free_data_and_error(data, "invalid file");
+		ft_free_data_and_error(data, "invalid file, map not closed");
 		return ;
 	}
 	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
@@ -123,7 +123,7 @@ void	fill_maze_if_spaces(t_data *data)
 		while (j < data->scene.cols)
 		{
 			if (data->scene.map[i][j] == 32)
-				data->scene.map[i][j] = 1;
+				data->scene.map[i][j] = 0;
 			j++;
 		}
 		i++;
