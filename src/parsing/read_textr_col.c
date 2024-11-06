@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_textr_col.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 17:39:00 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 10:24:21 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	check_valid_line(t_data *data, char *line)
  * Doesn't yet check floor/ceiling or stop at map
  * ==============================
  */
+
 static void	check_file_lines(t_data *data, t_check *check)
 {
 	char	*line;
@@ -42,6 +43,10 @@ static void	check_file_lines(t_data *data, t_check *check)
 	while (lines < 6)
 	{
 		line = get_next_line_cub(data, data->fd);
+		if (!line)
+		{
+			ft_error(data, "File has not enough information");
+		}
 		if (*line == '\n')
 		{
 			check->cur_file_line++;

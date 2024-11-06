@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 11:44:19 by tsaari            #+#    #+#             */
-/*   Updated: 2023/11/03 14:34:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 09:51:06 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ char	*ft_strrchr(const char *s, int c)
 		else
 			return (sc + len);
 	}
-	return (0);
+	return (NULL);
 }

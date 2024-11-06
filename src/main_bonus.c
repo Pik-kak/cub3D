@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:41:54 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 10:05:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,18 @@ static void	parse(t_data *data)
 		ft_error(data, ERR_INFILE);
 	}
 	read_file_for_longest_and_lines(data, check);
-	data->scene.rows = check->map_lines + 10;
-	data->scene.cols = check->longest_line + 10;
 	set_map(data, check);
 	free(check);
 }
+#include <time.h>
 
 static void	render_loop(void *param)
 {
 	t_data	*data;
+	time_t start, end;
+	double cpu_time;
+
+	start = clock();
 
 	data = param;
 	if (data->scene.wand_visible)
@@ -89,6 +92,11 @@ static void	render_loop(void *param)
 	draw_scene(data);
 	if (data->scene.door_timer > 0)
 		spell_door(data);
+	end = clock();
+	cpu_time = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+    // Print the time taken
+    //printf("Render time: %d seconds\n", (int)round(1 / cpu_time));
 }
 
 int	main(int argc, char **argv)
