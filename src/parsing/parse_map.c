@@ -6,13 +6,13 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 14:15:17 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 14:24:32 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
+int	read_next_line(t_data *data, int *map_found, char *line, t_check *check)
 {
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
