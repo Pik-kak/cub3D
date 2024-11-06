@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:59:58 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 10:21:47 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 			break ;
 	}
 	close(data->fd);
+	if (check->map_lines > 1000 || check->longest_line > 1000)
+		ft_free_data_and_error(data, "invalid file, map is too big");
 	data->scene.rows = check->map_lines + 10;
 	data->scene.cols = check->longest_line + 10;
-	if (data->scene.cols > 1000 || data->scene.rows > 1000)
-		ft_free_data_and_error(data, "invalid file, map is too big");
 }
 
 /* ==============================
@@ -123,6 +123,7 @@ void	check_map_lines(t_data *data, t_check *check)
 		}
 		else if (check_map_line(line, check) != 0)
 		{
+			printf("%s\n", line);
 			close(data->fd);
 			ft_free_data_and_error(data,
 				"invalid file, map not correct or extra lines before map");

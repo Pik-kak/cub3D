@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 18:04:52 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 09:56:57 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 /*
 Checks that the file type ends with .cub
 */
-int	check_filetype(char *filename, char *filetype)
+int	check_filetype(char *filepath, char *filetype)
 {
 	char			*file_end;
+	char			*filename;
 	unsigned int	i;
 
 	i = 0;
-	file_end = ft_strrchr(filename, '.');
+	filename = ft_strrchr(filepath, '/');
+	if (filename)
+	{
+		filename++;
+		if (ft_isalnum(*filename) == 0)
+			return (1);
+	}
+	file_end = ft_strrchr(filepath, '.');
 	if (!file_end)
 		return (1);
 	while (file_end[i] != '\0' && filetype[i] == file_end[i])
