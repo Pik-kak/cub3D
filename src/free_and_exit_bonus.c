@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:04:41 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 13:04:03 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	ft_free_data_and_error(t_data *data, char *error)
 	if (data->m)
 		mlx_terminate(data->m);
 	free_elements(data);
+	if (data->buffer)
+		free(data->buffer);
 	free(data);
 	data = NULL;
 	exit(1);
@@ -92,7 +94,10 @@ void	ft_free_data_and_exit(t_data *data)
 		free(data->txtrs);
 	if (data->m)
 		mlx_terminate(data->m);
+	if (data->buffer)
+		free(data->buffer);
 	free(data);
+	
 	data = NULL;
 	exit(0);
 }

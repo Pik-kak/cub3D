@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 10:05:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 13:46:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,20 @@ static void	set_map(t_data *data, t_check *check)
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 		ft_free_data_and_error(data, "File cannot be opened");
-	fill_map(data, check);
+	fill_map(data, check, 0, 1);
 	flood_fill(data, end, start, -1);
 	fill_maze_if_spaces(data);
 	close(data->fd);
 	check_player(data);
+}
+void print_map(t_data *data)
+{
+	for (int i = 0; i < data->scene.rows; i++) {
+        for (int j = 0; j < data->scene.cols; j++) {
+            printf("%d ", data->scene.map[i][j]);
+        }
+		printf("\n");
+    }
 }
 
 static void	parse(t_data *data)
@@ -74,6 +83,7 @@ static void	parse(t_data *data)
 	}
 	read_file_for_longest_and_lines(data, check);
 	set_map(data, check);
+	print_map(data);
 	free(check);
 }
 #include <time.h>

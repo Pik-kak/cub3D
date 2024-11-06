@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 10:07:07 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 13:33:56 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ typedef struct s_data
 	int			s_height;
 	char		*file;
 	int			fd;
+	char		*buffer;
 	t_scene		scene;
 }	t_data;
 
@@ -208,7 +209,7 @@ void			ft_free(char **ptr, char **ptr2);
 void			check_player(t_data *data);
 
 //fill_map
-void			fill_map(t_data *data, t_check *check);
+void			fill_map(t_data *data, t_check *check, int row, int lines);
 void			flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
 void			fill_maze_if_spaces(t_data *data);
 
