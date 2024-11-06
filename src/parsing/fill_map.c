@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 13:43:34 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:29:58 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	fill_maze_if_spaces(t_data *data)
 		while (j < data->scene.cols)
 		{
 			if (data->scene.map[i][j] == 32)
-				data->scene.map[i][j] = 1;
+				data->scene.map[i][j] = 0;
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 14:24:32 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:21:10 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,14 @@ int	read_next_line(t_data *data, int *map_found, char *line, t_check *check)
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 		return (1);
-	if (*line == '\n' && *map_found == 1)
+	if (*line == '\n')
 	{
-		free(line);
-		ft_free_data_and_error(data, "invalid file, empty lines in map");
+		if (*map_found == 1)
+		{
+			free(line);
+			return (1);
+		}
+		check->cur_file_line++;
 	}
 	else if (check_map_line(line, check) == 0)
 	{
@@ -71,7 +75,6 @@ static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
 	}
 	while (*line == '\n')
 	{
-		check->cur_file_line++;
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
@@ -98,10 +101,6 @@ void	check_map_lines(t_data *data, t_check *check)
 		{
 			close(data->fd);
 			free(line);
-		}
-		else if (check_map_line(line, check) != 0)
-		{
-			close(data->fd);
 			ft_free_data_and_error(data,
 				"invalid file, map not correct or extra lines before map");
 		}
