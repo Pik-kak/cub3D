@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 15:21:10 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:46:38 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
 	}
 	while (*line == '\n')
 	{
+		free(line);
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
