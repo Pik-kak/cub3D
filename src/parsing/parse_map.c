@@ -3,65 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 11:22:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 14:15:17 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
-
-//helper function to check that there is no illegal char's in map
-static int	check_map_line(char *line, t_check *check)
-{
-	int	i;
-
-	i = 0;
-	if ((line[i] != ' ' && line[i] != '1') || line[i] == '\n')
-		return (1);
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '1' && line[i] != '2'
-			&& line[i] != '0' && line[i] != 'N'
-			&& line[i] != 'E' && line[i] != 'S'
-			&& line[i] != 'W' && line[i] != '\n')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	set_check(t_check *check, char *line)
-{
-	char	*temp;
-
-	check->map_lines++;
-	if (ft_strlen(line) >= check->longest_line)
-	{
-		temp = ft_strtrim(line, "\n");
-		check->longest_line = ft_strlen(temp);
-		free (temp);
-	}
-}
 
 int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
 {
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 		return (1);
-	if (*line == '\n')
+	if (*line == '\n' && *map_found == 1)
 	{
-		if (map_found == 1)
-		{
-			free(line);
-			return (1);
-		}
-		check->cur_file_line++;
+		free(line);
+		ft_free_data_and_error(data, "invalid file, empty lines in map");
 	}
 	else if (check_map_line(line, check) == 0)
 	{
-		map_found = 1;
+		*map_found = 1;
 		set_check(check, line);
 	}
 	free(line);
@@ -81,14 +44,12 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	while (i < check->cur_file_line)
 	{
 		line = get_next_line_cub(data, data->fd);
-		if (!line)
-			break ;
 		free(line);
 		i++;
 	}
 	while (1)
 	{
-		if (read_next_line(data, map_found, line, check) == 1)
+		if (read_next_line(data, &map_found, line, check) == 1)
 			break ;
 	}
 	close(data->fd);
@@ -98,28 +59,45 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	data->scene.cols = check->longest_line + 10;
 }
 
+static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
+{
+	char	*line;
+
+	line = get_next_line_cub(data, data->fd);
+	if (!line)
+	{
+		close(data->fd);
+		ft_free_data_and_error(data, "invalid file, no map");
+	}
+	while (*line == '\n')
+	{
+		check->cur_file_line++;
+		line = get_next_line_cub(data, data->fd);
+		if (!line)
+		{
+			close(data->fd);
+			ft_free_data_and_error(data, "invalid file, no map");
+		}
+	}
+	return (line);
+}
+
 /* ==============================
- *	after checking and etting texttures and colors in parse_textr_col.c
- * this checks that there is no unallowed charachters after that
+ *	after checking and getting textures and colors in parse_textr_col.c
+ * this checks that there is no unallowed characters after that
  * ==============================
  */
 void	check_map_lines(t_data *data, t_check *check)
 {
 	char	*line;
 
-	line = NULL;
+	line = skip_empty_lines_at_beginning(data, check);
 	while (1)
 	{
-		line = get_next_line_cub(data, data->fd);
-		if (!line)
+		if (check_map_line(line, check) != 0)
 		{
 			close(data->fd);
-			break ;
-		}
-		if (*line == '\n')
-		{
 			free(line);
-			continue ;
 		}
 		else if (check_map_line(line, check) != 0)
 		{
@@ -128,6 +106,11 @@ void	check_map_lines(t_data *data, t_check *check)
 				"invalid file, map not correct or extra lines before map");
 		}
 		free(line);
-		close(data->fd);
+		line = get_next_line_cub(data, data->fd);
+		if (!line)
+		{
+			close(data->fd);
+			break ;
+		}
 	}
 }

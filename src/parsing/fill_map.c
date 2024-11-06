@@ -99,7 +99,7 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32
 		&& matrix[cur.y][cur.x] != -1)
 	{
-		ft_free_data_and_error(data, "invalid file");
+		ft_free_data_and_error(data, "invalid file, map not closed");
 		return ;
 	}
 	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
