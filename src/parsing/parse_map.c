@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d_bonus.h"
 
-int	read_next_line(t_data *data, int *map_found, char *line, t_check *check)
+int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
 {
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
@@ -98,6 +98,10 @@ void	check_map_lines(t_data *data, t_check *check)
 		{
 			close(data->fd);
 			free(line);
+		}
+		else if (check_map_line(line, check) != 0)
+		{
+			close(data->fd);
 			ft_free_data_and_error(data,
 				"invalid file, map not correct or extra lines before map");
 		}

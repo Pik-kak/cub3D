@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 13:30:38 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:43:34 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	fill_row(t_data *data, char *line, int row)
 	cols = -1;
 	if (line[i] == '\n' || ft_strlen(line) < 2)
 		ft_free_data_and_error(data, "invalid file");
-	while (cols++ < SPACE_AROUND_MAP)
+	while (++cols < SPACE_AROUND_MAP)
 		data->scene.map[row][cols] = ' ';
 	while (line[i] != '\n' && line[i] != '\0')
 	{
@@ -41,15 +41,20 @@ static void	fill_row(t_data *data, char *line, int row)
 }
 
 //extra rows added with ' ' 
-static void	fill_extra_row(t_data *data, int row)
+static void	fill_extra_row(t_data *data, int *row, int last)
 {
 	int	i;
 
 	i = 0;
-	while (i < data->scene.cols)
+	while (*row < last)
 	{
-		data->scene.map[row][i] = ' ';
-		i++;
+		while (i < data->scene.cols)
+		{
+			data->scene.map[*row][i] = ' ';
+			i++;
+		}
+		(*row)++;
+		i = 0;
 	}
 }
 
@@ -58,20 +63,13 @@ static void	fill_extra_row(t_data *data, int row)
  * ' ' around everything
  * ==============================
  */
-void	fill_map(t_data *data, t_check *check)
+
+void	fill_map(t_data *data, t_check *check, int row, int lines)
 {
 	char	*line;
-	int		lines;
-	int		row;
 
-	row = 0;
-	lines = 1;
 	line = NULL;
-	while (row < SPACE_AROUND_MAP)
-	{
-		fill_extra_row(data, row);
-		row++;
-	}
+	fill_extra_row(data, &row, SPACE_AROUND_MAP);
 	while (lines <= check->cur_file_line)
 	{
 		line = get_next_line_cub(data, data->fd);
@@ -88,11 +86,7 @@ void	fill_map(t_data *data, t_check *check)
 		lines++;
 		row++;
 	}
-	while (++row < check->map_lines + 2 * SPACE_AROUND_MAP)
-	{
-		fill_extra_row(data, row);
-		row++;
-	}
+	fill_extra_row(data, &row, check->map_lines + 2 * SPACE_AROUND_MAP);
 }
 
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)

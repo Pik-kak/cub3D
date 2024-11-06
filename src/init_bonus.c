@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 10:07:44 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 12:58:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	init_data(t_data *data, char **argv)
 	data->file = argv[1];
 	data->s_height = 1080;
 	data->s_width = 1920;
+	data->buffer = NULL;
 	init_scene(data);
 	init_player(&data->scene.player);
 }

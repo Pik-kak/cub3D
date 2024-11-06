@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 09:06:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/10/03 11:10:25 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:32:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,20 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*ret;
-	size_t	str_len;
+	char	*sc;
 
+	sc = (char *)s;
 	if (!s)
 		return (0);
-
-	str_len = ft_strlen(s);
-
-	// If start is beyond the end of the string, return an empty string
-	if ((size_t)start >= str_len)
+	if (len + (size_t)start >= ft_strlen(sc))
+		len = ft_strlen(sc) - start;
+	if ((size_t)start >= ft_strlen(sc))
 		return (ft_strdup(""));
-
-	// Adjust len if it exceeds the remaining string length after 'start'
-	if (len > str_len - start)
-		len = str_len - start;
-
-	// Allocate memory for the substring (+1 for the null terminator)
-	ret = (char *)malloc((len + 1) * sizeof(char));
+	ret = (char *)malloc ((len + 1) * sizeof(char));
 	if (!ret)
 		return (0);
-
-	// Copy the substring and null-terminate it
-	ft_strlcpy(ret, s + start, len + 1);
+	sc += start;
+	len += 1;
+	ft_strlcpy(ret, sc, len);
 	return (ret);
 }
