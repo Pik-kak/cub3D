@@ -6,14 +6,14 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 11:22:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:21:10 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
 //helper function to check that there is no illegal char's in map
-static int	check_map_line(char *line, t_check *check)
+static int	check_map_line(char *line)
 {
 	int	i;
 
@@ -45,8 +45,11 @@ void	set_check(t_check *check, char *line)
 	}
 }
 
-int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
+int	read_next_line(t_data *data, int map_found, t_check *check)
 {
+	char *line;
+	
+	line = NULL;
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 		return (1);
@@ -59,7 +62,7 @@ int	read_next_line(t_data *data, int map_found, char *line, t_check *check)
 		}
 		check->cur_file_line++;
 	}
-	else if (check_map_line(line, check) == 0)
+	else if (check_map_line(line) == 0)
 	{
 		map_found = 1;
 		set_check(check, line);
@@ -88,10 +91,11 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 	}
 	while (1)
 	{
-		if (read_next_line(data, map_found, line, check) == 1)
+		if (read_next_line(data, map_found, check) == 1)
 			break ;
 	}
 	close(data->fd);
+	free(data->buffer);
 	if (check->map_lines > 1000 || check->longest_line > 1000)
 		ft_free_data_and_error(data, "invalid file, map is too big");
 	data->scene.rows = check->map_lines + 10;
@@ -113,6 +117,7 @@ void	check_map_lines(t_data *data, t_check *check)
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
+			free(data->buffer);
 			close(data->fd);
 			break ;
 		}
@@ -121,13 +126,15 @@ void	check_map_lines(t_data *data, t_check *check)
 			free(line);
 			continue ;
 		}
-		else if (check_map_line(line, check) != 0)
+		else if (check_map_line(line) != 0)
 		{
+			free(data->buffer);
 			close(data->fd);
 			ft_free_data_and_error(data,
 				"invalid file, map not correct or extra lines before map");
 		}
 		free(line);
+		free(data->buffer);
 		close(data->fd);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 13:01:53 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:09:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@ void	ft_free(char **ptr, char **ptr2)
 char	*ft_substr_cub(t_data *data, char *s, unsigned int start, size_t len)
 {
 	char	*ret;
+	char	*empty_str;
 
 	if (!s)
 		return (0);
 	if (len + (size_t)start >= ft_strlen(s))
 		len = ft_strlen(s) - start;
 	if ((size_t)start >= ft_strlen(s))
-		return (ft_strdup(""));
+	{
+		empty_str = ft_strdup("");
+		if (!empty_str)
+        	return NULL;
+		return (empty_str);
+	}
 	ret = (char *)malloc ((len + 1) * sizeof(char));
 	if (!ret)
 		return (0);
@@ -59,7 +65,6 @@ static char	*read_file_until_nl(t_data *data, int fd, int br)
 		br = read(fd, readed, BUFFER_SIZE);
 		if (br == -1 || (!data->buffer) || (br == 0 && ft_strlen(data->buffer) == 0))
 		{
-			ft_free(&data->buffer, NULL);
 			return (NULL);
 		}
 		readed[br] = '\0';
@@ -96,13 +101,16 @@ char	*get_next_line_cub(t_data *data, int fd)
 	line = ft_substr_cub(data, data->buffer, 0, newline + 1);
 	if (!line)
 	{
-		ft_free(&data->buffer, &line);
+		ft_free(&data->buffer, NULL);
 		ft_free_data_and_error(data, ERR_MALLOC);
 	}
-	temp = ft_substr_cub(data, data->buffer, newline + 1, ft_strlen(data->buffer) - newline);
+	temp = data->buffer;
+	data->buffer = ft_substr_cub(data, data->buffer, newline + 1, ft_strlen(data->buffer) - newline);
+	free(temp);
 	if (!temp)
-		return (ft_free(&data->buffer, &line), NULL);
-	free(data->buffer);
-	data->buffer = temp;
+	{
+		ft_free(&data->buffer, &line);
+		return (NULL);
+	}
 	return (line);
 }

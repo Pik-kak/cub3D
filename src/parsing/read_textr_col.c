@@ -6,13 +6,13 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 10:24:21 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:34:14 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-static int	check_valid_line(t_data *data, char *line)
+static int	check_valid_line(t_data *data, char *line, t_check *check)
 {
 	if (check_texture_line(data, line) == 0)
 		return (0);
@@ -33,18 +33,18 @@ static int	check_valid_line(t_data *data, char *line)
  * ==============================
  */
 
-static void	check_file_lines(t_data *data, t_check *check)
+static void	check_file_lines(t_data *data, t_check *check, int lines)
 {
 	char	*line;
-	int		lines;
-
-	lines = 0;
+	
 	line = NULL;
 	while (lines < 6)
 	{
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
+			free(data->buffer);
+			close(data->fd);
 			ft_error(data, "File has not enough information");
 		}
 		if (*line == '\n')
@@ -53,7 +53,7 @@ static void	check_file_lines(t_data *data, t_check *check)
 			free(line);
 			continue ;
 		}
-		else if (check_valid_line(data, line) == 0)
+		else if (check_valid_line(data, line, check) == 0)
 		{
 			check->cur_file_line++;
 			lines++;
@@ -67,7 +67,7 @@ void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 		ft_error(data, ERR_OPEN);
-	check_file_lines(data, check);
+	check_file_lines(data, check, 0);
 	data->scene.col_ceiling = get_colour(data->scene.ceiling_rgb);
 	data->scene.col_floor = get_colour(data->scene.floor_rgb);
 }

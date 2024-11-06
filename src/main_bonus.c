@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 13:46:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 15:38:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ static void	set_map(t_data *data, t_check *check)
 	allocate_map(data);
 	init_map(data);
 	close(data->fd);
+	free(data->buffer);
+	data->buffer = NULL;
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
+	{
 		ft_free_data_and_error(data, "File cannot be opened");
+	}
 	fill_map(data, check, 0, 1);
 	flood_fill(data, end, start, -1);
 	fill_maze_if_spaces(data);
 	close(data->fd);
+	free(data->buffer);
+	data->buffer = NULL;
 	check_player(data);
 }
 void print_map(t_data *data)
@@ -63,38 +69,29 @@ void print_map(t_data *data)
 
 static void	parse(t_data *data)
 {
-	t_check	*check;
+	t_check	check;
 
-	check = (t_check *)malloc(sizeof (t_check));
-	init_check(check);
+	init_check(&check);
 	if (check_filetype(data->file, ".cub") != 0)
 	{
-		free(check);
 		ft_error(data, ERR_INFILE);
 	}
-	check_and_set_texttr_and_col_lines(data, check);
-	check_map_lines(data, check);
+	check_and_set_texttr_and_col_lines(data, &check);
+	check_map_lines(data, &check);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 	{
 		free_elements(data);
-		free(check);
 		ft_error(data, ERR_INFILE);
 	}
-	read_file_for_longest_and_lines(data, check);
-	set_map(data, check);
+	read_file_for_longest_and_lines(data, &check);
+	set_map(data, &check);
 	print_map(data);
-	free(check);
 }
-#include <time.h>
 
 static void	render_loop(void *param)
 {
 	t_data	*data;
-	time_t start, end;
-	double cpu_time;
-
-	start = clock();
 
 	data = param;
 	if (data->scene.wand_visible)
@@ -102,11 +99,6 @@ static void	render_loop(void *param)
 	draw_scene(data);
 	if (data->scene.door_timer > 0)
 		spell_door(data);
-	end = clock();
-	cpu_time = ((double)(end - start)) / CLOCKS_PER_SEC;
-
-    // Print the time taken
-    //printf("Render time: %d seconds\n", (int)round(1 / cpu_time));
 }
 
 int	main(int argc, char **argv)
