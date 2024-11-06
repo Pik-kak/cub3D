@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 10:07:07 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/06 14:13:39 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,9 @@ void			init_check(t_check *check);
 void			init_ray(t_data *data, t_ray *ray, double ray_angle);
 
 //parse_utils
+int				check_map_line(char *line, t_check *check);
+void			set_check(t_check *check, char *line);
 int				check_filetype(char *filename, char *filetype);
-unsigned int	rgb_to_hex(int r, int g, int b, int alpha);
 char			*skip_spaces(char *line);
 void			allocate_map(t_data *data);
 //parse_utils2
@@ -192,8 +193,8 @@ void			check_amount_of_commas(t_data *data, char *str);
 void			check_and_set_texttr_and_col_lines(t_data *data, t_check *check);
 
 //parse_textr_col
-int	check_texture_line(t_data *data, char *line);
-int	check_colour_line(t_data *data, char *line);
+int				check_texture_line(t_data *data, char *line);
+int				check_colour_line(t_data *data, char *line);
 
 //draw_utils_color
 uint32_t		get_image_color(t_data *data, mlx_image_t *image, int tex_x, int tex_y);

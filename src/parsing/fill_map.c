@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 18:11:41 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/06 13:30:38 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,35 @@ void	fill_map(t_data *data, t_check *check)
 	int		lines;
 	int		row;
 
-	row = -1;
-	lines = 0;
+	row = 0;
+	lines = 1;
 	line = NULL;
-	while (++row < SPACE_AROUND_MAP)
+	while (row < SPACE_AROUND_MAP)
+	{
 		fill_extra_row(data, row);
-	while (++lines <= check->cur_file_line)
+		row++;
+	}
+	while (lines <= check->cur_file_line)
 	{
 		line = get_next_line_cub(data, data->fd);
 		free(line);
+		lines++;
 	}
-	while (++lines <= check->cur_file_line + check->map_lines)
+	while (lines <= check->cur_file_line + check->map_lines)
 	{
-		row++;
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 			break ;
 		fill_row(data, line, row);
 		free(line);
+		lines++;
+		row++;
 	}
 	while (++row < check->map_lines + 2 * SPACE_AROUND_MAP)
+	{
 		fill_extra_row(data, row);
+		row++;
+	}
 }
 
 void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
@@ -97,7 +105,7 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32
 		&& matrix[cur.y][cur.x] != -1)
 	{
-		ft_free_data_and_error(data, "invalid file");
+		ft_free_data_and_error(data, "invalid file, map not closed");
 		return ;
 	}
 	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)
