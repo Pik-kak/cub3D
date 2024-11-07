@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_textr_col.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 15:34:14 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:12:04 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	check_valid_line(t_data *data, char *line, t_check *check)
 		return (0);
 	else
 	{
-		return (ft_free_data_and_error(data,
-				"invalid file, missing or invalid color or texture line"), 1);
+		ft_free_data_and_error(data, 
+		"invalid file, missing or invalid color or texture line", line);
 	}
 	return (1);
 }
@@ -41,13 +41,13 @@ static void	check_file_lines(t_data *data, t_check *check, int lines)
 	while (lines < 6)
 	{
 		line = get_next_line_cub(data, data->fd);
-		if (!line)
+		if (!line || *line == '\0')
 		{
-			free(data->buffer);
-			close(data->fd);
+			free(line);
+			free_buffer_close_fd(data);
 			ft_error(data, "File has not enough information");
 		}
-		if (*line == '\n')
+		else if (*line == '\n')
 		{
 			check->cur_file_line++;
 			free(line);
@@ -57,8 +57,8 @@ static void	check_file_lines(t_data *data, t_check *check, int lines)
 		{
 			check->cur_file_line++;
 			lines++;
+			free(line);
 		}
-		free(line);
 	}
 }
 

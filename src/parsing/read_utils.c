@@ -6,11 +6,19 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 15:09:22 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:16:27 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
+
+void	free_buffer_close_fd(t_data *data)
+{
+	if (data->buffer)
+		free(data->buffer);
+	data->buffer = NULL;
+	close(data->fd);
+}	
 
 void	ft_free(char **ptr, char **ptr2)
 {
@@ -59,21 +67,19 @@ static char	*read_file_until_nl(t_data *data, int fd, int br)
 	if (!data->buffer)
 		data->buffer = ft_calloc(1, 1);
 	if (!data->buffer)
-		ft_free_data_and_error(data, "malloc error");
+		ft_free_data_and_error(data, "malloc error", NULL);
 	while (br > 0)
 	{
 		br = read(fd, readed, BUFFER_SIZE);
 		if (br == -1 || (!data->buffer) || (br == 0 && ft_strlen(data->buffer) == 0))
-		{
 			return (NULL);
-		}
 		readed[br] = '\0';
 		temp = data->buffer;
 		data->buffer = ft_strjoin (data->buffer, readed);
 		free(temp);
 		if (!data->buffer)
 		{
-			ft_free_data_and_error(data, "malloc error");
+			ft_free_data_and_error(data, "malloc error", NULL);
 			return (NULL);
 		}
 		if (ft_strchr(data->buffer, '\n'))
@@ -86,6 +92,7 @@ char	*get_next_line_cub(t_data *data, int fd)
 {
 	char		*line;
 	char		*temp;
+	char		*temp2;
 	size_t		newline;
 	int			br;
 
@@ -101,12 +108,11 @@ char	*get_next_line_cub(t_data *data, int fd)
 	line = ft_substr_cub(data, data->buffer, 0, newline + 1);
 	if (!line)
 	{
-		ft_free(&data->buffer, NULL);
-		ft_free_data_and_error(data, ERR_MALLOC);
+		ft_free_data_and_error(data, ERR_MALLOC, NULL);
 	}
-	temp = data->buffer;
-	data->buffer = ft_substr_cub(data, data->buffer, newline + 1, ft_strlen(data->buffer) - newline);
-	free(temp);
+	temp = ft_substr_cub(data, data->buffer, newline + 1, ft_strlen(data->buffer) - newline);
+	free(data->buffer);
+	data->buffer = temp;
 	if (!temp)
 	{
 		ft_free(&data->buffer, &line);

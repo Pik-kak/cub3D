@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 17:47:48 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 16:06:07 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 10:37:28 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	update_wand(t_data *data)
 	else if (data->scene.wand_pos == 3)
 		wand_text = mlx_load_png("./textures/wand_spell2.png");
 	if (!wand_text)
-		ft_free_data_and_error(data, "error loading wand texture");
+		ft_free_data_and_error(data, "error loading wand texture", NULL);
 	data->wand = mlx_texture_to_image(data->m, wand_text);
 	mlx_delete_texture(wand_text);
 	mlx_image_to_window(data->m, data->wand, WIDTH / 2 - 200, HEIGHT - 800);

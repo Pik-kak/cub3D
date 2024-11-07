@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 16:33:45 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 10:35:28 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ void	read_file_for_longest_and_lines(t_data *data, t_check *check)
 		if (read_next_line(data, &map_found, check) == 1)
 			break ;
 	}
-	close(data->fd);
-	free(data->buffer);
+	free_buffer_close_fd(data);
 	if (check->map_lines > 1000 || check->longest_line > 1000)
-		ft_free_data_and_error(data, "invalid file, map is too big");
+		ft_free_data_and_error(data, "invalid file, map is too big", NULL);
 	data->scene.rows = check->map_lines + 10;
 	data->scene.cols = check->longest_line + 10;
 }
@@ -77,9 +76,8 @@ static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
 	line = get_next_line_cub(data, data->fd);
 	if (!line)
 	{
-		free(data->buffer);
-		close(data->fd);
-		ft_free_data_and_error(data, "invalid file, no map");
+		free_buffer_close_fd(data);
+		ft_free_data_and_error(data, "invalid file, no map", NULL);
 	}
 	while (*line == '\n')
 	{
@@ -87,9 +85,8 @@ static char	*skip_empty_lines_at_beginning(t_data *data, t_check *check)
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
-			free(data->buffer);
-			close(data->fd);
-			ft_free_data_and_error(data, "invalid file, no map");
+			free_buffer_close_fd(data);
+			ft_free_data_and_error(data, "invalid file, no map", NULL);
 		}
 	}
 	return (line);
@@ -109,18 +106,14 @@ void	check_map_lines(t_data *data, t_check *check)
 	{
 		if (check_map_line(line) != 0)
 		{
-			free(data->buffer);
-			close(data->fd);
-			free(line);
 			ft_free_data_and_error(data,
-				"invalid file, map not correct or extra lines before map");
+				"invalid file, map not correct or extra lines before map", line);
 		}
 		free(line);
 		line = get_next_line_cub(data, data->fd);
 		if (!line)
 		{
-			free(data->buffer);
-			close(data->fd);
+			free_buffer_close_fd(data);
 			break ;
 		}
 	}

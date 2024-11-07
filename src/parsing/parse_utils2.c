@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 18:15:13 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/07 11:17:33 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,6 @@
  * or '\0' and returns the copy
  * if there is content after the path returns error
  * ==============================
- */
-char	*copy_str(t_data *data, char *line)
-{
-	int		i;
-	char	*ret;
-
-	i = 0;
-	while (line[i] && line[i] != ' ' && line[i] != '\n')
-		i++;
-	if (i == 0)
-		return (NULL);
-	ret = (char *)malloc((i + 1) * sizeof(char));
-	if (!ret)
-		ft_free_data_and_error(data, ERR_MALLOC);
-	i = 0;
-	while (line[i] != ' ' && line[i] != '\n' && line[i])
-	{
-		ret[i] = line[i];
-		i++;
-	}
-	ret[i] = '\0';
-	line = skip_spaces(&line[i]);
-	if (*line != '\n' && *line != '\0')
-	{
-		free(ret);
-		ft_free_data_and_error(data, "element not valid, extra characters");
-	}
-	return (ret);
-}
 
 /* ==============================
  * Skips the spaces in the beginning.
@@ -54,7 +25,7 @@ char	*copy_str(t_data *data, char *line)
  * Sets the variable value if it is valid.
  * ==============================
  */
-void	check_valid_color_value(t_data *data, char *str)
+void	check_valid_color_value(t_data *data, char *str, char  *line)
 {
 	int	i;
 
@@ -62,12 +33,15 @@ void	check_valid_color_value(t_data *data, char *str)
 	while (str[i] != 0)
 	{
 		if (ft_isdigit(str[i++]) != 1)
+		{
+			free(line);
 			ft_free_data_and_error(data,
-				"invalid file, invalid colour setting");
+				"invalid file, invalid colour setting", str);
+		}
 	}
 }
 
-void	check_amount_of_commas(t_data *data, char *str)
+void	check_amount_of_commas(t_data *data, char *str, char *line)
 {
 	int	commas;
 
@@ -79,7 +53,10 @@ void	check_amount_of_commas(t_data *data, char *str)
 		str++;
 	}
 	if (commas != 2)
-		ft_free_data_and_error(data, "invalid file, invalid colour line");
+	{
+		free(line);
+		ft_free_data_and_error(data, "invalid file, invalid colour line", str);
+	}
 }
 
 //sets player position and dir 
@@ -124,5 +101,5 @@ void	check_player(t_data *data)
 		i++;
 	}
 	if (player_found != 1)
-		ft_free_data_and_error(data, "invalid file, wrong amount of players");
+		ft_free_data_and_error(data, "invalid file, wrong amount of players", NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_scene_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 13:14:51 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 18:13:10 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:38:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	draw_scene(t_data *data)
 	mlx_delete_image(data->m, data->image);
 	data->image = mlx_new_image(data->m, data->s_width, data->s_height);
 	if (!data->image)
-		ft_free_data_and_error(data, "MLX error");
+		ft_free_data_and_error(data, "MLX error", NULL);
 	collisions(data);
 	cast_rays(data);
 	if (data->scene.minimap_status == 3)
@@ -89,7 +89,7 @@ void	draw_scene(t_data *data)
 	if (mlx_image_to_window(data->m, data->image, 0, 0) == -1)
 	{
 		mlx_delete_image(data->m, data->image);
-		ft_free_data_and_error(data, "MLX error");
+		ft_free_data_and_error(data, "MLX error", NULL);
 	}
 	mlx_set_instance_depth(&data->image->instances[0], 2);
 }

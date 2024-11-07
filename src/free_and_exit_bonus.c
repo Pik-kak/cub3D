@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 15:38:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 10:26:32 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_free_double_array(char **array)
 	array = NULL;
 }
 
-void	ft_free_data_and_error(t_data *data, char *error)
+void	ft_free_data_and_error(t_data *data, char *error, char *str)
 {
 	int	i;
 
@@ -61,6 +61,8 @@ void	ft_free_data_and_error(t_data *data, char *error)
 		free(data->scene.map[i]);
 		i++;
 	}
+	if (str)
+		free(str);
 	free(data->scene.map);
 	if (data->walls)
 		free(data->walls);
@@ -69,9 +71,7 @@ void	ft_free_data_and_error(t_data *data, char *error)
 	if (data->m)
 		mlx_terminate(data->m);
 	free_elements(data);
-	close(data->fd);
-	if (data->buffer)
-		free(data->buffer);
+	free_buffer_close_fd(data);
 	free(data);
 	data = NULL;
 	exit(1);
@@ -95,10 +95,8 @@ void	ft_free_data_and_exit(t_data *data)
 		free(data->txtrs);
 	if (data->m)
 		mlx_terminate(data->m);
-	if (data->buffer)
-		free(data->buffer);
+	free_buffer_close_fd(data);
 	free(data);
-	close(data->fd);
 	data = NULL;
 	exit(0);
 }
