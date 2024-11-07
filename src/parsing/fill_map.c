@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 15:29:58 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:36:40 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	fill_row(t_data *data, char *line, int row)
 	i = 0;
 	cols = -1;
 	if (line[i] == '\n' || ft_strlen(line) < 2)
-		ft_free_data_and_error(data, "invalid file");
+		ft_free_data_and_error(data, "invalid file", line);
 	while (++cols < SPACE_AROUND_MAP)
 		data->scene.map[row][cols] = ' ';
 	while (line[i] != '\n' && line[i] != '\0')
@@ -99,7 +99,7 @@ void	flood_fill(t_data *data, t_point size, t_point cur, int to_fill)
 	if (matrix[cur.y][cur.x] != 1 && matrix[cur.y][cur.x] != 32
 		&& matrix[cur.y][cur.x] != -1)
 	{
-		ft_free_data_and_error(data, "invalid file, map not closed");
+		ft_free_data_and_error(data, "invalid file, map not closed", NULL);
 		return ;
 	}
 	if (matrix[cur.y][cur.x] == 1 || matrix[cur.y][cur.x] == -1)

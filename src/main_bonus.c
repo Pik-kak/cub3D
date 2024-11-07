@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/06 14:26:05 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:37:10 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,21 @@ static void	set_map(t_data *data, t_check *check)
 	end.y = data->scene.rows;
 	allocate_map(data);
 	init_map(data);
-	close(data->fd);
-	free(data->buffer);
+	free_buffer_close_fd(data);
 	data->buffer = NULL;
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 	{
-		ft_free_data_and_error(data, "File cannot be opened");
+		ft_free_data_and_error(data, "File cannot be opened", NULL);
 	}
 	fill_map(data, check, 0, 1);
 	flood_fill(data, end, start, -1);
 	fill_maze_if_spaces(data);
-	close(data->fd);
-	free(data->buffer);
+	free_buffer_close_fd(data);
 	data->buffer = NULL;
 	check_player(data);
 }
+
 void print_map(t_data *data)
 {
 	for (int i = 0; i < data->scene.rows; i++) {
@@ -118,7 +117,7 @@ int	main(int argc, char **argv)
 		parse(data);
 		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
-			ft_free_data_and_error(data, ERR_MLX);
+			ft_free_data_and_error(data, ERR_MLX, NULL);
 		get_textures(data);
 		mlx_set_mouse_pos(data->m, WIDTH / 2, HEIGHT / 2);
 		mlx_loop_hook(data->m, render_loop, data);

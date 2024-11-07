@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/06 16:06:38 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:03:43 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,8 +171,9 @@ typedef struct s_data
 void			free_elements(t_data *data);
 void			ft_error(t_data *data, char *error);
 void			ft_free_double_array(char **array);
-void			ft_free_data_and_error(t_data *data, char *error);
+void			ft_free_data_and_error(t_data *data, char *error, char *str);
 void			ft_free_data_and_exit(t_data *data);
+void			free_buffer_close_fd(t_data *data);
 
 //init
 void			init_data(t_data *data, char **argv);
@@ -187,8 +188,8 @@ char			*skip_spaces(char *line);
 void			allocate_map(t_data *data);
 //parse_utils2
 char			*copy_str(t_data *data, char *line);
-void			check_valid_color_value(t_data *data, char *str);
-void			check_amount_of_commas(t_data *data, char *str);
+void			check_valid_color_value(t_data *data, char *str, char *line);
+void			check_amount_of_commas(t_data *data, char *str, char *line);
 
 //read_textr_col
 void			check_and_set_texttr_and_col_lines(t_data *data, t_check *check);
@@ -239,6 +240,7 @@ void			get_textures(t_data *data);
 int				ray_len(t_ray *ray);
 void			set_door_open(t_data *data, int x, int y);
 void			cast_door_spell(t_data *data, int x, int y);
+void			spell_door(t_data *data);
 
 //key_hooks
 void			my_keyhook(void *param);
@@ -247,7 +249,7 @@ void			my_mouse_hook(t_data *data);
 void			turn_player(t_player *player, double angle);
 void			move_right_wall(t_player *player);
 void			move_left_wall(t_player *player);
-void	spell_door(t_data *data);
+
 //player_movement
 void			move_player_forward(t_player *player);
 void			move_player_backward(t_player *player);

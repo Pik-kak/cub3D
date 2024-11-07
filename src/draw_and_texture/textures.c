@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/04 17:14:27 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:37:48 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	check_texture_file(t_data *data, char *file)
 	int	fd;
 
 	if (is_directory(file))
-		ft_free_data_and_error(data, "Texture file is a directory");
+		ft_free_data_and_error(data, "Texture file is a directory", NULL);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		ft_free_data_and_error(data, "Texture file cannot be opened");
+		ft_free_data_and_error(data, "Texture file cannot be opened", NULL);
 	close(fd);
 	if (check_filetype(file, ".png"))
-		ft_free_data_and_error(data, "Wrong filetype, give a png -file");
+		ft_free_data_and_error(data, "Wrong filetype, give a png -file", NULL);
 }
 
 void	get_images(t_data *data)
