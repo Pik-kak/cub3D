@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:17:33 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:24:47 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,37 @@
  * or '\0' and returns the copy
  * if there is content after the path returns error
  * ==============================
+ */
+char	*copy_str(t_data *data, char *line)
+{
+	int		i;
+	char	*ret;
+	char	*temp;
+
+	i = 0;
+	while (line[i] && line[i] != ' ' && line[i] != '\n')
+		i++;
+	if (i == 0)
+		return (NULL);
+	ret = (char *)malloc((i + 1) * sizeof(char));
+	if (!ret)
+		ft_free_data_and_error(data, ERR_MALLOC, line);
+	i = 0;
+	while (line[i] != ' ' && line[i] != '\n' && line[i])
+	{
+		ret[i] = line[i];
+		i++;
+	}
+	ret[i] = '\0';
+	temp = line;
+	temp = skip_spaces(&temp[i]);
+	if (*temp != '\n' && *temp != '\0')
+	{
+		free(ret);
+		ft_free_data_and_error(data, "element not valid, extra characters", line);
+	}
+	return (ret);
+}
 
 /* ==============================
  * Skips the spaces in the beginning.
