@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:06:37 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:58:21 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	set_col_line(t_data *data, char *temp, char *pointer, int *rgb, char
 	int		i;
 
 	i = 0;
-	str = copy_str(data, pointer);
+	str = copy_str(data, pointer, line);
 	check_amount_of_commas(data, str, line);
 	splitted = ft_split (str, ',');
 	free(str);
@@ -83,25 +83,25 @@ static int	set_texture_line(t_data *data, char *temp, char *pointer, char *line)
 	{
 		if (data->scene.no)
 			ft_free_data_and_error(data, "invalid file, double NO path", line);
-		return (data->scene.no = copy_str(data, pointer), 0);
+		return (data->scene.no = copy_str(data, pointer, line), 0);
 	}
 	else if (ft_strncmp(temp, "SO", 2) == 0)
 	{
 		if (data->scene.so)
 			ft_free_data_and_error(data, "invalid file, double SO path", line);
-		return (data->scene.so = copy_str(data, pointer), 0);
+		return (data->scene.so = copy_str(data, pointer, line), 0);
 	}
 	else if (ft_strncmp(temp, "EA", 2) == 0)
 	{
 		if (data->scene.ea)
 			ft_free_data_and_error(data, "invalid file, double EA path", line);
-		return (data->scene.ea = copy_str(data, pointer), 0);
+		return (data->scene.ea = copy_str(data, pointer, line), 0);
 	}
 	else if (ft_strncmp(temp, "WE", 2) == 0)
 	{
 		if (data->scene.we)
 			ft_free_data_and_error(data, "invalid file, double WE path", line);
-		return (data->scene.we = copy_str(data, pointer), 0);
+		return (data->scene.we = copy_str(data, pointer, line), 0);
 	}
 	return (1);
 }

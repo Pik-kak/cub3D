@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:03:43 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:57:39 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int				check_filetype(char *filename, char *filetype);
 char			*skip_spaces(char *line);
 void			allocate_map(t_data *data);
 //parse_utils2
-char			*copy_str(t_data *data, char *line);
+char			*copy_str(t_data *data, char *pointer, char *line);
 void			check_valid_color_value(t_data *data, char *str, char *line);
 void			check_amount_of_commas(t_data *data, char *str, char *line);
 

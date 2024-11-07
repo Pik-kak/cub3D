@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:24:47 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/07 11:56:53 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
  * if there is content after the path returns error
  * ==============================
  */
-char	*copy_str(t_data *data, char *line)
+char	*copy_str(t_data *data, char *pointer, char *line)
 {
 	int		i;
 	char	*ret;
 	char	*temp;
 
 	i = 0;
-	while (line[i] && line[i] != ' ' && line[i] != '\n')
+	while (pointer[i] && pointer[i] != ' ' && pointer[i] != '\n')
 		i++;
 	if (i == 0)
 		return (NULL);
@@ -33,18 +33,19 @@ char	*copy_str(t_data *data, char *line)
 	if (!ret)
 		ft_free_data_and_error(data, ERR_MALLOC, line);
 	i = 0;
-	while (line[i] != ' ' && line[i] != '\n' && line[i])
+	while (pointer[i] != ' ' && pointer[i] != '\n' && pointer[i])
 	{
-		ret[i] = line[i];
+		ret[i] = pointer[i];
 		i++;
 	}
 	ret[i] = '\0';
-	temp = line;
+	temp = pointer;
 	temp = skip_spaces(&temp[i]);
 	if (*temp != '\n' && *temp != '\0')
 	{
 		free(ret);
-		ft_free_data_and_error(data, "element not valid, extra characters", line);
+		free(line);
+		ft_free_data_and_error(data, "element not valid, extra characters", NULL);
 	}
 	return (ret);
 }
