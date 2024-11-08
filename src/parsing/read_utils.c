@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 11:53:47 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 14:06:49 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ static char	*read_file_until_nl(t_data *data, int fd, int br)
 	char	*temp;
 
 	if (!data->buffer)
-		data->buffer = ft_calloc(1, 1);
-	if (!data->buffer)
-		ft_free_data_and_error(data, "malloc error", NULL);
+		return (NULL);
 	while (br > 0)
 	{
 		br = read(fd, readed, BUFFER_SIZE);
@@ -101,7 +99,7 @@ char	*get_next_line_cub(t_data *data, int fd)
 		return (NULL);
 	data->buffer = read_file_until_nl(data, fd, 1);
 	if (!data->buffer)
-		return (ft_free(data->buffer, NULL));
+		return (ft_free(&data->buffer, NULL));
 	newline = (ft_strchr(data->buffer, '\n') - data->buffer);
 	line = ft_substr_cub(data, data->buffer, 0, newline + 1);
 	if (!line)
@@ -113,7 +111,5 @@ char	*get_next_line_cub(t_data *data, int fd)
 		temp = NULL;
 	free(data->buffer);
 	data->buffer = temp;
-	if (!temp)
-		return (ft_free(&data->buffer, &line));
 	return (line);
 }

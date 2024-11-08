@@ -6,7 +6,7 @@
 #    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/08 12:43:10 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/11/08 14:04:32 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ LIBFT =	libft/libft.a
 SRC_DIR		= src/
 MAIN_SRCS	= main_bonus.c \
 				init_bonus.c \
+				init2.c \
 				free_and_exit_bonus.c \
 				key_hooks_bonus.c \
 				raycaster.c \

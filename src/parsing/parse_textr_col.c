@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 12:19:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 13:00:39 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-static void	set_colour_to_rgb(t_data *data, int *rgb, char *spl, char *line)
+static void	set_colour_to_rgb(t_data *data, int *rgb, char **spl, char *line)
 {
 	rgb[0] = ft_atoi(spl[0]);
 	rgb[1] = ft_atoi(spl[1]);
@@ -20,7 +20,7 @@ static void	set_colour_to_rgb(t_data *data, int *rgb, char *spl, char *line)
 	if (rgb[0] < 0 || rgb[0] > 255 || rgb[1] < 0
 		|| rgb[1] > 255 || rgb[2] < 0 || rgb[2] > 255)
 	{
-		ft_free_double_array(splitted);
+		ft_free_double_array(spl);
 		ft_free_data_and_error(data,
 			"invalid file, colour value out of range", line);
 	}

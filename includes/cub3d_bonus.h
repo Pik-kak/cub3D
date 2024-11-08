@@ -6,7 +6,7 @@
 /*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 12:41:34 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:04:20 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,9 @@ void			free_buffer_close_fd(t_data *data);
 void			init_data(t_data *data, char **argv);
 void			init_check(t_check *check);
 void			init_ray(t_data *data, t_ray *ray, double ray_angle);
+
+//init2
+void			init_buffer(t_data *data);
 
 //parse_utils
 int				check_map_line(char *line);

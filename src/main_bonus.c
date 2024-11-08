@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 11:36:36 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 13:58:12 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static void	set_map(t_data *data, t_check *check)
 	allocate_map(data);
 	init_map(data);
 	free_buffer_close_fd(data);
-	data->buffer = NULL;
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 	{
 		ft_free_data_and_error(data, "File cannot be opened", NULL);
 	}
+	init_buffer(data);
 	fill_map(data, check, 0, 1);
 	flood_fill(data, end, start, -1);
 	fill_maze_if_spaces(data);
@@ -73,6 +73,7 @@ static void	parse(t_data *data)
 		free_elements(data);
 		ft_error(data, ERR_INFILE);
 	}
+	init_buffer(data);
 	read_file_for_longest_and_lines(data, &check);
 	set_map(data, &check);
 }
