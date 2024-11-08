@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:56:53 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 11:10:52 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*copy_str(t_data *data, char *pointer, char *line)
  * Sets the variable value if it is valid.
  * ==============================
  */
-void	check_valid_color_value(t_data *data, char *str, char  *line)
+void	check_valid_color_value(t_data *data, char *str, char *line)
 {
 	int	i;
 
