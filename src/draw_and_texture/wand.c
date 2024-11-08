@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wand.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 17:47:48 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 10:37:28 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 14:39:28 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	update_wand(t_data *data)
 	if (data->scene.wand_pos == 1)
 		wand_text = mlx_load_png("./textures/testwand2.png");
 	else if (data->scene.wand_pos == 2)
-		wand_text = mlx_load_png("./textures/wand_spell1.png");
+		wand_text = mlx_load_png("./textures/wand_spell1bigger.png");
 	else if (data->scene.wand_pos == 3)
-		wand_text = mlx_load_png("./textures/wand_spell2.png");
+		wand_text = mlx_load_png("./textures/wand_spell2bigger.png");
 	if (!wand_text)
 		ft_free_data_and_error(data, "error loading wand texture", NULL);
 	data->wand = mlx_texture_to_image(data->m, wand_text);
