@@ -210,7 +210,6 @@ uint32_t		darken_color(uint32_t color, double factor);
 //parse_map
 void			check_map_lines(t_data *data, t_check *check);
 void			read_file_for_longest_and_lines(t_data *data, t_check *check);
-void			ft_free(char **ptr, char **ptr2);
 void			check_player(t_data *data);
 
 //fill_map
