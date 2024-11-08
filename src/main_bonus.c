@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/07 10:37:10 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 11:36:36 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,6 @@ static void	set_map(t_data *data, t_check *check)
 	free_buffer_close_fd(data);
 	data->buffer = NULL;
 	check_player(data);
-}
-
-void print_map(t_data *data)
-{
-	for (int i = 0; i < data->scene.rows; i++) {
-        for (int j = 0; j < data->scene.cols; j++) {
-            printf("%d ", data->scene.map[i][j]);
-        }
-		printf("\n");
-    }
 }
 
 static void	parse(t_data *data)
