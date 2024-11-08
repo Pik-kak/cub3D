@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_textr_col.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:12:04 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 11:12:36 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	check_valid_line(t_data *data, char *line, t_check *check)
 		return (0);
 	else
 	{
-		ft_free_data_and_error(data, 
-		"invalid file, missing or invalid color or texture line", line);
+		ft_free_data_and_error(data,
+			"invalid file, missing or invalid color or texture line", line);
 	}
 	return (1);
 }
@@ -32,11 +32,10 @@ static int	check_valid_line(t_data *data, char *line, t_check *check)
  * Doesn't yet check floor/ceiling or stop at map
  * ==============================
  */
-
 static void	check_file_lines(t_data *data, t_check *check, int lines)
 {
 	char	*line;
-	
+
 	line = NULL;
 	while (lines < 6)
 	{
