@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
+#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/06 16:14:26 by tsaari           ###   ########.fr        #
+#    Updated: 2024/11/08 12:43:10 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ PARS_SRCS	= read_textr_col.c \
 				parse_utils2.c \
 				parse_map.c \
 				fill_map.c \
-				read_utils.c
+				read_utils.c \
+				copy_string.c
 			
 DRAW_DIR	= $(SRC_DIR)draw_and_texture/
 DRAW_SRCS	= draw_scene_bonus.c \
