@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_textr_col.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 13:54:37 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:36:42 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ static void	check_file_lines(t_data *data, t_check *check, int lines)
 	}
 }
 
-void	check_and_set_texttr_and_col_lines(t_data *data, t_check *check)
+void	set_texttr_and_col_lines(t_data *data, t_check *check)
 {
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
-		ft_error(data, ERR_OPEN);
+		ft_error(data, "File cannot be opened");
 	init_buffer(data);
 	check_file_lines(data, check, 0);
 	data->scene.col_ceiling = get_colour(data->scene.ceiling_rgb);

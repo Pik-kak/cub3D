@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_string.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:40:50 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 12:43:38 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:30:35 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*find_substring(t_data *data, char *pointer, char *line)
 		return (NULL);
 	ret = (char *)malloc((i + 1) * sizeof(char));
 	if (!ret)
-		ft_free_data_and_error(data, ERR_MALLOC, line);
+		ft_free_data_and_error(data, "Malloc error", line);
 	i = 0;
 	while (pointer[i] != ' ' && pointer[i] != '\n' && pointer[i])
 	{

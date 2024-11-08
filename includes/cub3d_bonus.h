@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:04:20 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:46:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,11 @@
 # define COL_BRICK_RED	0xC2294EFF
 # define COL_LINE		0xF8F7edFF
 # define COL_WHITE		0xFFFFFFFF
-# define ERR_INFILE "Wrong file type"
-# define ERR_ARG "Invalid amount of arguments"
-# define ERR_OPEN "File cannot be opened"
-# define ERR_MALLOC "Malloc error"
-# define ERR_MLX "MLX error"
 # define PI 3.14159265
 # define PLAYER_SPEED 8
 # define SENSITIVITY 0.0008
 # define BLOCK_SIZE 512
 # define MINIMAP_DIV 4
-# define FOV PI / 3;
 # define SPACE_AROUND_MAP 5
 # define BUFFER_SIZE 1024
 
@@ -89,8 +83,8 @@ typedef struct s_check
 	int	longest_line;
 	int	cur_file_line;
 	int	map_lines;
-	int current_line;
-}				t_check;
+	int	current_line;
+}	t_check;
 
 typedef struct s_player
 {
@@ -168,118 +162,120 @@ typedef struct s_data
 }	t_data;
 
 //free_and_exit
-void			free_elements(t_data *data);
-void			ft_error(t_data *data, char *error);
-void			ft_free_double_array(char **array);
-void			ft_free_data_and_error(t_data *data, char *error, char *str);
-void			ft_free_data_and_exit(t_data *data);
-void			free_buffer_close_fd(t_data *data);
+void		free_elements(t_data *data);
+void		ft_error(t_data *data, char *error);
+void		ft_free_double_array(char **array);
+void		ft_free_data_and_error(t_data *data, char *error, char *str);
+void		ft_free_data_and_exit(t_data *data);
+void		free_buffer_close_fd(t_data *data);
 
 //init
-void			init_data(t_data *data, char **argv);
-void			init_check(t_check *check);
-void			init_ray(t_data *data, t_ray *ray, double ray_angle);
+void		init_data(t_data *data, char **argv);
+void		init_check(t_check *check);
+void		init_ray(t_data *data, t_ray *ray, double ray_angle);
 
 //init2
-void			init_buffer(t_data *data);
+void		init_buffer(t_data *data);
 
 //parse_utils
-int				check_map_line(char *line);
-void			set_check(t_check *check, char *line);
-int				check_filetype(char *filename, char *filetype);
-char			*skip_spaces(char *line);
-void			allocate_map(t_data *data);
+int			check_map_line(char *line);
+void		set_check(t_check *check, char *line);
+int			check_filetype(char *filename, char *filetype);
+char		*skip_spaces(char *line);
+void		allocate_map(t_data *data);
 //parse_utils2
-char			*copy_str(t_data *data, char *pointer, char *line);
-void			check_valid_color_value(t_data *data, char *str, char *line);
-void			check_amount_of_commas(t_data *data, char *str, char *line);
+char		*copy_str(t_data *data, char *pointer, char *line);
+void		check_valid_color_value(t_data *data, char *str, char *line);
+void		check_amount_of_commas(t_data *data, char *str, char *line);
 
 //copy_str
-char			*copy_str(t_data *data, char *pointer, char *line);
+char		*copy_str(t_data *data, char *pointer, char *line);
 
 //read_textr_col
-void			check_and_set_texttr_and_col_lines(t_data *data, t_check *check);
+void		set_texttr_and_col_lines(t_data *data, t_check *check);
 
 //parse_textr_col
-int				check_texture_line(t_data *data, char *line);
-int				check_colour_line(t_data *data, char *line);
+int			check_texture_line(t_data *data, char *line);
+int			check_colour_line(t_data *data, char *line);
 
 //draw_utils_color
-uint32_t		get_image_color(t_data *data, mlx_image_t *image, int tex_x, int tex_y);
-int				adjust_opacity(int color, float opacity);
-uint32_t		get_colour(int rgb[3]);
-uint32_t		darken_color(uint32_t color, double factor);
+uint32_t	get_img_col(t_data *data, mlx_image_t *image, int tex_x, int tex_y);
+int			adjust_opacity(int color, float opacity);
+uint32_t	get_colour(int rgb[3]);
+uint32_t	darken_color(uint32_t color, double factor);
 
 //parse_map
-void			check_map_lines(t_data *data, t_check *check);
-void			read_file_for_longest_and_lines(t_data *data, t_check *check);
-void			check_player(t_data *data);
+void		check_map_lines(t_data *data, t_check *check);
+void		read_file_for_longest_and_lines(t_data *data, t_check *check);
+void		check_player(t_data *data);
 
 //fill_map
-void			fill_map(t_data *data, t_check *check, int row, int lines);
-void			flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
-void			fill_maze_if_spaces(t_data *data);
+void		fill_map(t_data *data, t_check *check, int row, int lines);
+void		flood_fill(t_data *data, t_point size, t_point cur, int to_fill);
+void		fill_maze_if_spaces(t_data *data);
 
 //read_utils
-char			*get_next_line_cub(t_data *data, int fd);
+char		*get_next_line_cub(t_data *data, int fd);
 
 //draw_scene
-void			draw_tile(t_data *data, t_minimap *mmap, int i, int j);
-void			draw_circle(t_data *data, int radius, int color);
-void			draw_nose(t_data *data, int length, int color);
-void			draw_scene(t_data *data);
+void		draw_tile(t_data *data, t_minimap *mmap, int i, int j);
+void		draw_circle(t_data *data, int radius, int color);
+void		draw_nose(t_data *data, int length, int color);
+void		draw_scene(t_data *data);
 
 //draw_utils
-void			calculate_msrmnts(t_data *data, t_texture *txtr, double wall_height, int raycount);
-int				pixel_ok(t_data *data, int x, int y);
-float			calculate_opacity(int ray, int nbr_of_rays, int start, int end);
-int				squared_distance(int x1, int y1, int x2, int y2);
+void		calc_msrmnts(t_data *data, t_texture *tx, double w_hght, int r);
+int			pixel_ok(t_data *data, int x, int y);
+float		calculate_opacity(int ray, int nbr_of_rays, int start, int end);
+int			squared_distance(int x1, int y1, int x2, int y2);
 
 //draw_minimap
-void			draw_minimap(t_data *data);
+void		draw_minimap(t_data *data);
 
 //textures
-void			get_textures(t_data *data);
+void		get_textures(t_data *data);
 
 //raycaster_utils
-int				ray_len(t_ray *ray);
-void			set_door_open(t_data *data, int x, int y);
-void			cast_door_spell(t_data *data, int x, int y);
-void			spell_door(t_data *data);
+int			ray_len(t_ray *ray);
+void		set_door_open(t_data *data, int x, int y);
+void		cast_door_spell(t_data *data, int x, int y);
+void		spell_door(t_data *data);
 
 //key_hooks
-void			my_keyhook(void *param);
-void			my_keyhook2(mlx_key_data_t keydata, void *param);
-void			my_mouse_hook(t_data *data);
-void			turn_player(t_player *player, double angle);
-void			move_right_wall(t_player *player);
-void			move_left_wall(t_player *player);
+void		my_keyhook(void *param);
+void		my_keyhook2(mlx_key_data_t keydata, void *param);
+void		my_mouse_hook(t_data *data);
+void		turn_player(t_player *player, double angle);
+void		move_right_wall(t_player *player);
+void		move_left_wall(t_player *player);
 
 //player_movement
-void			move_player_forward(t_player *player);
-void			move_player_backward(t_player *player);
-void			move_player_left(t_player *player);
-void			move_player_right(t_player *player);
+void		move_player_forward(t_player *player);
+void		move_player_backward(t_player *player);
+void		move_player_left(t_player *player);
+void		move_player_right(t_player *player);
 
 //wand.c
-void			update_wand(t_data *data);
+void		update_wand(t_data *data);
 
 //raycaster
-void			cast_door_ray(t_data *data, double ray_angle, double x, double y);
-int				cast_collission_ray(t_data *data, double ray_angle, double x, double y);
+void		cast_door_ray(t_data *data, double ray_angle, double x, double y);
+int			cast_collission_ray(t_data *data,
+				double ray_angle, double x, double y);
 
 //raycast_math
-void			horizontal_cast(t_ray *ray);
-void			vertical_cast(t_ray *ray);
+void		horizontal_cast(t_ray *ray);
+void		vertical_cast(t_ray *ray);
 
 //collissions
-double			normalize_angle(double angle);
-void			collisions(t_data *data);
-void			cast_one_ray(t_data *data, t_ray *ray);
+double		normalize_angle(double angle);
+void		collisions(t_data *data);
+void		cast_one_ray(t_data *data, t_ray *ray);
 
 //draw_walls
-int				cast_rays(t_data *data);
+int			cast_rays(t_data *data);
 //draw_floor
-void			draw_floor_texture(t_data *data, t_ray *ray, t_texture *txtr, int i);
+void		draw_floor_texture(t_data *data,
+				t_ray *ray, t_texture *txtr, int i);
 
 #endif

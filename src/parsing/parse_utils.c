@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 10:30:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 14:30:25 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,14 @@ void	allocate_map(t_data *data)
 	data->scene.map = malloc(data->scene.rows * sizeof(int *));
 	if (!data->scene.map)
 	{
-		ft_free_data_and_error(data, ERR_MALLOC, NULL);
+		ft_free_data_and_error(data, "Malloc error", NULL);
 	}
 	while (row < data->scene.rows)
 	{
 		data->scene.map[row] = malloc(data->scene.cols * sizeof(int));
 		if (!data->scene.map[row])
 		{
-			ft_free_data_and_error(data, ERR_MALLOC, NULL);
+			ft_free_data_and_error(data, "Malloc error", NULL);
 		}
 		row++;
 	}
