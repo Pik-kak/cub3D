@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 11:57:39 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 12:41:34 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,9 @@ void			allocate_map(t_data *data);
 char			*copy_str(t_data *data, char *pointer, char *line);
 void			check_valid_color_value(t_data *data, char *str, char *line);
 void			check_amount_of_commas(t_data *data, char *str, char *line);
+
+//copy_str
+char			*copy_str(t_data *data, char *pointer, char *line);
 
 //read_textr_col
 void			check_and_set_texttr_and_col_lines(t_data *data, t_check *check);
