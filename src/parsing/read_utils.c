@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 11:07:02 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 11:53:47 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_buffer_close_fd(t_data *data)
 	close(data->fd);
 }	
 
-void	ft_free(char **ptr, char **ptr2)
+char	*ft_free(char **ptr, char **ptr2)
 {
 	if (ptr != NULL && *ptr != NULL)
 	{
@@ -32,6 +32,7 @@ void	ft_free(char **ptr, char **ptr2)
 		free(*ptr2);
 		*ptr2 = NULL;
 	}
+	return (NULL);
 }
 
 char	*ft_substr_cub(t_data *data, char *s, unsigned int start, size_t len)
@@ -47,7 +48,7 @@ char	*ft_substr_cub(t_data *data, char *s, unsigned int start, size_t len)
 	{
 		empty_str = ft_strdup("");
 		if (!empty_str)
-        	return NULL;
+			return (NULL);
 		return (empty_str);
 	}
 	ret = (char *)malloc ((len + 1) * sizeof(char));
@@ -71,7 +72,7 @@ static char	*read_file_until_nl(t_data *data, int fd, int br)
 	while (br > 0)
 	{
 		br = read(fd, readed, BUFFER_SIZE);
-		if (br == -1 || (!data->buffer) || (br == 0 && ft_strlen(data->buffer) == 0))
+		if (br == -1 || (br == 0 && ft_strlen(data->buffer) == 0))
 			return (NULL);
 		readed[br] = '\0';
 		temp = data->buffer;
@@ -100,24 +101,19 @@ char	*get_next_line_cub(t_data *data, int fd)
 		return (NULL);
 	data->buffer = read_file_until_nl(data, fd, 1);
 	if (!data->buffer)
-	{
-		free(data->buffer);
-		return (NULL);
-	}
+		return (ft_free(data->buffer, NULL));
 	newline = (ft_strchr(data->buffer, '\n') - data->buffer);
 	line = ft_substr_cub(data, data->buffer, 0, newline + 1);
 	if (!line)
 		ft_free_data_and_error(data, ERR_MALLOC, NULL);
 	if (newline + 1 < ft_strlen(data->buffer))
-		temp = ft_substr_cub(data, data->buffer, newline + 1, ft_strlen(data->buffer) - newline - 1);
+		temp = ft_substr_cub(data, data->buffer, newline + 1,
+				ft_strlen(data->buffer) - newline - 1);
 	else
 		temp = NULL;
 	free(data->buffer);
 	data->buffer = temp;
 	if (!temp)
-	{
-		ft_free(&data->buffer, &line);
-		return (NULL);
-	}
+		return (ft_free(&data->buffer, &line));
 	return (line);
 }
