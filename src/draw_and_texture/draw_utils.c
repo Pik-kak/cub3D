@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:47:29 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:44:01 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 15:00:54 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	calc_msrmnts(t_data *data, t_texture *tx, double w_hght, int r)
 	if (tx->start < 0)
 		tx->start = 0;
 	tx->end = (w_hght / 2) + (data->s_height / 2);
-	if (txtr->end >= data->s_height)
-		txtr->end = data->s_height - 1;
+	if (tx->end >= data->s_height)
+		tx->end = data->s_height - 1;
 	tx->wall_height = w_hght;
 	tx->raycount = r;
 }
