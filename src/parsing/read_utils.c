@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 14:06:49 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:30:13 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*get_next_line_cub(t_data *data, int fd)
 	newline = (ft_strchr(data->buffer, '\n') - data->buffer);
 	line = ft_substr_cub(data, data->buffer, 0, newline + 1);
 	if (!line)
-		ft_free_data_and_error(data, ERR_MALLOC, NULL);
+		ft_free_data_and_error(data, "Malloc error", NULL);
 	if (newline + 1 < ft_strlen(data->buffer))
 		temp = ft_substr_cub(data, data->buffer, newline + 1,
 				ft_strlen(data->buffer) - newline - 1);

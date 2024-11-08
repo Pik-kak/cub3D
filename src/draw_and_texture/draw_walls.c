@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/05 18:04:29 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/08 14:44:30 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_texture(t_data *data, t_ray *ray, t_texture *txtr, int i)
 		else
 			tex_y = tex_start;
 		tex_start += step;
-		color = get_image_color(data, ray->wall, (int)ray->tex_x, tex_y);
+		color = get_img_col(data, ray->wall, (int)ray->tex_x, tex_y);
 		if (pixel_ok(data, txtr->raycount, i))
 			mlx_put_pixel(data->image, txtr->raycount, i, color);
 		i++;
@@ -52,7 +52,7 @@ void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 	t_texture	txtr;
 
 	i = 0;
-	calculate_msrmnts(data, &txtr, wall_height, ray_count);
+	calc_msrmnts(data, &txtr, wall_height, ray_count);
 	while (i < data->s_height)
 	{
 		if (i < txtr.start)
@@ -68,7 +68,6 @@ void	draw_walls(t_data *data, int ray_count, t_ray *ray, double wall_height)
 		}
 		else
 		{
-			//draw_floor_texture(data, ray, &txtr, i);
 			if (pixel_ok(data, ray_count, i))
 				mlx_put_pixel(data->image, ray_count, i, data->scene.col_floor);
 		}

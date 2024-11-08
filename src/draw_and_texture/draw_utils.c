@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:47:29 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/04 16:54:00 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:44:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ int	pixel_ok(t_data *data, int x, int y)
  * Calculates the starting and ending points of the wall slice
  * ===============================
  */
-void	calculate_msrmnts(t_data *data, t_texture *txtr,
-	double wall_height, int raycount)
+void	calc_msrmnts(t_data *data, t_texture *tx, double w_hght, int r)
 {
-	txtr->start = -(wall_height / 2) + (data->s_height / 2);
-	if (txtr->start < 0)
-		txtr->start = 0;
-	txtr->end = (wall_height / 2) + (data->s_height / 2);
+	tx->start = -(w_hght / 2) + (data->s_height / 2);
+	if (tx->start < 0)
+		tx->start = 0;
+	tx->end = (w_hght / 2) + (data->s_height / 2);
 	if (txtr->end >= data->s_height)
 		txtr->end = data->s_height - 1;
-	txtr->wall_height = wall_height;
-	txtr->raycount = raycount;
+	tx->wall_height = w_hght;
+	tx->raycount = r;
 }
 
 float	calculate_opacity(int ray, int nbr_of_rays, int start, int end)

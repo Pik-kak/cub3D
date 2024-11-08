@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 13:58:12 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:37:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ static void	parse(t_data *data)
 	init_check(&check);
 	if (check_filetype(data->file, ".cub") != 0)
 	{
-		ft_error(data, ERR_INFILE);
+		ft_error(data, "Wrong file type");
 	}
-	check_and_set_texttr_and_col_lines(data, &check);
+	set_texttr_and_col_lines(data, &check);
 	check_map_lines(data, &check);
 	data->fd = open(data->file, O_RDONLY);
 	if (data->fd < 0)
 	{
 		free_elements(data);
-		ft_error(data, ERR_INFILE);
+		ft_error(data, "Wrong file type");
 	}
 	init_buffer(data);
 	read_file_for_longest_and_lines(data, &check);
@@ -96,19 +96,19 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		write(2, ERR_ARG, 27);
+		write(2, "Invalid amount of arguments", 27);
 		return (0);
 	}
 	data = (t_data *)ft_calloc(sizeof(t_data), sizeof(t_data));
 	if (!data)
-		ft_error(data, ERR_MALLOC);
+		ft_error(data, "Malloc error");
 	else
 	{
 		init_data(data, argv);
 		parse(data);
 		data->m = mlx_init(data->s_width, data->s_height, "Cub3D", false);
 		if (!data->m)
-			ft_free_data_and_error(data, ERR_MLX, NULL);
+			ft_free_data_and_error(data, "MLX error", NULL);
 		get_textures(data);
 		mlx_set_mouse_pos(data->m, WIDTH / 2, HEIGHT / 2);
 		mlx_loop_hook(data->m, render_loop, data);

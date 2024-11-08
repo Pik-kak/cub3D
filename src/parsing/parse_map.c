@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 15:12:57 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 11:09:57 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:26:06 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	check_map_lines(t_data *data, t_check *check)
 		if (check_map_line(line) != 0)
 		{
 			ft_free_data_and_error(data,
-				"invalid file, map not correct or extra lines before map", line);
+				"invalid file, map not correct or invalid lines", line);
 		}
 		free(line);
 		line = get_next_line_cub(data, data->fd);
