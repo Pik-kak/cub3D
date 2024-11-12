@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
+#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/11/12 13:54:30 by tsaari           ###   ########.fr        #
+=======
+#    Updated: 2024/11/12 13:49:21 by kkauhane         ###   ########.fr        #
+>>>>>>> ddf1494f545b646607c599a15622581716b8841e
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +39,6 @@ MAIN_SRCS	= main.c \
 				raycaster_utils.c \
 				raycast_math.c \
 				collissions.c \
-				mouse_hook.c \
 				player_movement.c
 
 PARS_DIR	= $(SRC_DIR)parsing/
