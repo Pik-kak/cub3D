@@ -6,7 +6,7 @@
 #    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/08 14:04:32 by kkauhane         ###   ########.fr        #
+#    Updated: 2024/11/12 11:33:11 by kkauhane         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,11 @@ LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
 LIBFT =	libft/libft.a
 
 SRC_DIR		= src/
-MAIN_SRCS	= main_bonus.c \
-				init_bonus.c \
+MAIN_SRCS	= main.c \
+				init.c \
 				init2.c \
-				free_and_exit_bonus.c \
-				key_hooks_bonus.c \
+				free_and_exit.c \
+				key_hooks.c \
 				raycaster.c \
 				raycaster_utils.c \
 				raycast_math.c \
@@ -56,7 +56,7 @@ PARS_SRCS	= read_textr_col.c \
 				copy_string.c
 			
 DRAW_DIR	= $(SRC_DIR)draw_and_texture/
-DRAW_SRCS	= draw_scene_bonus.c \
+DRAW_SRCS	= draw_scene.c \
 				draw_walls.c \
 				textures.c \
 				draw_utils.c \
@@ -66,16 +66,7 @@ DRAW_SRCS	= draw_scene_bonus.c \
 				draw_floor.c
 
 BONUS_DIR	= bonus/
-BSRCS		= fdf_bonus.c \
-				parse_map_bonus.c \
-				draw_map_bonus.c \
-				utils1_bonus.c \
-				free_and_exit_bonus.c \
-				rotate_and_center_bonus.c \
-				draw_utils_bonus.c \
-				key_hooks_bonus.c \
-				hook_utils_bonus.c \
-				utils2_bonus.c
+BSRCS		= 
 
 VPATH		+= $(SRC_DIR):$(PARS_DIR):$(DRAW_DIR)
 
