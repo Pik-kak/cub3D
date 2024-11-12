@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_hooks_bonus.c                                  :+:      :+:    :+:   */
+/*   key_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:33:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:49:34 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	my_keyhook(void *param)
 		turn_player(&data->scene.player, 0.05);
 	if (mlx_is_key_down(data->m, MLX_KEY_ESCAPE))
 		ft_free_data_and_exit(data);
-	my_mouse_hook(data);
 }
 
 void	wand_visibility(t_data *data)
