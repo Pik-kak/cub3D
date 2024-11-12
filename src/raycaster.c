@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:17:01 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:22:18 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,30 +103,3 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	return (ret_dist);
 }
 
-void	cast_door_ray(t_data *data, double ray_angle, double x, double y)
-{
-	t_ray	ray;
-	bool	hor_door;
-	int		hor_grid_x;
-	int		hor_grid_y;
-
-	init_ray(data, &ray, ray_angle);
-	ray.open_door = true;
-	horizontal_cast(&ray);
-	hor_door = ray.is_door;
-	ray.is_door = false;
-	hor_grid_x = (int)(ray.rxry[0] / BLOCK_SIZE);
-	hor_grid_y = (int)(ray.rxry[1] / BLOCK_SIZE);
-	vertical_cast(&ray);
-	if (ray.dist_h > 0 && (ray.dist_v == 0 || ray.dist_h < ray.dist_v))
-	{
-		if (hor_door && ray.dist_h < 1500)
-			cast_door_spell(data, hor_grid_x, hor_grid_y);
-	}
-	else
-	{
-		if (ray.is_door && ray.dist_v < 1500)
-			cast_door_spell(data, ray.rxry[0] / \
-			BLOCK_SIZE, ray.rxry[1] / BLOCK_SIZE);
-	}
-}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_bonus.c                                       :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 14:09:31 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:31:02 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,4 @@ void	init_ray(t_data *data, t_ray *ray, double ray_angle)
 	ray->wall = NULL;
 	ray->wall_height = 0;
 	ray->tex_x = 0;
-	ray->floor = data->walls->floor;
 }

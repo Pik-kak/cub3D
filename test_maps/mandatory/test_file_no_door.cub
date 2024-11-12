@@ -1,7 +1,7 @@
-NO ./textures/42_N.png
-SO ./textures/42_S.png
-WE ./textures/42_W.png
-EA ./textures/wall.png
+NO ./textures/north_texture.png
+SO ./textures/south_texture.png
+WE ./textures/west_texture.png
+EA ./textures/east_texture.png
 
 C 40,40,40
 F 120,50,60
@@ -10,7 +10,7 @@ F 120,50,60
 
         1111111111111111111111111
         1000000000110000000000001
-        10110000011100000N0000001
+        10110000000100000N0000001
         1001000000000000000000001
 111111111011000001110000000000001
 100000000011000001110111110111111

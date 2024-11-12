@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 10:36:40 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:17:53 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	fill_row(t_data *data, char *line, int row)
 		data->scene.map[row][cols] = ' ';
 	while (line[i] != '\n' && line[i] != '\0')
 	{
-		if (line[i] == '1' || line[i] == '0' || line[i] == '2')
+		if (line[i] == '1' || line[i] == '0')
 			data->scene.map[row][cols] = line[i] - 48;
 		else
 			data->scene.map[row][cols] = line[i];

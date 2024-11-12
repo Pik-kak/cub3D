@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+         #
+#    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/11/12 13:54:30 by tsaari           ###   ########.fr        #
-=======
-#    Updated: 2024/11/12 13:49:21 by kkauhane         ###   ########.fr        #
->>>>>>> ddf1494f545b646607c599a15622581716b8841e
+#    Updated: 2024/11/12 14:14:26 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +52,7 @@ DRAW_SRCS	= draw_scene.c \
 				draw_walls.c \
 				textures.c \
 				draw_utils.c \
-				draw_utils_color.c \
-				draw_floor.c
+				draw_utils_color.c
 
 
 BONUS_DIR	= bonus/
@@ -90,8 +85,7 @@ BDRAW_SRCS	= draw_scene_bonus.c \
 				draw_utils_bonus.c \
 				draw_utils_color_bonus.c \
 				draw_minimap_bonus.c \
-				wand_bonus.c \
-				draw_floor_bonus.c
+				wand_bonus.c
 
 VPATH		+= $(SRC_DIR):$(PARS_DIR):$(DRAW_DIR):$(BONUS_DIR):$(BPARS_DIR):$(BDRAW_DIR):$(BONUS_DIR)
 

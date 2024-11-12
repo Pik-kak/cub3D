@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/11/12 13:55:52 by tsaari           ###   ########.fr       */
-=======
-/*   Updated: 2024/11/12 13:49:55 by kkauhane         ###   ########.fr       */
->>>>>>> ddf1494f545b646607c599a15622581716b8841e
+/*   Updated: 2024/11/12 14:20:49 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +84,6 @@ static void	render_loop(void *param)
 
 	data = param;
 	draw_scene(data);
-	if (data->scene.door_timer > 0)
-		spell_door(data);
 }
 
 int	main(int argc, char **argv)

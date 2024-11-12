@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures.c                                         :+:      :+:    :+:   */
+/*   textures_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/07 10:37:48 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:33:33 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,11 @@ void	get_images(t_data *data)
 	data->walls->ea = mlx_texture_to_image(data->m, data->txtrs->ea);
 	data->walls->we = mlx_texture_to_image(data->m, data->txtrs->we);
 	data->walls->door = mlx_texture_to_image(data->m, data->txtrs->door);
-	data->walls->floor = mlx_texture_to_image(data->m, data->txtrs->floor);
 	mlx_delete_texture(data->txtrs->no);
 	mlx_delete_texture(data->txtrs->so);
 	mlx_delete_texture(data->txtrs->ea);
 	mlx_delete_texture(data->txtrs->we);
 	mlx_delete_texture(data->txtrs->door);
-	mlx_delete_texture(data->txtrs->floor);
 }
 
 void	get_textures(t_data *data)
@@ -68,6 +66,5 @@ void	get_textures(t_data *data)
 	data->txtrs->ea = mlx_load_png(data->scene.ea);
 	data->txtrs->we = mlx_load_png(data->scene.we);
 	data->txtrs->door = mlx_load_png("./textures/bookshelf5.png");
-	data->txtrs->floor = mlx_load_png("./textures/floor_texture.png");
 	get_images(data);
 }

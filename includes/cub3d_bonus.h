@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 13:52:40 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:33:45 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct s_ray
 	int			rows;
 	int			hor_x;
 	mlx_image_t	*wall;
-	mlx_image_t	*floor;
 	int			wall_height;
 	bool		is_door;
 	bool		open_door;
@@ -106,7 +105,6 @@ typedef struct s_textures
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
 	mlx_texture_t	*door;
-	mlx_texture_t	*floor;
 }	t_textures;
 
 typedef struct s_walls
@@ -116,7 +114,6 @@ typedef struct s_walls
 	mlx_image_t	*ea;
 	mlx_image_t	*we;
 	mlx_image_t	*door;
-	mlx_image_t	*floor;
 }	t_walls;
 
 typedef struct s_scene
@@ -271,8 +268,5 @@ void		cast_one_ray(t_data *data, t_ray *ray);
 
 //draw_walls
 int			cast_rays(t_data *data);
-//draw_floor
-void		draw_floor_texture(t_data *data,
-				t_ray *ray, t_texture *txtr, int i);
 
 #endif

@@ -1,7 +1,7 @@
-NO ./textures/2.png
-SO ./textures/3.png
-WE ./textures/4.png
-EA ./textures/5.png
+NO ./textures/bonus1.png
+SO ./textures/bonus2.png
+WE ./textures/bonus3.png
+EA ./textures/bonus4.png
 
 C 40,40,40
 F 120,50,60

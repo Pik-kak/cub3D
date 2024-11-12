@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d_bonus.h                                      :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 13:52:40 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:32:19 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,6 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-typedef struct s_minimap
-{
-	int	start_x;
-	int	start_y;
-	int	end_x;
-	int	end_y;
-}	t_minimap;
-
 typedef struct s_texture
 {
 	int	start;
@@ -70,7 +62,6 @@ typedef struct s_ray
 	int			rows;
 	int			hor_x;
 	mlx_image_t	*wall;
-	mlx_image_t	*floor;
 	int			wall_height;
 	bool		is_door;
 	bool		open_door;
@@ -105,8 +96,6 @@ typedef struct s_textures
 	mlx_texture_t	*so;
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
-	mlx_texture_t	*door;
-	mlx_texture_t	*floor;
 }	t_textures;
 
 typedef struct s_walls
@@ -115,8 +104,6 @@ typedef struct s_walls
 	mlx_image_t	*so;
 	mlx_image_t	*ea;
 	mlx_image_t	*we;
-	mlx_image_t	*door;
-	mlx_image_t	*floor;
 }	t_walls;
 
 typedef struct s_scene
@@ -135,13 +122,6 @@ typedef struct s_scene
 	uint32_t	col_ceiling;
 	int			cols;
 	int			rows;
-	int			minimap_status;
-	int			wand_pos;
-	bool		wand_visible;
-	int			door_timer;
-	int			wand_timer;
-	int			door_x;
-	int			door_y;
 	int			last_ray_dir;
 }	t_scene;
 
@@ -149,7 +129,6 @@ typedef struct s_data
 {
 	mlx_t		*m;
 	mlx_image_t	*image;
-	mlx_image_t	*wand;
 	mlx_image_t	*txtr;
 	t_textures	*txtrs;
 	t_walls		*walls;
@@ -217,31 +196,21 @@ void		fill_maze_if_spaces(t_data *data);
 char		*get_next_line_cub(t_data *data, int fd);
 
 //draw_scene
-void		draw_tile(t_data *data, t_minimap *mmap, int i, int j);
-void		draw_circle(t_data *data, int radius, int color);
-void		draw_nose(t_data *data, int length, int color);
 void		draw_scene(t_data *data);
 
 //draw_utils
 void		calc_msrmnts(t_data *data, t_texture *tx, double w_hght, int r);
 int			pixel_ok(t_data *data, int x, int y);
 
-//draw_minimap
-void		draw_minimap(t_data *data);
-
 //textures
 void		get_textures(t_data *data);
 
 //raycaster_utils
 int			ray_len(t_ray *ray);
-void		set_door_open(t_data *data, int x, int y);
-void		cast_door_spell(t_data *data, int x, int y);
-void		spell_door(t_data *data);
 
 //key_hooks
 void		my_keyhook(void *param);
 void		my_keyhook2(mlx_key_data_t keydata, void *param);
-void		my_mouse_hook(t_data *data);
 void		turn_player(t_player *player, double angle);
 void		move_right_wall(t_player *player);
 void		move_left_wall(t_player *player);
@@ -252,11 +221,8 @@ void		move_player_backward(t_player *player);
 void		move_player_left(t_player *player);
 void		move_player_right(t_player *player);
 
-//wand.c
-void		update_wand(t_data *data);
 
 //raycaster
-void		cast_door_ray(t_data *data, double ray_angle, double x, double y);
 int			cast_collission_ray(t_data *data,
 				double ray_angle, double x, double y);
 
@@ -271,8 +237,6 @@ void		cast_one_ray(t_data *data, t_ray *ray);
 
 //draw_walls
 int			cast_rays(t_data *data);
-//draw_floor
-void		draw_floor_texture(t_data *data,
-				t_ray *ray, t_texture *txtr, int i);
+
 
 #endif
