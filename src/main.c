@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 14:37:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:55:52 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ static void	render_loop(void *param)
 	t_data	*data;
 
 	data = param;
-	if (data->scene.wand_visible)
-		update_wand(data);
 	draw_scene(data);
 	if (data->scene.door_timer > 0)
 		spell_door(data);
@@ -113,7 +111,6 @@ int	main(int argc, char **argv)
 		mlx_set_mouse_pos(data->m, WIDTH / 2, HEIGHT / 2);
 		mlx_loop_hook(data->m, render_loop, data);
 		mlx_loop_hook(data->m, my_keyhook, data);
-		mlx_key_hook(data->m, &my_keyhook2, data);
 		mlx_loop(data->m);
 	}
 	ft_free_data_and_exit(data);

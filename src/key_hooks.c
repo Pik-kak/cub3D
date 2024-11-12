@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_hooks_bonus.c                                  :+:      :+:    :+:   */
+/*   key_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:33:31 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:55:44 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,37 +70,3 @@ void	my_keyhook(void *param)
 	my_mouse_hook(data);
 }
 
-void	wand_visibility(t_data *data)
-{
-	if (!data->scene.wand_visible)
-		data->scene.wand_visible = true;
-	else if (data->scene.wand_visible)
-	{
-		data->scene.wand_visible = false;
-		mlx_delete_image(data->m, data->wand);
-	}
-}
-
-void	my_keyhook2(mlx_key_data_t keydata, void *param)
-{
-	t_data	*data;
-
-	data = param;
-	if (keydata.key == MLX_KEY_TAB && keydata.action == MLX_PRESS)
-	{
-		if (data->scene.minimap_status == 3)
-			data->scene.minimap_status = 1;
-		else
-			data->scene.minimap_status = 3;
-	}
-	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS \
-	&& data->scene.wand_visible)
-	{
-		cast_door_ray(data, normalize_angle(data->scene.player.dir), \
-		data->scene.player.px, data->scene.player.py);
-	}
-	if (keydata.key == MLX_KEY_E && keydata.action == MLX_PRESS)
-	{
-		wand_visibility(data);
-	}
-}

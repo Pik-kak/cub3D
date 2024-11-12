@@ -6,7 +6,7 @@
 #    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/12 13:39:22 by tsaari           ###   ########.fr        #
+#    Updated: 2024/11/12 13:54:30 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,6 @@ DRAW_SRCS	= draw_scene.c \
 				textures.c \
 				draw_utils.c \
 				draw_utils_color.c \
-				draw_minimap.c \
-				wand.c \
 				draw_floor.c
 
 

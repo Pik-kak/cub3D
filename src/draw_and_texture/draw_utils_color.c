@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:47:10 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:38:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:50:34 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,6 @@ uint32_t	get_img_col(t_data *data, mlx_image_t *image,
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	adjust_opacity(int color, float opacity)
-{
-	int	red;
-	int	green;
-	int	blue;
-	int	alpha;
-
-	if (opacity > 1.0)
-		opacity = 1.0;
-	else if (opacity < 0.0)
-		opacity = 0.0;
-	red = (color >> 24) & 0xFF;
-	green = (color >> 16) & 0xFF;
-	blue = (color >> 8) & 0xFF;
-	alpha = (int)((color & 0xFF) * opacity);
-	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
-}
 
 /* ==============================
  * Gets the colours from the map element 
@@ -68,21 +51,3 @@ uint32_t	get_colour(int rgb[3])
 	return (colour);
 }
 
-/*=======================
- * Adjusts brightness
- * ======================
- */
-uint32_t	darken_color(uint32_t color, double factor)
-{
-	uint8_t	r;
-	uint8_t	g;
-	uint8_t	b;
-
-	r = (color >> 24) & 0xFF;
-	g = (color >> 16) & 0xFF;
-	b = (color >> 8) & 0xFF;
-	r = (uint8_t)(r * factor);
-	g = (uint8_t)(g * factor);
-	b = (uint8_t)(b * factor);
-	return ((r << 24) | (g << 16) | (b << 8) | 0xFF);
-}

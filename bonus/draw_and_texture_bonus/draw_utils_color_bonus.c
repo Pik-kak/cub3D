@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_utils_color.c                                 :+:      :+:    :+:   */
+/*   draw_utils_color_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:47:10 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:38:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:50:53 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,6 @@ uint32_t	get_img_col(t_data *data, mlx_image_t *image,
 	b = image->pixels[pixel_index + 2];
 	a = image->pixels[pixel_index + 3];
 	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-int	adjust_opacity(int color, float opacity)
-{
-	int	red;
-	int	green;
-	int	blue;
-	int	alpha;
-
-	if (opacity > 1.0)
-		opacity = 1.0;
-	else if (opacity < 0.0)
-		opacity = 0.0;
-	red = (color >> 24) & 0xFF;
-	green = (color >> 16) & 0xFF;
-	blue = (color >> 8) & 0xFF;
-	alpha = (int)((color & 0xFF) * opacity);
-	return ((red << 24) | (green << 16) | (blue << 8) | alpha);
 }
 
 /* ==============================
