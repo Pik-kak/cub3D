@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 14:37:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/12 13:49:55 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	main(int argc, char **argv)
 		if (!data->m)
 			ft_free_data_and_error(data, "MLX error", NULL);
 		get_textures(data);
-		mlx_set_mouse_pos(data->m, WIDTH / 2, HEIGHT / 2);
 		mlx_loop_hook(data->m, render_loop, data);
 		mlx_loop_hook(data->m, my_keyhook, data);
 		mlx_key_hook(data->m, &my_keyhook2, data);
