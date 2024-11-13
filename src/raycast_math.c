@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_math.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:52:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/03 16:22:40 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:06:12 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 void	check_direction_horizontal(t_ray *ray, double ray_angle)
 {

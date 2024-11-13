@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/12 14:30:56 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:43:44 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init_data(t_data *data, char **argv)
 	data->txtr = NULL;
 	data->txtrs = NULL;
 	data->walls = NULL;
+	data->wand = NULL;
 	data->file = argv[1];
 	data->s_height = 1080;
 	data->s_width = 1920;

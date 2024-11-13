@@ -40,7 +40,7 @@ void	spell_door(t_data *data)
 {
 	if (data->scene.door_timer > 0)
 	{
-		if (data->scene.door_timer < 15 && data->scene.door_timer % 3 == 0 \
+		if (data->scene.door_timer < 25 && data->scene.door_timer % 3 == 0 \
 		&& data->scene.door_timer > 0)
 		{
 			set_door_open(data, data->scene.door_x, data->scene.door_y);

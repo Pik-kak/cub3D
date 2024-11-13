@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:49:29 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/12 14:20:17 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:06:17 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 int	ray_len(t_ray *ray)
 {

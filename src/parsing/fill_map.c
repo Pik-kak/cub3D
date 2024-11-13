@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 21:45:41 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 14:17:53 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:04:31 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 //reads line and fills every row
 static void	fill_row(t_data *data, char *line, int row)

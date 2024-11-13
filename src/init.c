@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 09:14:47 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/12 14:31:02 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:08:50 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 static void	init_player(t_player *player)
 {
@@ -43,13 +43,6 @@ static void	init_scene(t_data *data)
 	data->scene.floor_rgb[0] = -1;
 	data->scene.floor_rgb[1] = -1;
 	data->scene.floor_rgb[2] = -1;
-	data->scene.minimap_status = 1;
-	data->scene.wand_pos = 1;
-	data->scene.wand_visible = false;
-	data->scene.door_timer = 0;
-	data->scene.wand_timer = 0;
-	data->scene.door_x = 0;
-	data->scene.door_y = 0;
 	data->scene.last_ray_dir = 0;
 }
 

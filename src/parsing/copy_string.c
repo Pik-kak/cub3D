@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:40:50 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:30:35 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:04:22 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 char	*find_substring(t_data *data, char *pointer, char *line)
 {

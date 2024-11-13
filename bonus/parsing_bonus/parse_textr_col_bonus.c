@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textr_col_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
 /*   Updated: 2024/11/13 14:23:48 by kkauhane         ###   ########.fr       */
