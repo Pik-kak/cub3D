@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils_color.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 12:47:10 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 13:50:34 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:29:08 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ uint32_t	get_img_col(t_data *data, mlx_image_t *image,
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-
 /* ==============================
  * Gets the colours from the map element 
  * ==============================
@@ -50,4 +49,3 @@ uint32_t	get_colour(int rgb[3])
 	colour = (rgb[0] << 24 | rgb[1] << 16 | rgb[2] << 8 | a);
 	return (colour);
 }
-
