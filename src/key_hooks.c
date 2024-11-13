@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:32:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/12 14:08:25 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:05:52 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 void	move_right_wall(t_player *player)
 {
@@ -68,4 +68,3 @@ void	my_keyhook(void *param)
 	if (mlx_is_key_down(data->m, MLX_KEY_ESCAPE))
 		ft_free_data_and_exit(data);
 }
-

@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 14:47:29 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 13:52:51 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:04:01 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 /* ==============================
  * If pixel is out of screen does not draw it 

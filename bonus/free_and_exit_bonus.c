@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/07 10:26:32 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:35:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	free_elements(t_data *data)
 		free(data->scene.ea);
 	if (data->scene.we != NULL)
 		free(data->scene.we);
+	mlx_delete_texture(data->txtrs->wand_basic);
+	mlx_delete_texture(data->txtrs->wand_spell1);
+	mlx_delete_texture(data->txtrs->wand_spell2);
 }
 
 void	ft_error(t_data *data, char *error)

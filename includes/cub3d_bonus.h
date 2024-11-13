@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 14:33:45 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:40:18 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,9 @@ typedef struct s_textures
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
 	mlx_texture_t	*door;
+	mlx_texture_t	*wand_basic;
+	mlx_texture_t	*wand_spell1;
+	mlx_texture_t	*wand_spell2;
 }	t_textures;
 
 typedef struct s_walls
@@ -193,6 +196,7 @@ void		set_texttr_and_col_lines(t_data *data, t_check *check);
 
 //parse_textr_col
 int			check_texture_line(t_data *data, char *line);
+void		check_texture_file(t_data *data, char *file);
 int			check_colour_line(t_data *data, char *line);
 
 //draw_utils_color

@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:41:21 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/05 17:33:47 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:06:04 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 /* ==============================
  * moves player forward or backward using dopx/y 

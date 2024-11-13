@@ -6,19 +6,12 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 08:20:00 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/12 14:22:18 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:08:16 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
-/*========================================
- * casts One ray to given angle
- * first it casts ray to find wall in horizontal block sides,
- * then vertical and 
- * draws ray to which ray is shorter and nearer player.
- * =======================================
- */
 double	count_texture_x(t_ray *ray, int x)
 {
 	double	ret;
@@ -27,7 +20,7 @@ double	count_texture_x(t_ray *ray, int x)
 	return (ret);
 }
 
-void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
+void	set_wall(t_data *data, t_ray *ray, int hor_or_ver)
 {
 	if (hor_or_ver == 1)
 	{
@@ -36,11 +29,6 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 			ray->wall = data->walls->no;
 		else
 			ray->wall = data->walls->so;
-		if (hor_door)
-		{
-			ray->wall = data->walls->door;
-			ray->is_door = true;
-		}	
 		ray->tex_x = count_texture_x(ray, ray->hor_x);
 	}
 	else
@@ -50,8 +38,6 @@ void	set_wall(t_data *data, t_ray *ray, int hor_or_ver, bool hor_door)
 			ray->wall = data->walls->we;
 		else
 			ray->wall = data->walls->ea;
-		if (ray->is_door)
-			ray->wall = data->walls->door;
 		ray->tex_x = count_texture_x(ray, ray->rxry[1]);
 	}
 }
@@ -62,25 +48,23 @@ void	cast_one_ray(t_data *data, t_ray *ray)
 
 	horizontal_cast(ray);
 	ray->hor_x = ray->rxry[0];
-	hor_door = ray->is_door;
-	ray->is_door = false;
 	vertical_cast(ray);
 	if (ray->dist_h > 0 && (ray->dist_v == 0 || ray->dist_h < ray->dist_v))
 	{
-		set_wall(data, ray, 1, hor_door);
+		set_wall(data, ray, 1);
 		data->scene.last_ray_dir = 0;
 	}
 	else if (ray->dist_v > 0 && (ray->dist_h == 0 || ray->dist_h > ray->dist_v))
 	{
-		set_wall(data, ray, 0, ray->is_door);
+		set_wall(data, ray, 0);
 		data->scene.last_ray_dir = 1;
 	}
 	else
 	{
 		if (data->scene.last_ray_dir == 0)
-			set_wall(data, ray, 1, hor_door);
+			set_wall(data, ray, 1);
 		else
-			set_wall(data, ray, 0, ray->is_door);
+			set_wall(data, ray, 0);
 	}
 }
 
@@ -102,4 +86,3 @@ int	cast_collission_ray(t_data *data, double ray_angle, double x, double y)
 	}
 	return (ret_dist);
 }
-

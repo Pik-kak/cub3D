@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   collissions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:52:25 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/04 17:07:14 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:05:18 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 double	normalize_angle(double angle)
 {

@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 17:30:37 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:36:42 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:05:03 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 static int	check_valid_line(t_data *data, char *line, t_check *check)
 {

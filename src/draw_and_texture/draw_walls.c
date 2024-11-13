@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/03 10:59:45 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/08 14:44:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:04:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 /* ================================
  * Draws a slice of the wall

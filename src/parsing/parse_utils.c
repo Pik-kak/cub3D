@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 14:15:39 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:04:53 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 //helper function to check that there is no illegal char's in map
 int	check_map_line(char *line)
@@ -22,7 +22,7 @@ int	check_map_line(char *line)
 		return (1);
 	while (line[i] != '\0')
 	{
-		if (line[i] != ' ' && line[i] != '1' 
+		if (line[i] != ' ' && line[i] != '1'
 			&& line[i] != '0' && line[i] != 'N'
 			&& line[i] != 'E' && line[i] != 'S'
 			&& line[i] != 'W' && line[i] != '\n')

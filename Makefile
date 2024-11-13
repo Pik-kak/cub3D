@@ -6,7 +6,7 @@
 #    By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/25 08:54:03 by tsaari            #+#    #+#              #
-#    Updated: 2024/11/12 14:14:26 by tsaari           ###   ########.fr        #
+#    Updated: 2024/11/13 14:43:06 by tsaari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,8 +99,6 @@ BOBJ_DIR		= bobj
 
 all:	$(NAME)
 
-#bonus: $(BONUS)
-
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
@@ -130,7 +128,7 @@ $(NAME):	$(OBJ_DIR) $(OBJS) $(LIBFT) $(MLX_TARGET)
 			@echo "\033[1;32mCub3D compile success!\n\033[0m"
 
 .bonus:		$(BOBJ_DIR) $(BOBJS) $(LIBFT) $(MLX_TARGET) 
-			@$(CC) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
+			@$(CC) $(CFLAGS) $(BOBJS) $(LIBFT) $(MLX_TARGET) $(MLXFLAGS) $(GLFW_DIR) $(LDFLAGS) -o $(NAME)
 			@touch .bonus
 			@echo "\033[1;32mLibft library ready!\n\033[0m"
 			@echo "\033[1;32mMLX42 library ready!\n\033[0m"

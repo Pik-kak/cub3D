@@ -6,11 +6,11 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 14:30:13 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 12:05:08 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
 void	free_buffer_close_fd(t_data *data)
 {
