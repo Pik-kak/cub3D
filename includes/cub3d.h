@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 14:32:19 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:30:57 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_BONUS_H
-# define CUB3D_BONUS_H
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -221,7 +221,6 @@ void		move_player_backward(t_player *player);
 void		move_player_left(t_player *player);
 void		move_player_right(t_player *player);
 
-
 //raycaster
 int			cast_collission_ray(t_data *data,
 				double ray_angle, double x, double y);
@@ -237,6 +236,5 @@ void		cast_one_ray(t_data *data, t_ray *ray);
 
 //draw_walls
 int			cast_rays(t_data *data);
-
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:28:19 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/12 14:15:39 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:29:22 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_map_line(char *line)
 		return (1);
 	while (line[i] != '\0')
 	{
-		if (line[i] != ' ' && line[i] != '1' 
+		if (line[i] != ' ' && line[i] != '1'
 			&& line[i] != '0' && line[i] != 'N'
 			&& line[i] != 'E' && line[i] != 'S'
 			&& line[i] != 'W' && line[i] != '\n')
