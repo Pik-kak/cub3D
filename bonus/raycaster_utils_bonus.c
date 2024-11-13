@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster_utils_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 14:49:29 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/13 12:16:38 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/13 14:24:47 by kkauhane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
