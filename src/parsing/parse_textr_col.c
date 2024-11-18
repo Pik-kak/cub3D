@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/13 12:04:48 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/18 14:15:25 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	set_col_line(t_data *data, char *pointer, int *rgb, char *line)
 	int		i;
 
 	i = 0;
+	str = NULL;
 	str = copy_str(data, pointer, line);
 	check_amount_of_commas(data, str, line);
 	splitted = ft_split (str, ',');
