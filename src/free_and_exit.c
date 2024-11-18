@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 08:27:02 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/13 12:05:30 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/18 14:22:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_free_data_and_error(t_data *data, char *error, char *str)
 		free(data->scene.map[i]);
 		i++;
 	}
-	if (str)
+	if (str != NULL)
 		free(str);
 	free(data->scene.map);
 	if (data->walls)

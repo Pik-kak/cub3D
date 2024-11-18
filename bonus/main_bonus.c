@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/08 14:37:11 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/18 15:07:43 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		write(2, "Invalid amount of arguments", 27);
+		write(2, "Error\nInvalid amount of arguments\n", 34);
 		return (0);
 	}
 	data = (t_data *)ft_calloc(sizeof(t_data), sizeof(t_data));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:46:39 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/13 14:24:06 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:55:32 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_buffer_close_fd(t_data *data)
 {
-	if (data->buffer)
+	if (data->buffer != NULL)
 		free(data->buffer);
 	data->buffer = NULL;
 	close(data->fd);
@@ -71,7 +71,7 @@ static char	*read_file_until_nl(t_data *data, int fd, int br)
 	{
 		br = read(fd, readed, BUFFER_SIZE);
 		if (br == -1 || (br == 0 && ft_strlen(data->buffer) == 0))
-			return (NULL);
+			return (ft_free(&data->buffer, NULL));
 		readed[br] = '\0';
 		temp = data->buffer;
 		data->buffer = ft_strjoin (data->buffer, readed);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils2_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/13 14:23:57 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:06:11 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ void	check_valid_color_value(t_data *data, char *str, char *line)
 void	check_amount_of_commas(t_data *data, char *str, char *line)
 {
 	int	commas;
+	int	i;
 
 	commas = 0;
-	while (*str)
+	i = 0;
+	while (str[i])
 	{
-		if (*str == ',')
+		if (str[i] == ',')
 			commas++;
-		str++;
+		i++;
 	}
 	if (commas != 2)
 	{
@@ -95,5 +97,5 @@ void	check_player(t_data *data)
 		i++;
 	}
 	if (player_found != 1)
-		ft_free_data_and_error(data, "invalid file, too many players", NULL);
+		ft_free_data_and_error(data, "invalid file, wrong nb of players", NULL);
 }
