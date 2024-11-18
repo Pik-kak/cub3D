@@ -19,7 +19,7 @@ RM = rm -rf
 MLX_DIR = MLX42
 MLX_BUILD_DIR = $(MLX_DIR)/build
 MLX_TARGET = $(MLX_BUILD_DIR)/libmlx42.a
-CFLAGS = -Wall -Wextra -Werror -lm -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -lm -g -fsanitize=address
 MLXFLAGS = -Iinclude -lglfw
 GLFW_DIR = -L"/usr/lib/x86_64-linux-gnu"
 LDFLAGS = -ldl -pthread -lm $(GLFW_DIR) -lglfw
