@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:57:40 by tsaari            #+#    #+#             */
-/*   Updated: 2024/11/18 15:07:43 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/19 10:54:00 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static void	render_loop(void *param)
 	t_data	*data;
 
 	data = param;
+	draw_scene(data);
 	if (data->scene.wand_visible)
 		update_wand(data);
-	draw_scene(data);
 	if (data->scene.door_timer > 0)
 		spell_door(data);
 }

@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:48:31 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/13 14:34:34 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/19 10:37:06 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,10 @@ void	get_textures(t_data *data)
 	check_texture_file(data, data->scene.ea);
 	check_texture_file(data, data->scene.we);
 	check_texture_file(data, "./textures/bookshelf5.png");
-	check_texture_file(data, "./textures/testwand2.png");
-	check_texture_file(data, "./textures/wand_spell1bigger.png");
-	check_texture_file(data, "./textures/wand_spell2bigger.png");
 	data->txtrs->no = mlx_load_png(data->scene.no);
 	data->txtrs->so = mlx_load_png(data->scene.so);
 	data->txtrs->ea = mlx_load_png(data->scene.ea);
 	data->txtrs->we = mlx_load_png(data->scene.we);
 	data->txtrs->door = mlx_load_png("./textures/bookshelf5.png");
-	data->txtrs->wand_basic = mlx_load_png("./textures/testwand2.png");
-	data->txtrs->wand_spell1 = mlx_load_png("./textures/wand_spell1bigger.png");
-	data->txtrs->wand_spell2 = mlx_load_png("./textures/wand_spell2bigger.png");
 	get_images(data);
 }

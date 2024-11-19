@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/25 20:43:28 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/18 15:05:49 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/11/19 11:12:48 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * Sets the variable value if it is valid.
  * ==============================
  */
-void	check_valid_color_value(t_data *data, char *str, char *line)
+void	check_valid_color_value(t_data *data, char **spl, char *str, char *line)
 {
 	int	i;
 
@@ -29,8 +29,9 @@ void	check_valid_color_value(t_data *data, char *str, char *line)
 		if (ft_isdigit(str[i++]) != 1)
 		{
 			free(line);
+			ft_free_double_array(spl);
 			ft_free_data_and_error(data,
-				"invalid file, invalid colour setting", str);
+				"invalid file, invalid colour setting", NULL);
 		}
 	}
 }

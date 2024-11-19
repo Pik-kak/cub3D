@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 16:27:23 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/13 14:23:48 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:10:39 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	set_col_line(t_data *data, char *pointer, int *rgb, char *line)
 		ft_free_data_and_error(data, "malloc error", line);
 	}
 	while (splitted[i] != 0)
-		check_valid_color_value(data, splitted[i++], line);
+		check_valid_color_value(data, splitted, splitted[i++], line);
 	if (i != 3)
 	{
 		ft_free_double_array(splitted);
