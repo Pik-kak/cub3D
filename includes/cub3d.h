@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kkauhane <kkauhane@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 17:13:30 by kkauhane          #+#    #+#             */
-/*   Updated: 2024/11/13 14:30:57 by kkauhane         ###   ########.fr       */
+/*   Updated: 2024/11/19 11:15:30 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ char		*skip_spaces(char *line);
 void		allocate_map(t_data *data);
 //parse_utils2
 char		*copy_str(t_data *data, char *pointer, char *line);
-void		check_valid_color_value(t_data *data, char *str, char *line);
+void		check_valid_color_value(t_data *data,
+				char **spl, char *str, char *line);
 void		check_amount_of_commas(t_data *data, char *str, char *line);
 
 //copy_str
