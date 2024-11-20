@@ -29,7 +29,7 @@ void	check_valid_color_value(t_data *data, char **spl, char *str, char *line)
 		if (ft_isdigit(str[i++]) != 1)
 		{
 			free(line);
-			ft_free_double_array(splitted);
+			ft_free_double_array(spl);
 			ft_free_data_and_error(data,
 				"invalid file, invalid colour setting", NULL);
 		}
